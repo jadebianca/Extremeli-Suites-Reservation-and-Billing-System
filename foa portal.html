@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Front-Desk Operations Portal - Extremeli Suites</title>
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/jpeg" href="images/logo.JPG">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    html {
+      scrollbar-gutter: stable;
+      overflow-y: scroll;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      color: #111111;
+      background-color: #f8f9fa;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, .portal-greeting, .stat-value, .room-title, .page-title, .room-card-title, .step-title {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .top-bar {
+      background-color: #092741;
+      color: #ffffff;
+      text-align: center;
+      padding: 12px 20px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      width: 100%;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e5e5;
+      width: 100%;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .logo-img {
+      height: 55px; 
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .user-nav-profile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #092741;
+    }
+
+    .user-nav-profile svg {
+      width: 16px;
+      height: 16px;
+      fill: #092741;
+    }
+
+    .portal-wrapper {
+      max-width: 1380px;
+      width: 100%;
+      margin: 30px auto 60px;
+      padding: 0 30px;
+      display: flex;
+      gap: 30px;
+      flex: 1;
+      align-items: flex-start; /* Pinipigilan ang pag-stretch ng sukat */
+    }
+
+    .portal-sidebar {
+      width: 270px;
+      background-color: #092741;
+      color: #ffffff;
+      padding: 35px 25px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 6px;
+      flex-shrink: 0;
+      position: sticky; /* Panatilihin ang haba at posisyon habang naglalakbay sa mga seksyon */
+      top: 30px;
+    }
+
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 35px;
+    }
+
+    .avatar-circle {
+      width: 60px;
+      height: 60px;
+      background-color: #D2AA55;
+      color: #092741;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .profile-name {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .profile-role {
+      font-size: 11px;
+      color: #a0b2c6;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .sidebar-menu li a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #cbd7e4;
+      font-weight: 500;
+      border-radius: 4px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .sidebar-menu li a svg {
+      width: 18px;
+      height: 18px;
+      fill: #cbd7e4;
+      transition: fill 0.3s;
+    }
+
+    .sidebar-menu li a:hover,
+    .sidebar-menu li.active a {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .sidebar-menu li.active a svg,
+    .sidebar-menu li a:hover svg {
+      fill: #D2AA55;
+    }
+
+    .logout-link {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logout-link a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #cbd7e4;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .logout-link a:hover {
+      color: #ff6b6b;
+    }
+
+    .portal-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      min-width: 0;
+    }
+
+    .portal-section {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .portal-section.hidden {
+      display: none !important;
+    }
+
+    .portal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 5px;
+    }
+
+    .portal-subtag {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #B48934;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .portal-greeting {
+      font-size: 38px;
+      font-weight: 500;
+      color: #092741;
+      line-height: 1.1;
+    }
+
+    .portal-subtitle {
+      font-size: 14px;
+      color: #687680;
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: #ffffff;
+      padding: 20px 22px;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #687680;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 30px;
+      font-weight: 500;
+      color: #092741;
+      line-height: 1.2;
+    }
+
+    .stat-subtext {
+      font-size: 11px;
+      color: #888888;
+      margin-top: 4px;
+    }
+
+    .badge-status {
+      padding: 5px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+    }
+
+    .badge-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .badge-available, .badge-active, .badge-confirmed, .badge-completed, .badge-verified, .badge-checked-in {
+      background-color: #E7F6EC;
+      color: #0E7A36;
+      border: 1px solid #B7E4C7;
+    }
+    .badge-available::before, .badge-active::before, .badge-confirmed::before, .badge-completed::before, .badge-verified::before, .badge-checked-in::before { background-color: #0E7A36; }
+
+    .badge-out-of-service, .badge-deactivated, .badge-cancelled, .badge-rejected, .badge-noshow {
+      background-color: #FDF2F2;
+      color: #9B1C1C;
+      border: 1px solid #F8B4B4;
+    }
+    .badge-out-of-service::before, .badge-deactivated::before, .badge-cancelled::before, .badge-rejected::before, .badge-noshow::before { background-color: #9B1C1C; }
+
+    .badge-pending, .badge-reserved, .badge-occupied, .badge-rebook-requested, .badge-not-required {
+      background-color: #FFF6E5;
+      color: #B48934;
+      border: 1px solid #F3DBA7;
+    }
+    .badge-pending::before, .badge-reserved::before, .badge-occupied::before, .badge-rebook-requested::before, .badge-not-required::before { background-color: #B48934; }
+
+    .admin-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      padding: 25px 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      width: 100%;
+    }
+
+    .card-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f0f0;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .card-title-text {
+      font-size: 24px;
+      font-weight: 500;
+      color: #092741;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      white-space: nowrap;
+    }
+
+    .admin-table th {
+      text-align: left;
+      padding: 12px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #687680;
+      background-color: #fafafa;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .admin-table td {
+      padding: 14px;
+      font-size: 13px;
+      color: #111111;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td {
+      background-color: #fdfdfd;
+    }
+
+    .btn-action-primary {
+      background-color: #D2AA55;
+      color: #092741;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 9px 18px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .btn-action-primary:hover { background-color: #B48934; }
+
+    .btn-action-outline {
+      background: transparent;
+      border: 1px solid #092741;
+      color: #092741;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .btn-action-outline:hover {
+      background-color: #092741;
+      color: #ffffff;
+    }
+
+    .btn-action-danger {
+      background: transparent;
+      border: 1px solid #9B1C1C;
+      color: #9B1C1C;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 4px;
+    }
+    .btn-action-danger:hover {
+      background-color: #9B1C1C;
+      color: #ffffff;
+    }
+
+    .dash-calendar-container {
+      display: flex;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .dash-cal-sidebar {
+      width: 320px;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 20px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .dash-cal-main {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      min-width: 0;
+    }
+
+    .cal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .cal-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #092741;
+    }
+    .cal-nav-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: #687680;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .cal-nav-btn:hover { background-color: #f0f4f8; }
+
+    .cal-days-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #8898a5;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .cal-dates-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      text-align: center;
+    }
+
+    .cal-day-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+      color: #334155;
+    }
+
+    .cal-day-cell:hover:not(.empty) { background-color: #f1f5f9; }
+
+    .cal-day-cell.booked { background-color: #e0f2fe; color: #0369a1; }
+    .cal-day-cell.selected {
+      background-color: #092741 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(9, 39, 65, 0.3);
+    }
+    .cal-day-cell.empty { cursor: default; }
+
+    .cal-legend {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #f1f5f9;
+      font-size: 11px;
+      color: #64748b;
+      flex-wrap: wrap;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    .selected-date-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .selected-date-title { font-size: 26px; font-weight: 600; color: #092741; }
+    .selected-count-badge {
+      background-color: #e2e8f0;
+      color: #334155;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .res-card-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+    .res-item-card {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .res-avatar {
+      width: 38px; height: 38px;
+      background-color: #38bdf8;
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .room-avail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 15px;
+    }
+    .room-avail-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .room-avail-img { width: 65px; height: 50px; object-fit: cover; border-radius: 6px; }
+    .room-avail-badge-booked { background-color: #ffe4e6; color: #9f1239; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; }
+    .room-avail-badge-free { background-color: #dcfce7; color: #15803d; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; }
+
+    .filter-toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-toolbar input {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 14px;
+      border: 1px solid #dcdcdc;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      outline: none;
+      background: #ffffff;
+      border-radius: 4px;
+    }
+    .filter-toolbar select {
+      width: 220px;
+      padding: 10px 14px;
+      border: 1px solid #dcdcdc;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      outline: none;
+      background: #ffffff;
+      color: #092741;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+
+    .ledger-search-box {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13.5px;
+      outline: none;
+      color: #333;
+      margin-bottom: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .ledger-search-box::placeholder {
+      color: #888888;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(9, 39, 65, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-overlay.hidden { display: none !important; }
+    .modal-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 680px;
+      padding: 35px;
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .c-field { display: flex; flex-direction: column; margin-bottom: 16px; }
+    .c-field label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #092741; font-weight: 700; margin-bottom: 8px; }
+    .c-field input, .c-field select, .c-field textarea {
+      padding: 12px 14px; border: 1px solid #dcdcdc; font-family: 'Manrope', sans-serif; font-size: 13px; color: #111111; outline: none; background: #ffffff; border-radius: 4px;
+    }
+
+    .verification-grid { display: grid; grid-template-columns: 1fr 340px; gap: 25px; }
+    .receipt-modal-preview { width: 100%; height: 240px; background-color: #f8fafc; border: 1px dashed #cccccc; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #687680; font-size: 13px; padding: 20px; text-align: center; }
+
+    .footer {
+      background-color: #061b2e;
+      color: #ffffff;
+      padding: 35px 5% 20px;
+      font-size: 13px;
+      margin-top: auto;
+    }
+    .footer-bottom { text-align: center; color: #aaaaaa; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+
+    @media (max-width: 1100px) {
+      .portal-wrapper { flex-direction: column; padding: 0 20px; }
+      .portal-sidebar { width: 100%; position: static; }
+      .dash-calendar-container { flex-direction: column; }
+      .dash-cal-sidebar { width: 100%; }
+      .room-avail-grid { grid-template-columns: 1fr; }
+      .verification-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="top-bar">
+    EXTREMELI SUITES · FRONT-DESK OPERATIONS MODULE
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <a href="foa-portal.html">
+        <img src="images/logo.JPG" alt="Extremeli Suites Logo" class="logo-img">
+      </a>
+    </div>
+
+    <div class="user-nav-profile">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      <span>FRONT OFFICE ASSOCIATE</span>
+    </div>
+  </nav>
+
+  <!-- MAIN PORTAL WRAPPER -->
+  <div class="portal-wrapper">
+    
+    <!-- SIDEBAR -->
+    <aside class="portal-sidebar">
+      <div class="profile-header">
+        <div class="avatar-circle">CS</div>
+        <div class="profile-name">Austria, Christian Josef M.</div>
+        <div class="profile-role">FOA / Front-Desk Associate</div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li id="nav-dashboard" class="active">
+          <a onclick="showSection('view-dashboard', 'nav-dashboard')">
+            <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            Dashboard Overview
+          </a>
+        </li>
+        <li id="nav-verify">
+          <a onclick="showSection('view-verify-payments', 'nav-verify')">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            GCash Verification
+          </a>
+        </li>
+        <li id="nav-monitor">
+          <a onclick="showSection('view-monitor-reservations', 'nav-monitor')">
+            <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+            All Reservations Status
+          </a>
+        </li>
+        <li id="nav-availability">
+          <a onclick="showSection('view-room-availability', 'nav-availability')">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+            Room Status Monitoring
+          </a>
+        </li>
+        <li id="nav-cancellations">
+          <a onclick="showSection('view-cancellations', 'nav-cancellations')">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+            Cancellation Requests
+          </a>
+        </li>
+        <li id="nav-rebooking">
+          <a onclick="showSection('view-rebooking', 'nav-rebooking')">
+            <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+            Rebooking Requests
+          </a>
+        </li>
+        <li id="nav-payments">
+          <a onclick="showSection('view-payments-recording', 'nav-payments')">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            Reservation Payments Record
+          </a>
+        </li>
+      </ul>
+
+      <div class="logout-link">
+        <a href="foa login.html">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+          Log out
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="portal-main">
+      
+      <!-- DASHBOARD OVERVIEW -->
+      <div id="view-dashboard" class="portal-section">
+        <div class="portal-header">
+          <div>
+            <div class="portal-subtag">FRONT-DESK OPERATIONS MODULE</div>
+            <h1 class="portal-greeting">Front-Desk Dashboard</h1>
+            <p class="portal-subtitle">Monitor guest reservations, GCash verification queues, room statuses, and rebookings.</p>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">PENDING VERIFICATION</div>
+            <div class="stat-value" id="stat-count-pending">1</div>
+            <div class="stat-subtext">Requires GCash verification</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">REBOOKING REQUESTS</div>
+            <div class="stat-value" id="stat-count-rebook">1</div>
+            <div class="stat-subtext">Status: Rebook Requested</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">CANCELLATIONS</div>
+            <div class="stat-value" id="stat-count-cancel">1</div>
+            <div class="stat-subtext">Pending FOA Review</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">CHECKED-IN GUESTS</div>
+            <div class="stat-value" id="stat-count-checkedin">1</div>
+            <div class="stat-subtext">Occupied Room Status</div>
+          </div>
+        </div>
+
+        <div class="dash-calendar-container">
+          <div class="dash-cal-sidebar">
+            <div class="c-field" style="margin-bottom: 20px;">
+              <label style="font-size: 11px; color: #64748b;">Filter Calendar by Room</label>
+              <select id="cal-room-filter" onchange="renderCalendar()">
+                <option value="all">All Rooms</option>
+                <option value="101">Room 101 (Deluxe A)</option>
+                <option value="102">Room 102 (Deluxe B)</option>
+                <option value="204">Room 204 (Junior Suite C)</option>
+              </select>
+            </div>
+
+            <div class="cal-header">
+              <button class="cal-nav-btn" onclick="changeMonth(-1)">«</button>
+              <div class="cal-title" id="cal-month-year">September 2026</div>
+              <button class="cal-nav-btn" onclick="changeMonth(1)">»</button>
+            </div>
+
+            <div class="cal-days-header">
+              <div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div>
+            </div>
+
+            <div class="cal-dates-grid" id="cal-dates-grid"></div>
+
+            <div class="cal-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:#e0f2fe;"></div> Reserved / Confirmed</div>
+            </div>
+          </div>
+
+          <div class="dash-cal-main">
+            <div class="selected-date-header">
+              <div>
+                <h2 class="selected-date-title" id="selected-date-display">Wednesday, September 23, 2026</h2>
+                <span style="font-size: 12px; color: #64748b;" id="selected-res-count">1 reservation(s) on this date</span>
+              </div>
+              <div class="selected-count-badge" id="selected-date-badge">1 Active Booking</div>
+            </div>
+
+            <div class="res-card-list" id="res-list-container">
+              <div class="res-item-card">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <div class="res-avatar">R</div>
+                  <div>
+                    <strong style="font-size:14px; color:#092741;">Room 101 - Deluxe A</strong>
+                    <div style="font-size:12px; color:#687680;">2026-09-22 → 2026-09-23 · Guest: <strong>Jana Abordo</strong></div>
+                  </div>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <span class="badge-status badge-confirmed">Confirmed</span>
+                  <button class="btn-action-outline" style="padding:4px 12px; font-size:11px;" onclick="showSection('view-monitor-reservations', 'nav-monitor')">View</button>
+                </div>
+              </div>
+            </div>
+
+            <h3 style="font-size: 18px; font-weight:600; color:#092741; margin-bottom: 12px;" id="avail-heading">Room Status Overview</h3>
+            
+            <div class="room-avail-grid">
+              <div class="room-avail-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <img src="images/deluxeA.JPG" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Deluxe+A'" class="room-avail-img" alt="Deluxe A">
+                  <div>
+                    <strong style="font-size:13px; color:#092741;">Room 101</strong>
+                    <div style="font-size:11px; color:#687680;">Deluxe A</div>
+                  </div>
+                </div>
+                <span class="room-avail-badge-booked">Occupied</span>
+              </div>
+
+              <div class="room-avail-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <img src="images/deluxeB.JPG" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Deluxe+B'" class="room-avail-img" alt="Deluxe B">
+                  <div>
+                    <strong style="font-size:13px; color:#092741;">Room 102</strong>
+                    <div style="font-size:11px; color:#687680;">Deluxe B with Balcony</div>
+                  </div>
+                </div>
+                <span class="room-avail-badge-free">Available</span>
+              </div>
+
+              <div class="room-avail-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <img src="images/junior.JPG" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Junior+Suite'" class="room-avail-img" alt="Junior Suite">
+                  <div>
+                    <strong style="font-size:13px; color:#092741;">Room 204</strong>
+                    <div style="font-size:11px; color:#687680;">Junior Suite C with Balcony</div>
+                  </div>
+                </div>
+                <span class="room-avail-badge-free">Available</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT PENDING GCASH RESERVATIONS -->
+        <div class="admin-card" style="margin-top: 10px;">
+          <div class="card-title-bar" style="margin-bottom: 15px;">
+            <h3 class="card-title-text" style="font-size: 22px;">Reservations Awaiting GCash Payment Verification</h3>
+            <button class="btn-action-outline" onclick="showSection('view-verify-payments', 'nav-verify')">OPEN VERIFICATION QUEUE →</button>
+          </div>
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>RESERVATION NO.</th>
+                  <th>GUEST NAME</th>
+                  <th>SELECTED ROOM & DATES</th>
+                  <th>ESTIMATED ROOM CHARGE</th>
+                  <th>DEPOSIT SUBMITTED</th>
+                  <th>STATUS</th>
+                  <th style="text-align: right;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>EXT-2026-00482</strong></td>
+                  <td>Abordo, Jana Sayrielle G.</td>
+                  <td>Deluxe A (Dec 18–20, 2026 · 2 Nights)</td>
+                  <td>₱6,600.00 <span style="font-size:11px; color:#687680;">(₱3,300/night)</span></td>
+                  <td>₱1,000.00 <span style="font-size:11px; color:#687680;">(GCash)</span></td>
+                  <td><span class="badge-status badge-pending">PENDING VERIFICATION</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn-action-primary" onclick="openVerifyModal('EXT-2026-00482', 'Abordo, Jana Sayrielle G.', 'Deluxe A', 'Dec 18 - Dec 20, 2026 (2 nights)', '₱3,300.00', '₱6,600.00', '₱1,000.00', '1002938475102')">VERIFY PAYMENT</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- GCASH PAYMENT VERIFICATION & RESERVATION HANDLING -->
+      <div id="view-verify-payments" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">FRONT-DESK OPERATIONS MODULE</div>
+          <h1 class="portal-greeting">GCash Payment Verification</h1>
+          <p class="portal-subtitle">Manually check the official hotel GCash account and review guest reservation details & deposit proof.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="filter-toolbar">
+            <input type="text" id="search-verify" placeholder="Search by Ref No, Guest Name, or GCash Reference..." onkeyup="filterTable('table-verify-list', 'search-verify', 'filter-verify-status')" />
+            <select id="filter-verify-status" onchange="filterTable('table-verify-list', 'search-verify', 'filter-verify-status')">
+              <option value="">All Verification Statuses</option>
+              <option value="pending verification">Pending Verification</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>RESERVATION NO.</th>
+                  <th>GUEST NAME</th>
+                  <th>ROOM TYPE & DATES</th>
+                  <th>ESTIMATED CHARGE</th>
+                  <th>GCASH REF NO.</th>
+                  <th>DEPOSIT AMOUNT</th>
+                  <th>STATUS</th>
+                  <th style="text-align: right;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="table-verify-list">
+                <tr data-search="ext-2026-00482 abordo, jana sayrielle g. deluxe a 1002938475102 pending verification">
+                  <td><strong>EXT-2026-00482</strong></td>
+                  <td>Abordo, Jana Sayrielle G.</td>
+                  <td>Deluxe A <br><span style="font-size:11px; color:#687680;">Dec 18–20, 2026 (2 nights)</span></td>
+                  <td>₱6,600.00</td>
+                  <td><code>1002938475102</code></td>
+                  <td>₱1,000.00</td>
+                  <td><span class="badge-status badge-pending" id="table-badge-482">PENDING VERIFICATION</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn-action-primary" onclick="openVerifyModal('EXT-2026-00482', 'Abordo, Jana Sayrielle G.', 'Deluxe A', 'Dec 18 - Dec 20, 2026 (2 nights)', '₱3,300.00', '₱6,600.00', '₱1,000.00', '1002938475102')">REVIEW & VERIFY</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESERVATION STATUS MONITORING AND UPDATING -->
+      <div id="view-monitor-reservations" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">FRONT-DESK OPERATIONS MODULE</div>
+          <h1 class="portal-greeting">Reservation Status Monitoring</h1>
+          <p class="portal-subtitle">Monitor Guest Portal reservations and update statuses (Checked-In, Checked-Out, No Show).</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="filter-toolbar">
+            <input type="text" id="search-monitor" placeholder="Search by Reservation No, Guest Name, or Room..." onkeyup="filterTable('table-monitor-body', 'search-monitor', 'filter-monitor-status')" />
+            <select id="filter-monitor-status" onchange="filterTable('table-monitor-body', 'search-monitor', 'filter-monitor-status')">
+              <option value="">All Reservation Statuses</option>
+              <option value="pending verification">Pending Verification</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="checked-in">Checked-In</option>
+              <option value="checked-out">Checked-Out</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="rejected">Rejected</option>
+              <option value="no show">No Show</option>
+            </select>
+          </div>
+
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>RESERVATION NO.</th>
+                  <th>GUEST NAME</th>
+                  <th>ROOM & DATES</th>
+                  <th>ROOM RATE</th>
+                  <th>ESTIMATED CHARGE</th>
+                  <th>DEPOSIT</th>
+                  <th>STATUS</th>
+                  <th style="text-align: right;">STATUS ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="table-monitor-body">
+                <tr data-search="ext-2026-00482 abordo, jana sayrielle g. room 101 confirmed">
+                  <td><strong>EXT-2026-00482</strong></td>
+                  <td>Abordo, Jana Sayrielle G.</td>
+                  <td><strong>Room 101</strong> (Deluxe A)<br><span style="font-size:11px; color:#687680;">Dec 18–20, 2026 (2 nights)</span></td>
+                  <td>₱3,300.00 / night</td>
+                  <td>₱6,600.00</td>
+                  <td>₱1,000.00 <span style="font-size:11px; color:#0E7A36;">(Verified)</span></td>
+                  <td><span class="badge-status badge-confirmed" id="status-badge-482">CONFIRMED</span></td>
+                  <td style="text-align: right;">
+                    <div style="display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-primary" style="padding:6px 10px; font-size:10px;" onclick="updateResStatus('EXT-2026-00482', 'Room 101', 'Checked-In')">SET CHECKED-IN</button>
+                      <button class="btn-action-outline" style="padding:6px 10px; font-size:10px;" onclick="updateResStatus('EXT-2026-00482', 'Room 101', 'Checked-Out')">SET CHECKED-OUT</button>
+                      <button class="btn-action-danger" style="padding:6px 10px; font-size:10px;" onclick="updateResStatus('EXT-2026-00482', 'Room 101', 'No Show')">SET NO SHOW</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROOM STATUS MONITORING -->
+      <div id="view-room-availability" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">ROOM MANAGEMENT</div>
+          <h1 class="portal-greeting">Room Status Monitoring</h1>
+          <p class="portal-subtitle">Monitor current room availability and occupancy statuses (Available, Reserved, Occupied, Out of Service).</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="card-title-bar">
+            <h2 class="card-title-text">Hotel Room Units</h2>
+          </div>
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ROOM NO.</th>
+                  <th>ROOM TYPE & DETAILS</th>
+                  <th>CURRENT ROOM STATUS</th>
+                  <th>ASSOCIATED RESERVATION</th>
+                </tr>
+              </thead>
+              <tbody id="table-room-status-body">
+                <tr>
+                  <td><strong>Room 101</strong></td>
+                  <td>Deluxe A (Max 2 Guests · ₱3,300/night)</td>
+                  <td><span class="badge-status badge-occupied" id="room-status-101">Occupied</span></td>
+                  <td>EXT-2026-00482 (Abordo, Jana)</td>
+                </tr>
+                <tr>
+                  <td><strong>Room 102</strong></td>
+                  <td>Deluxe B with Balcony (Max 2 Guests · ₱3,500/night)</td>
+                  <td><span class="badge-status badge-available" id="room-status-102">Available</span></td>
+                  <td>None</td>
+                </tr>
+                <tr>
+                  <td><strong>Room 204</strong></td>
+                  <td>Junior Suite C with Balcony (Max 3 Guests · ₱4,200/night)</td>
+                  <td><span class="badge-status badge-available" id="room-status-204">Available</span></td>
+                  <td>None</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CANCELLATION REQUEST MONITORING -->
+      <div id="view-cancellations" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">FRONT-DESK OPERATIONS MODULE</div>
+          <h1 class="portal-greeting">Cancellation Request Monitoring</h1>
+          <p class="portal-subtitle">Review cancellation records submitted via Guest Portal and automatically release reserved room dates.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="filter-toolbar">
+            <input type="text" id="search-cancel" placeholder="Search by Reservation No, Guest Name, or Reason..." onkeyup="filterTable('table-cancel-body', 'search-cancel')" />
+          </div>
+
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>RESERVATION NO.</th>
+                  <th>GUEST NAME</th>
+                  <th>CANCELLED ROOM & DATES</th>
+                  <th>REASON FOR CANCELLATION</th>
+                  <th>SUBMITTED CANCELLATION DATE</th>
+                  <th>RESERVATION STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="table-cancel-body">
+                <tr id="cancel-row-1" data-search="ext-2026-00482 abordo, jana sayrielle g. room 101 emergency travel changes cancel requested">
+                  <td><strong>EXT-2026-00482</strong></td>
+                  <td>Abordo, Jana Sayrielle G.</td>
+                  <td>Room 101 (Dec 18–20, 2026)</td>
+                  <td>Emergency travel changes</td>
+                  <td>2026-11-10</td>
+                  <td><span class="badge-status badge-cancelled" id="badge-cancel-482">CANCELLED</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- REBOOKING REQUEST PROCESSING -->
+      <div id="view-rebooking" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">FRONT-DESK OPERATIONS MODULE</div>
+          <h1 class="portal-greeting">Rebooking Request Processing</h1>
+          <p class="portal-subtitle">Process rebooking requests, calculate same-day rebooking charges, and verify additional GCash payments.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="filter-toolbar">
+            <input type="text" id="search-rebook" placeholder="Search by Reservation No, Guest Name, or Room..." onkeyup="filterTable('table-rebook-body', 'search-rebook', 'filter-rebook-status')" />
+            <select id="filter-rebook-status" onchange="filterTable('table-rebook-body', 'search-rebook', 'filter-rebook-status')">
+              <option value="">All Rebooking Statuses</option>
+              <option value="rebook requested">Rebook Requested</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>RESERVATION NO.</th>
+                  <th>GUEST NAME</th>
+                  <th>ORIGINAL DETAILS</th>
+                  <th>REQUESTED DATES & GUESTS</th>
+                  <th>ADDITIONAL CHARGE & DESCRIPTION</th>
+                  <th>PAYMENT VERIFICATION</th>
+                  <th>REBOOKING STATUS</th>
+                  <th style="text-align: right;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="table-rebook-body">
+                <tr id="rebook-row-1" data-search="ext-2026-00482 abordo, jana sayrielle g. room 101 rebook requested">
+                  <td><strong>EXT-2026-00482</strong></td>
+                  <td>Abordo, Jana Sayrielle G.</td>
+                  <td>Room 101<br><span style="font-size:11px; color:#687680;">Dec 18–20, 2026 (2 guests)</span></td>
+                  <td><strong>Dec 22–24, 2026</strong><br><span style="font-size:11px; color:#687680;">2 guests</span></td>
+                  <td><span id="rebook-charge-display">₱500.00</span><br><span style="font-size:11px; color:#687680;" id="rebook-desc-display">Same-Day Rebooking Fee</span></td>
+                  <td><span class="badge-status badge-pending" id="rebook-pay-status">Pending Verification</span><br><span style="font-size:11px; color:#687680;">Ref: 2009182736451</span></td>
+                  <td><span class="badge-status badge-rebook-requested" id="rebook-req-status">REBOOK REQUESTED</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn-action-primary" onclick="openRebookProcessingModal('EXT-2026-00482', 'Abordo, Jana Sayrielle G.', 'Room 101', 'Dec 18–20, 2026', 'Dec 22–24, 2026', '2', '500.00', 'Same-Day Rebooking Fee', '2009182736451')">PROCESS REBOOKING</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESERVATION PAYMENTS RECORD -->
+      <div id="view-payments-recording" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">FRONT-DESK OPERATIONS MODULE</div>
+          <h1 class="portal-greeting" style="font-size: 34px; margin-bottom: 20px;">Online Reservation Ledger Summary</h1>
+        </div>
+
+        <input type="text" id="search-ledger" class="ledger-search-box" placeholder="Search reservation ID, date, status..." onkeyup="filterTable('table-ledger-summary-body', 'search-ledger')" />
+
+        <div class="admin-card" style="padding: 0; overflow: hidden; border-radius: 8px;">
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="padding: 16px 20px; font-size: 11px;">RESERVATION ID</th>
+                  <th style="padding: 16px 20px; font-size: 11px;">ROOM TYPE</th>
+                  <th style="padding: 16px 20px; font-size: 11px;">ESTIMATED ROOM CHARGE</th>
+                  <th style="padding: 16px 20px; font-size: 11px;">REQUIRED DEPOSIT</th>
+                  <th style="padding: 16px 20px; font-size: 11px;">DEPOSIT PAID</th>
+                  <th style="padding: 16px 20px; font-size: 11px;">SAME-DAY REBOOK CHARGE</th>
+                  <th style="padding: 16px 20px; font-size: 11px;">DEPOSIT PAYMENT STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="table-ledger-summary-body">
+                <tr data-search="ext-2026-00482 deluxe a verified">
+                  <td style="padding: 18px 20px;"><strong>EXT-2026-00482</strong></td>
+                  <td style="padding: 18px 20px; color: #555555;">Deluxe A</td>
+                  <td style="padding: 18px 20px; font-weight: 600;">₱6,600.00</td>
+                  <td style="padding: 18px 20px; color: #555555;">₱1,000.00</td>
+                  <td style="padding: 18px 20px; color: #0E7A36; font-weight: 700;">₱1,000.00</td>
+                  <td style="padding: 18px 20px; color: #555555;">₱0.00</td>
+                  <td style="padding: 18px 20px;"><span class="badge-status badge-verified">VERIFIED</span></td>
+                </tr>
+                <tr data-search="ext-2026-00109 junior suite c verified">
+                  <td style="padding: 18px 20px;"><strong>EXT-2026-00109</strong></td>
+                  <td style="padding: 18px 20px; color: #555555;">Junior Suite C</td>
+                  <td style="padding: 18px 20px; font-weight: 600;">₱7,600.00</td>
+                  <td style="padding: 18px 20px; color: #555555;">₱1,000.00</td>
+                  <td style="padding: 18px 20px; color: #0E7A36; font-weight: 700;">₱1,000.00</td>
+                  <td style="padding: 18px 20px; color: #555555;">₱0.00</td>
+                  <td style="padding: 18px 20px;"><span class="badge-status badge-verified">VERIFIED</span></td>
+                </tr>
+                <tr data-search="ext-2026-00312 deluxe b pending verification">
+                  <td style="padding: 18px 20px;"><strong>EXT-2026-00312</strong></td>
+                  <td style="padding: 18px 20px; color: #555555;">Deluxe B</td>
+                  <td style="padding: 18px 20px; font-weight: 600;">₱7,000.00</td>
+                  <td style="padding: 18px 20px; color: #555555;">₱1,000.00</td>
+                  <td style="padding: 18px 20px; color: #B48934; font-weight: 700;">₱1,000.00</td>
+                  <td style="padding: 18px 20px; color: #B48934; font-weight: 600;">₱500.00</td>
+                  <td style="padding: 18px 20px;"><span class="badge-status badge-pending">PENDING VERIFICATION</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- MODAL: VERIFY GCASH PAYMENT & APPROVE/REJECT RESERVATION -->
+  <div id="modal-verify-gcash" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h2 class="card-title-text" style="margin-bottom:6px;">Reservation & Payment Verification</h2>
+      <p style="font-size:13px; color:#687680; margin-bottom:20px;">Review Guest Info, Estimated Room Charge, and GCash Verification for Reservation <strong id="v-modal-ref">EXT-2026-00482</strong>.</p>
+
+      <div class="verification-grid">
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:#687680; font-weight:700;">Uploaded Payment Screenshot</div>
+          <div class="receipt-modal-preview">
+            <span>[ GCash Payment Receipt Screenshot ]<br><small style="color:#888;">Ref: 1002938475102</small></span>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:15px; background:#fafafa; padding:15px; border-radius:4px; border:1px solid #eeeeee;">
+            <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#687680;">Guest Name:</span><strong id="v-modal-guest">Abordo, Jana Sayrielle G.</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#687680;">Selected Room:</span><strong id="v-modal-room">Deluxe A</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#687680;">Stay Dates:</span><span id="v-modal-dates">Dec 18 - Dec 20, 2026</span></div>
+            <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#687680;">Room Rate:</span><span id="v-modal-rate">₱3,300.00 / night</span></div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; border-top:1px dashed #ddd; padding-top:6px;"><span style="color:#687680;">Est. Room Charge:</span><strong id="v-modal-est-charge" style="color:#092741;">₱6,600.00</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; border-top:1px dashed #ddd; padding-top:6px;"><span style="color:#687680;">Deposit Required:</span><strong id="v-modal-amount" style="color:#B48934;">₱1,000.00</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#687680;">GCash Ref No:</span><code id="v-modal-gcash-ref">1002938475102</code></div>
+          </div>
+
+          <!-- ASSIGN ROOM NUMBER DROPDOWN FOR APPROVAL -->
+          <div class="c-field">
+            <label for="input-room-number">ASSIGN ROOM NUMBER</label>
+            <select id="input-room-number">
+              <option value="Room 101">Room 101 - Deluxe A (Available)</option>
+              <option value="Room 102">Room 102 - Deluxe B with Balcony (Available)</option>
+              <option value="Room 204">Room 204 - Junior Suite C with Balcony (Available)</option>
+            </select>
+          </div>
+
+          <!-- REJECTION REASON INPUT FOR REJECTION -->
+          <div class="c-field" id="rejection-reason-container">
+            <label for="input-reject-reason">REJECTION REASON (IF REJECTING)</label>
+            <input type="text" id="input-reject-reason" placeholder="e.g. Invalid GCash reference number or insufficient amount">
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top: 10px;">
+            <button class="btn-action-primary" style="width:100%; padding:12px;" onclick="approveReservation()">APPROVE RESERVATION & CONFIRM</button>
+            <button class="btn-action-danger" style="width:100%; padding:10px;" onclick="rejectReservation()">REJECT RESERVATION</button>
+            <button class="btn-action-outline" style="width:100%; padding:8px; font-size:10px;" onclick="closeModal('modal-verify-gcash')">CANCEL</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: REBOOKING REQUEST PROCESSING -->
+  <div id="modal-rebook-processing" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h2 class="card-title-text" style="margin-bottom:6px;">Process Rebooking Request</h2>
+      <p style="font-size:13px; color:#687680; margin-bottom:15px;">Review details for Reservation <strong id="rb-proc-ref">EXT-2026-00482</strong></p>
+      
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; background:#f8fafc; padding:15px; border-radius:4px; margin-bottom:15px; border:1px solid #e2e8f0; font-size:12px;">
+        <div>
+          <span style="color:#687680; font-weight:700;">ORIGINAL RESERVATION</span><br>
+          Guest: <strong id="rb-proc-guest">Abordo, Jana</strong><br>
+          Room: <span id="rb-proc-orig-room">Room 101</span><br>
+          Dates: <span id="rb-proc-orig-dates">Dec 18–20, 2026</span>
+        </div>
+        <div>
+          <span style="color:#687680; font-weight:700;">REQUESTED CHANGES</span><br>
+          Requested Dates: <strong id="rb-proc-new-dates">Dec 22–24, 2026</strong><br>
+          Guests: <span id="rb-proc-guests">2</span><br>
+          Availability Status: <strong style="color:#0E7A36;">ROOM AVAILABLE</strong>
+        </div>
+      </div>
+
+      <div class="c-field">
+        <label>SAME-DAY REBOOKING CHARGE (ENTER 0 IF NO CHARGE REQUIRED)</label>
+        <input type="number" id="rb-charge-input" value="500.00" placeholder="0.00">
+      </div>
+      <div class="c-field">
+        <label>CHARGE DESCRIPTION</label>
+        <input type="text" id="rb-desc-input" value="Same-Day Rebooking Policy Fee" placeholder="Description of fee">
+      </div>
+
+      <div style="background:#fafafa; padding:12px; border-radius:4px; border:1px solid #eee; margin-bottom:15px; font-size:12px;">
+        <div style="display:flex; justify-content:space-between;">
+          <span>Submitted GCash Ref: <code id="rb-proc-ref-no">2009182736451</code></span>
+          <button class="btn-action-outline" style="padding:2px 8px; font-size:10px;" onclick="alert('GCash transaction verified with official hotel account history.')">VERIFY GCASH HISTORY</button>
+        </div>
+      </div>
+
+      <div class="c-field">
+        <label for="rb-decline-reason">REJECTION REASON (IF DECLINING REQUEST)</label>
+        <input type="text" id="rb-decline-reason" placeholder="e.g. Requested dates unavailable">
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:15px;">
+        <button class="btn-action-danger" onclick="declineRebooking()">DECLINE REBOOKING</button>
+        <button class="btn-action-primary" onclick="approveRebooking()">APPROVE REBOOKING</button>
+        <button class="btn-action-outline" onclick="closeModal('modal-rebook-processing')">CLOSE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-bottom">
+      © 2026 EXTREMELI SUITES · FRONT-DESK OPERATIONS MODULE.
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    function showSection(sectionId, navId) {
+      const sections = ['view-dashboard', 'view-verify-payments', 'view-monitor-reservations', 'view-room-availability', 'view-cancellations', 'view-rebooking', 'view-payments-recording'];
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.classList.add('hidden');
+      });
+
+      const navItems = ['nav-dashboard', 'nav-verify', 'nav-monitor', 'nav-availability', 'nav-cancellations', 'nav-rebooking', 'nav-payments'];
+      navItems.forEach(id => {
+        const elem = document.getElementById(id);
+        if(elem) elem.classList.remove('active');
+      });
+
+      const targetSec = document.getElementById(sectionId);
+      if(targetSec) targetSec.classList.remove('hidden');
+      
+      if(navId && document.getElementById(navId)) {
+        document.getElementById(navId).classList.add('active');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function closeModal(modalId) { 
+      document.getElementById(modalId).classList.add('hidden'); 
+    }
+
+    function filterTable(tbodyId, searchInputId, selectFilterId) {
+      const query = document.getElementById(searchInputId).value.toLowerCase();
+      const statusFilter = selectFilterId ? document.getElementById(selectFilterId).value.toLowerCase() : "";
+      const tbody = document.getElementById(tbodyId);
+      const rows = tbody.getElementsByTagName('tr');
+
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const searchData = row.getAttribute('data-search') || row.innerText.toLowerCase();
+        if (searchData.includes(query) && (statusFilter === "" || searchData.includes(statusFilter))) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      }
+    }
+
+    function openVerifyModal(refNo, guestName, roomType, stayDates, roomRate, estCharge, depositAmt, gcashRef) {
+      document.getElementById('v-modal-ref').innerText = refNo;
+      document.getElementById('v-modal-guest').innerText = guestName;
+      document.getElementById('v-modal-room').innerText = roomType;
+      document.getElementById('v-modal-dates').innerText = stayDates;
+      document.getElementById('v-modal-rate').innerText = roomRate;
+      document.getElementById('v-modal-est-charge').innerText = estCharge;
+      document.getElementById('v-modal-amount').innerText = depositAmt;
+      document.getElementById('v-modal-gcash-ref').innerText = gcashRef;
+      document.getElementById('modal-verify-gcash').classList.remove('hidden');
+    }
+
+    function approveReservation() {
+      const assignedRoom = document.getElementById('input-room-number').value;
+      closeModal('modal-verify-gcash');
+      document.getElementById('stat-count-pending').innerText = '0';
+      
+      const badge = document.getElementById('table-badge-482');
+      if(badge) {
+        badge.className = "badge-status badge-confirmed";
+        badge.innerText = "CONFIRMED";
+      }
+
+      const monBadge = document.getElementById('status-badge-482');
+      if(monBadge) {
+        monBadge.className = "badge-status badge-confirmed";
+        monBadge.innerText = "CONFIRMED";
+      }
+
+      alert(`Payment verified! Assigned room '${assignedRoom}' successfully. Reservation status set to 'Confirmed' and confirmation email sent to guest.`);
+    }
+
+    function rejectReservation() {
+      const reason = document.getElementById('input-reject-reason').value;
+      if (!reason.trim()) {
+        alert("Mangyaring maglagay ng dahilan para sa pag-reject ng reservation.");
+        return;
+      }
+      closeModal('modal-verify-gcash');
+      document.getElementById('stat-count-pending').innerText = '0';
+      
+      const badge = document.getElementById('table-badge-482');
+      if(badge) {
+        badge.className = "badge-status badge-rejected";
+        badge.innerText = "REJECTED";
+      }
+
+      alert(`Reservation status set to 'Rejected'. Rejection reason: "${reason}" sent to guest via email.`);
+    }
+
+    function updateResStatus(refNo, roomNo, newStatus) {
+      const monBadge = document.getElementById('status-badge-482');
+      if(monBadge) {
+        monBadge.innerText = newStatus.toUpperCase();
+        if(newStatus === 'Checked-In') monBadge.className = "badge-status badge-checked-in";
+        else if(newStatus === 'Checked-Out') monBadge.className = "badge-status badge-completed";
+        else if(newStatus === 'No Show') monBadge.className = "badge-status badge-noshow";
+      }
+
+      if(roomNo === 'Room 101') {
+        const roomBadge = document.getElementById('room-status-101');
+        if(roomBadge) {
+          if(newStatus === 'Checked-In') {
+            roomBadge.className = "badge-status badge-occupied";
+            roomBadge.innerText = "Occupied";
+          } else if(newStatus === 'Checked-Out') {
+            roomBadge.className = "badge-status badge-available";
+            roomBadge.innerText = "Available";
+          }
+        }
+      }
+
+      alert(`Reservation ${refNo} updated to '${newStatus}'. Updated room status reflected in Guest Portal.`);
+    }
+
+    function openRebookProcessingModal(refNo, guest, origRoom, origDates, newDates, guests, charge, desc, gcashRef) {
+      document.getElementById('rb-proc-ref').innerText = refNo;
+      document.getElementById('rb-proc-guest').innerText = guest;
+      document.getElementById('rb-proc-orig-room').innerText = origRoom;
+      document.getElementById('rb-proc-orig-dates').innerText = origDates;
+      document.getElementById('rb-proc-new-dates').innerText = newDates;
+      document.getElementById('rb-proc-guests').innerText = guests;
+      document.getElementById('rb-charge-input').value = charge;
+      document.getElementById('rb-desc-input').value = desc;
+      document.getElementById('rb-proc-ref-no').innerText = gcashRef;
+      document.getElementById('modal-rebook-processing').classList.remove('hidden');
+    }
+
+    function approveRebooking() {
+      const chargeAmt = parseFloat(document.getElementById('rb-charge-input').value) || 0;
+      const desc = document.getElementById('rb-desc-input').value;
+
+      closeModal('modal-rebook-processing');
+      document.getElementById('stat-count-rebook').innerText = '0';
+
+      document.getElementById('rebook-req-status').className = "badge-status badge-confirmed";
+      document.getElementById('rebook-req-status').innerText = "APPROVED";
+
+      document.getElementById('rebook-pay-status').className = "badge-status badge-verified";
+      document.getElementById('rebook-pay-status').innerText = "Verified";
+
+      document.getElementById('rebook-charge-display').innerText = "₱" + chargeAmt.toFixed(2);
+      document.getElementById('rebook-desc-display').innerText = desc || (chargeAmt === 0 ? "No Charge Required" : "Additional Charge");
+
+      alert("Rebooking approved! Reservation details updated, request status set to 'Approved', and email notification sent to guest.");
+    }
+
+    function declineRebooking() {
+      const reason = document.getElementById('rb-decline-reason').value;
+      if(!reason.trim()) {
+        alert("Mangyaring maglagay ng dahilan para sa pag-decline ng rebooking.");
+        return;
+      }
+      closeModal('modal-rebook-processing');
+      document.getElementById('stat-count-rebook').innerText = '0';
+
+      document.getElementById('rebook-req-status').className = "badge-status badge-rejected";
+      document.getElementById('rebook-req-status').innerText = "REJECTED";
+
+      alert(`Rebooking declined. Reason: "${reason}". Original reservation details preserved and email notification sent to guest.`);
+    }
+
+    // CALENDAR LOGIC
+    let currentMonth = 8;
+    let currentYear = 2026;
+    let selectedDay = 23;
+
+    const calendarBookings = {
+      "2026-09-09": { status: "booked", room: "Room 101", guest: "Mark Santos", dates: "2026-09-09 -> 2026-09-12" },
+      "2026-09-23": { status: "booked", room: "Room 101", guest: "Jana Abordo", dates: "2026-09-22 -> 2026-09-23" }
+    };
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    function changeMonth(delta) {
+      currentMonth += delta;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      else if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      document.getElementById('cal-month-year').innerText = `${monthNames[currentMonth]} ${currentYear}`;
+      const datesGrid = document.getElementById('cal-dates-grid');
+      datesGrid.innerHTML = '';
+
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      let startingIndex = firstDay === 0 ? 6 : firstDay - 1;
+      const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+      for (let i = 0; i < startingIndex; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'cal-day-cell empty';
+        datesGrid.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= totalDays; day++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day-cell';
+        cell.innerText = day;
+
+        const dateKey = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const booking = calendarBookings[dateKey];
+
+        if (booking) cell.classList.add(booking.status);
+        if (day === selectedDay) cell.classList.add('selected');
+
+        cell.onclick = () => selectDate(day, dateKey);
+        datesGrid.appendChild(cell);
+      }
+    }
+
+    function selectDate(day, dateKey) {
+      selectedDay = day;
+      renderCalendar();
+
+      const dateObj = new Date(currentYear, currentMonth, day);
+      document.getElementById('selected-date-display').innerText = `${dayNames[dateObj.getDay()]}, ${monthNames[currentMonth]} ${day}, ${currentYear}`;
+      document.getElementById('avail-heading').innerText = `Room Status Overview (${monthNames[currentMonth].substring(0,3)} ${day})`;
+
+      const booking = calendarBookings[dateKey];
+      const resContainer = document.getElementById('res-list-container');
+
+      if (booking) {
+        document.getElementById('selected-res-count').innerText = "1 reservation(s) on this date";
+        document.getElementById('selected-date-badge').innerText = "1 Active Booking";
+        resContainer.innerHTML = `
+          <div class="res-item-card">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div class="res-avatar">${booking.guest.charAt(0)}</div>
+              <div>
+                <strong style="font-size:14px; color:#092741;">${booking.room}</strong>
+                <div style="font-size:12px; color:#687680;">${booking.dates} · Guest: <strong>${booking.guest}</strong></div>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <span class="badge-status badge-confirmed">Confirmed</span>
+              <button class="btn-action-outline" style="padding:4px 12px; font-size:11px;" onclick="showSection('view-monitor-reservations', 'nav-monitor')">View</button>
+            </div>
+          </div>
+        `;
+      } else {
+        document.getElementById('selected-res-count').innerText = "0 reservation(s) on this date";
+        document.getElementById('selected-date-badge').innerText = "All Rooms Available";
+        resContainer.innerHTML = `<div style="padding:15px; background:#f8fafc; border:1px dashed #cbd5e1; border-radius:8px; font-size:13px; color:#687680; text-align:center;">No direct reservations recorded for this date.</div>`;
+      }
+    }
+
+    window.onload = function() {
+      renderCalendar();
+      selectDate(23, "2026-09-23");
+    };
+  </script>
+
+</body>
+</html>

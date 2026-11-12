@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrative Portal - Extremeli Suites</title>
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/jpeg" href="images/logo.JPG">
+  
+  <!-- Google Fonts: Cormorant Garamond for Headings & Manrope for Body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* PREVENT SCROLLBAR SHIFT / LAYOUT JUMP */
+    html {
+      scrollbar-gutter: stable;
+      overflow-y: scroll;
+    }
+
+    /* RESET & BASE STYLES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      color: #111111;
+      background-color: #f8f9fa;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, .portal-greeting, .stat-value, .room-title, .page-title, .room-card-title, .step-title, .summary-room-title {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* TOP ANNOUNCEMENT BAR */
+    .top-bar {
+      background-color: #092741;
+      color: #ffffff;
+      text-align: center;
+      padding: 12px 20px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      width: 100%;
+    }
+
+    /* NAVIGATION BAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e5e5;
+      width: 100%;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .logo-img {
+      height: 55px; 
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .user-nav-profile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #092741;
+      cursor: pointer;
+    }
+
+    .user-nav-profile svg {
+      width: 16px;
+      height: 16px;
+      fill: #092741;
+    }
+
+    /* PORTAL CONTAINER */
+    .portal-wrapper {
+      max-width: 1380px;
+      width: 100%;
+      margin: 30px auto 60px;
+      padding: 0 30px;
+      display: flex;
+      gap: 30px;
+      flex: 1;
+      align-items: flex-start;
+    }
+
+    /* SIDEBAR - FIXED SIZE & STICKY POSITION */
+    .portal-sidebar {
+      width: 270px;
+      min-width: 270px;
+      max-width: 270px;
+      background-color: #092741;
+      color: #ffffff;
+      padding: 35px 25px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 6px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 30px;
+      align-self: flex-start;
+    }
+
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 35px;
+    }
+
+    .avatar-circle {
+      width: 60px;
+      height: 60px;
+      background-color: #D2AA55;
+      color: #092741;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .profile-name {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .profile-role {
+      font-size: 11px;
+      color: #a0b2c6;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .sidebar-menu li a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #cbd7e4;
+      font-weight: 500;
+      border-radius: 4px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .sidebar-menu li a svg {
+      width: 18px;
+      height: 18px;
+      fill: #cbd7e4;
+      transition: fill 0.3s;
+    }
+
+    .sidebar-menu li a:hover,
+    .sidebar-menu li.active a {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .sidebar-menu li.active a svg,
+    .sidebar-menu li a:hover svg {
+      fill: #D2AA55;
+    }
+
+    .logout-link {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logout-link a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #cbd7e4;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .logout-link a:hover {
+      color: #ff6b6b;
+    }
+
+    /* MAIN CONTENT WRAPPER */
+    .portal-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      min-width: 0;
+      width: calc(100% - 300px);
+    }
+
+    .portal-section {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .portal-section.hidden {
+      display: none !important;
+    }
+
+    .subtab-content.hidden {
+      display: none !important;
+    }
+
+    /* GREETING BAR */
+    .portal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 5px;
+    }
+
+    .portal-subtag {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #B48934;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .portal-greeting {
+      font-size: 38px;
+      font-weight: 500;
+      color: #092741;
+      line-height: 1.1;
+    }
+
+    .portal-subtitle {
+      font-size: 14px;
+      color: #687680;
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    /* STATS ROW */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: #ffffff;
+      padding: 20px 22px;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #687680;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 30px;
+      font-weight: 500;
+      color: #092741;
+      line-height: 1.2;
+    }
+
+    .stat-subtext {
+      font-size: 11px;
+      color: #888888;
+      margin-top: 4px;
+    }
+
+    /* STATUS BADGES */
+    .badge-status {
+      padding: 5px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+    }
+
+    .badge-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .badge-available, .badge-active, .badge-confirmed, .badge-completed, .badge-paid {
+      background-color: #E7F6EC;
+      color: #0E7A36;
+      border: 1px solid #B7E4C7;
+    }
+    .badge-available::before, .badge-active::before, .badge-confirmed::before, .badge-completed::before, .badge-paid::before { background-color: #0E7A36; }
+
+    .badge-maintenance, .badge-deactivated, .badge-cancelled, .badge-rejected {
+      background-color: #FDF2F2;
+      color: #9B1C1C;
+      border: 1px solid #F8B4B4;
+    }
+    .badge-maintenance::before, .badge-deactivated::before, .badge-cancelled::before, .badge-rejected::before { background-color: #9B1C1C; }
+
+    .badge-pending {
+      background-color: #FFF6E5;
+      color: #B48934;
+      border: 1px solid #F3DBA7;
+    }
+    .badge-pending::before { background-color: #B48934; }
+
+    /* TABLES & CARDS */
+    .admin-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      padding: 25px 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      width: 100%;
+    }
+
+    .card-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f0f0;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .card-title-text {
+      font-size: 24px;
+      font-weight: 500;
+      color: #092741;
+    }
+
+    /* TABLE CONTAINER WITH VISIBLE SCROLLBAR */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .table-container::-webkit-scrollbar {
+      height: 8px;
+      display: block;
+    }
+
+    .table-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb:hover {
+      background: #092741;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      white-space: nowrap;
+    }
+
+    .admin-table th {
+      text-align: left;
+      padding: 12px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #687680;
+      background-color: #fafafa;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .admin-table td {
+      padding: 14px;
+      font-size: 13px;
+      color: #111111;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td {
+      background-color: #fdfdfd;
+    }
+
+    /* BUTTONS */
+    .btn-action-primary {
+      background-color: #D2AA55;
+      color: #092741;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 9px 18px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .btn-action-primary:hover { background-color: #B48934; }
+
+    .btn-action-outline {
+      background: transparent;
+      border: 1px solid #092741;
+      color: #092741;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .btn-action-outline:hover {
+      background-color: #092741;
+      color: #ffffff;
+    }
+
+    .btn-action-danger {
+      background: transparent;
+      border: 1px solid #9B1C1C;
+      color: #9B1C1C;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 4px;
+    }
+    .btn-action-danger:hover {
+      background-color: #9B1C1C;
+      color: #ffffff;
+    }
+
+    /* MODAL OVERLAY */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(9, 39, 65, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-overlay.hidden { display: none !important; }
+
+    .modal-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 650px;
+      padding: 35px;
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .c-field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+    }
+    .c-field label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #092741;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .c-field input, .c-field select, .c-field textarea {
+      padding: 12px 14px;
+      border: 1px solid #dcdcdc;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      color: #111111;
+      outline: none;
+      background: #ffffff;
+      border-radius: 4px;
+    }
+
+    /* FILTER & SEARCH TOOLBAR ROW */
+    .filter-toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-toolbar input {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 14px;
+      border: 1px solid #dcdcdc;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      outline: none;
+      background: #ffffff;
+      border-radius: 4px;
+    }
+    .filter-toolbar select {
+      width: 220px;
+      padding: 10px 14px;
+      border: 1px solid #dcdcdc;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      outline: none;
+      background: #ffffff;
+      color: #092741;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+
+    /* DATE RANGE FILTER TOOLBAR FOR REPORTS */
+    .reports-date-filter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      background: #f4f6f8;
+      padding: 12px 16px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+    }
+    .reports-date-filter label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #092741;
+    }
+    .reports-date-filter input[type="date"] {
+      padding: 6px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      color: #092741;
+      outline: none;
+    }
+
+    /* TABBED BAR */
+    .tab-bar {
+      display: flex;
+      gap: 20px;
+      border-bottom: 2px solid #e5e5e5;
+      margin-bottom: 25px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .tab-bar::-webkit-scrollbar {
+      height: 4px;
+    }
+    .tab-bar::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 2px;
+    }
+
+    .tab-btn {
+      padding: 10px 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #687680;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      color: #B48934;
+      border-bottom-color: #B48934;
+    }
+
+    /* CATALOG ROOM IMAGES */
+    .room-thumb-catalog {
+      width: 70px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* DASHBOARD CALENDAR VIEW STYLES */
+    .dash-calendar-container {
+      display: flex;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .dash-cal-sidebar {
+      width: 320px;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 20px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .dash-cal-main {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      min-width: 0;
+    }
+
+    /* Mini Calendar Grid */
+    .cal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .cal-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #092741;
+    }
+    .cal-nav-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: #687680;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .cal-nav-btn:hover { background-color: #f0f4f8; }
+
+    .cal-days-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #8898a5;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .cal-dates-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      text-align: center;
+    }
+
+    .cal-day-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+      color: #334155;
+    }
+
+    .cal-day-cell.hover:not(.empty) {
+      background-color: #f1f5f9;
+    }
+
+    .cal-day-cell.booked {
+      background-color: #e0f2fe;
+      color: #0369a1;
+    }
+    .cal-day-cell.selected {
+      background-color: #092741 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(9, 39, 65, 0.3);
+    }
+    .cal-day-cell.empty {
+      cursor: default;
+    }
+
+    .cal-legend {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #f1f5f9;
+      font-size: 11px;
+      color: #64748b;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .selected-date-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .selected-date-title {
+      font-size: 26px;
+      font-weight: 600;
+      color: #092741;
+    }
+    .selected-count-badge {
+      background-color: #e2e8f0;
+      color: #334155;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .res-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .res-item-card {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .res-avatar {
+      width: 38px;
+      height: 38px;
+      background-color: #38bdf8;
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .room-avail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 15px;
+    }
+
+    .room-avail-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .room-avail-img {
+      width: 80px;
+      height: 55px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+    }
+
+    .room-avail-badge-booked {
+      background-color: #ffe4e6;
+      color: #9f1239;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+    .room-avail-badge-free {
+      background-color: #dcfce7;
+      color: #15803d;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .footer {
+      background-color: #061b2e;
+      color: #ffffff;
+      padding: 35px 5% 20px;
+      font-size: 13px;
+      margin-top: auto;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      color: #aaaaaa;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    @media (max-width: 1100px) {
+      .portal-wrapper {
+        flex-direction: column;
+        padding: 0 20px;
+      }
+      .portal-sidebar {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        position: relative;
+        top: 0;
+      }
+      .portal-main {
+        width: 100%;
+      }
+      .dash-calendar-container {
+        flex-direction: column;
+      }
+      .dash-cal-sidebar {
+        width: 100%;
+      }
+      .room-avail-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="top-bar">
+    EXTREMELI SUITES · ADMINISTRATIVE PORTAL
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <a href="admin-portal.html">
+        <img src="images/logo.JPG" alt="Extremeli Suites Logo" class="logo-img">
+      </a>
+    </div>
+
+    <div class="user-nav-profile">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      <span>ADMIN</span>
+    </div>
+  </nav>
+
+  <!-- MAIN PORTAL WRAPPER -->
+  <div class="portal-wrapper">
+    
+    <!-- SIDEBAR -->
+    <aside class="portal-sidebar">
+      <div class="profile-header">
+        <div class="avatar-circle">GM</div>
+        <div class="profile-name">General Manager</div>
+        <div class="profile-role">Executive Admin Access</div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li id="nav-dashboard" class="active">
+          <a onclick="showSection('view-dashboard', 'nav-dashboard')">
+            <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            Dashboard Overview
+          </a>
+        </li>
+        <li id="nav-inventory">
+          <a onclick="showSection('view-room-inventory', 'nav-inventory')">
+            <svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+            Room & Website Content
+          </a>
+        </li>
+        <li id="nav-status">
+          <a onclick="showSection('view-room-status', 'nav-status')">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/></svg>
+            Room Availability & Status
+          </a>
+        </li>
+        <li id="nav-accounts">
+          <a onclick="showSection('view-user-accounts', 'nav-accounts')">
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            User Account & Access
+          </a>
+        </li>
+        <li id="nav-reports">
+          <a onclick="showSection('view-reports', 'nav-reports')">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            Reports & Analytics
+          </a>
+        </li>
+        <li id="nav-audit">
+          <a onclick="showSection('view-audit-logs', 'nav-audit')">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+            System & Security Logs
+          </a>
+        </li>
+      </ul>
+
+      <div class="logout-link">
+        <a href="admin login.html">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+          Log out
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="portal-main">
+      
+      <!-- DASHBOARD OVERVIEW -->
+      <div id="view-dashboard" class="portal-section">
+        <div class="portal-header">
+          <div>
+            <div class="portal-subtag">Administrative Executive Summary</div>
+            <h1 class="portal-greeting">Admin Dashboard</h1>
+            <p class="portal-subtitle">Live system preview across room inventory, availability, user accounts, governance logs, and analytics.</p>
+          </div>
+        </div>
+
+        <!-- STATS ROW -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">TOTAL ROOM UNITS</div>
+            <div class="stat-value">12</div>
+            <div class="stat-subtext">Direct booking catalog</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">AVAILABLE FOR BOOKING</div>
+            <div class="stat-value" id="stat-avail-count">10</div>
+            <div class="stat-subtext">Active online inventory</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">OUT OF SERVICE</div>
+            <div class="stat-value" id="stat-hold-count">2</div>
+            <div class="stat-subtext">Maintenance / Operational Hold</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">STAFF ACCOUNTS</div>
+            <div class="stat-value">4</div>
+            <div class="stat-subtext">Active FOA Users</div>
+          </div>
+        </div>
+
+        <!-- CALENDAR INTERACTIVE VIEW -->
+        <div class="dash-calendar-container">
+          
+          <div class="dash-cal-sidebar">
+            <div class="c-field" style="margin-bottom: 20px;">
+              <label style="font-size: 11px; color: #64748b;">Filter by Room</label>
+              <select id="cal-room-filter" onchange="renderCalendar()">
+                <option value="all">All Rooms</option>
+                <option value="101">Room 101 (Deluxe A)</option>
+                <option value="102">Room 102 (Deluxe B)</option>
+                <option value="204">Room 204 (Junior Suite C)</option>
+              </select>
+            </div>
+
+            <!-- MINI CALENDAR -->
+            <div class="cal-header">
+              <button class="cal-nav-btn" onclick="changeMonth(-1)">«</button>
+              <div class="cal-title" id="cal-month-year">September 2026</div>
+              <button class="cal-nav-btn" onclick="changeMonth(1)">»</button>
+            </div>
+
+            <div class="cal-days-header">
+              <div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div>
+            </div>
+
+            <div class="cal-dates-grid" id="cal-dates-grid"></div>
+
+            <div class="cal-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:#e0f2fe;"></div> Booked</div>
+            </div>
+          </div>
+
+          <div class="dash-cal-main">
+            <div class="selected-date-header">
+              <div>
+                <h2 class="selected-date-title" id="selected-date-display">Wednesday, September 23, 2026</h2>
+                <span style="font-size: 12px; color: #64748b;" id="selected-res-count">1 reservation(s) on this date</span>
+              </div>
+              <div class="selected-count-badge" id="selected-date-badge">1 Active Booking</div>
+            </div>
+
+            <div class="res-card-list" id="res-list-container">
+              <div class="res-item-card">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <div class="res-avatar">R</div>
+                  <div>
+                    <strong style="font-size:14px; color:#092741;">Room 101 - Deluxe A</strong>
+                    <div style="font-size:12px; color:#64748b;">2026-09-22 → 2026-09-23 · Reserved by: <strong>Jana Abordo</strong></div>
+                  </div>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <span class="badge-status badge-completed">Paid</span>
+                  <button class="btn-action-outline" style="padding:4px 12px; font-size:11px;">View</button>
+                </div>
+              </div>
+            </div>
+
+            <h3 style="font-size: 18px; font-weight:600; color:#092741; margin-bottom: 12px;" id="avail-heading">Room Availability on Sep 23</h3>
+            
+            <div class="room-avail-grid">
+              <div class="room-avail-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <img src="images/deluxeA.JPG" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Deluxe+A'" class="room-avail-img" alt="Deluxe A Photo">
+                  <div>
+                    <strong style="font-size:13px; color:#092741;">Room 101</strong>
+                    <div style="font-size:11px; color:#687680;">Deluxe A</div>
+                  </div>
+                </div>
+                <span class="room-avail-badge-booked">Booked</span>
+              </div>
+
+              <div class="room-avail-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <img src="images/deluxeB.JPG" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Deluxe+B'" class="room-avail-img" alt="Deluxe B Photo">
+                  <div>
+                    <strong style="font-size:13px; color:#092741;">Room 102</strong>
+                    <div style="font-size:11px; color:#687680;">Deluxe B with Balcony</div>
+                  </div>
+                </div>
+                <span class="room-avail-badge-free">Available</span>
+              </div>
+
+              <div class="room-avail-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <img src="images/junior.JPG" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Junior+Suite'" class="room-avail-img" alt="Junior Suite Photo">
+                  <div>
+                    <strong style="font-size:13px; color:#092741;">Room 204</strong>
+                    <div style="font-size:11px; color:#687680;">Junior Suite C with Balcony</div>
+                  </div>
+                </div>
+                <span class="room-avail-badge-free">Available</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ROOM & FACILITY MANAGEMENT -->
+      <div id="view-room-inventory" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">Room & Facility Information Management</div>
+          <h1 class="portal-greeting">Room & Facility Catalog Management</h1>
+          <p class="portal-subtitle">Add, view, update, and deactivate room types, room units, and informational hotel facilities/services displayed on the hotel website.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="tab-bar">
+            <button class="tab-btn active" id="btn-subtab-room-types" onclick="switchContentTab('room-types')">Room Type Management</button>
+            <button class="tab-btn" id="btn-subtab-rooms" onclick="switchContentTab('rooms')">Room Unit Management</button>
+            <button class="tab-btn" id="btn-subtab-facilities" onclick="switchContentTab('facilities')">Facility & Service Management</button>
+          </div>
+
+          <!-- ROOM TYPE MANAGEMENT SUBTAB -->
+          <div id="subtab-room-types" class="subtab-content">
+            <div class="card-title-bar">
+              <h2 class="card-title-text" style="font-size:20px;">Room Types Directory</h2>
+              <button class="btn-action-primary" onclick="openRoomTypeModal('add')">+ ADD NEW ROOM TYPE</button>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-room-types" placeholder="Search by Room Type Name, Description..." onkeyup="filterTable('table-room-types-body', 'search-room-types', 'filter-room-types-status')" />
+              <select id="filter-room-types-status" onchange="filterTable('table-room-types-body', 'search-room-types', 'filter-room-types-status')">
+                <option value="">All Statuses</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>PICTURE / IMAGE</th>
+                    <th>ROOM TYPE NAME</th>
+                    <th>NIGHTLY RATE (₱)</th>
+                    <th>MAX GUEST CAPACITY</th>
+                    <th>DESCRIPTION</th>
+                    <th>STATUS</th>
+                    <th style="text-align: right;">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="table-room-types-body">
+                  <tr data-search="deluxe a 3300 2 guests active">
+                    <td><img src="images/deluxeA.JPG" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Deluxe+A'" class="room-thumb-catalog" alt="Deluxe A"></td>
+                    <td><strong>Deluxe A</strong><br><span style="font-size:11px; color:#888;">1 Queen Bed</span></td>
+                    <td><strong>₱3,300.00</strong></td>
+                    <td>Up to 2 Guests</td>
+                    <td><span style="font-size:11px; color:#687680;">A bright and comfortable room with a queen bed / 2 single beds, dedicated work desk. Room Only.</span></td>
+                    <td><span class="badge-status badge-active" id="rt-status-1">ACTIVE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-outline" onclick="openRoomTypeModal('edit', 'Deluxe A', '3300', '2', 'A bright and comfortable room with a queen bed / 2 single beds, dedicated work desk. Room Only.', '1 Queen Bed', 'Wi-Fi, Air Conditioning, Work Desk')">EDIT</button>
+                      <button class="btn-action-danger" onclick="toggleRoomTypeStatus('1')">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                  <tr data-search="deluxe b with balcony 3800 2 guests active">
+                    <td><img src="images/deluxeB.JPG" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Deluxe+B'" class="room-thumb-catalog" alt="Deluxe B"></td>
+                    <td><strong>Deluxe B with Balcony</strong><br><span style="font-size:11px; color:#888;">2 Single Beds</span></td>
+                    <td><strong>₱3,800.00</strong></td>
+                    <td>Up to 2 Guests</td>
+                    <td><span style="font-size:11px; color:#687680;">A welcoming twin room with generous natural light and a private balcony overlooking property. Room Only.</span></td>
+                    <td><span class="badge-status badge-active" id="rt-status-2">ACTIVE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-outline" onclick="openRoomTypeModal('edit', 'Deluxe B with Balcony', '3800', '2', 'A welcoming twin room with generous natural light and a private balcony overlooking property. Room Only.', '2 Single Beds', 'Balcony, Wi-Fi, Air Conditioning')">EDIT</button>
+                      <button class="btn-action-danger" onclick="toggleRoomTypeStatus('2')">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                  <tr data-search="junior suite c with balcony 6800 4 guests active">
+                    <td><img src="images/junior.JPG" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Junior+Suite'" class="room-thumb-catalog" alt="Junior Suite"></td>
+                    <td><strong>Junior Suite C with Balcony</strong><br><span style="font-size:11px; color:#888;">1 Queen Bed + Sofa Bed</span></td>
+                    <td><strong>₱6,800.00</strong></td>
+                    <td>Up to 4 Guests</td>
+                    <td><span style="font-size:11px; color:#687680;">Spacious guest option featuring private balcony and generous room for longer stays. Room Only.</span></td>
+                    <td><span class="badge-status badge-active" id="rt-status-3">ACTIVE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-outline" onclick="openRoomTypeModal('edit', 'Junior Suite C with Balcony', '6800', '4', 'Spacious guest option featuring private balcony and generous room for longer stays. Room Only.', '1 Queen Bed + Sofa Bed', 'Private Balcony, Mini Bar, Wi-Fi')">EDIT</button>
+                      <button class="btn-action-danger" onclick="toggleRoomTypeStatus('3')">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ROOM UNIT MANAGEMENT SUBTAB -->
+          <div id="subtab-rooms" class="subtab-content hidden">
+            <div class="card-title-bar">
+              <h2 class="card-title-text" style="font-size:20px;">Room Units Directory</h2>
+              <button class="btn-action-primary" onclick="openRoomModal('add')">+ ADD NEW ROOM UNIT</button>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-inventory" placeholder="Search by Room Unit, Type Name..." onkeyup="filterTable('table-inventory-body', 'search-inventory', 'filter-inventory-status')" />
+              <select id="filter-inventory-status" onchange="filterTable('table-inventory-body', 'search-inventory', 'filter-inventory-status')">
+                <option value="">All Statuses</option>
+                <option value="available">Available</option>
+                <option value="occupied">Occupied</option>
+                <option value="maintenance">Maintenance</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ROOM NUMBER</th>
+                    <th>ROOM TYPE</th>
+                    <th>FLOOR NUMBER</th>
+                    <th>ROOM STATUS</th>
+                    <th style="text-align: right;">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="table-inventory-body">
+                  <tr data-search="room 101 deluxe a floor 1 available">
+                    <td><strong>Room 101</strong></td>
+                    <td>Deluxe A</td>
+                    <td>Floor 1</td>
+                    <td><span class="badge-status badge-available" id="inv-status-101">AVAILABLE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-outline" onclick="openRoomModal('edit', 'Room 101', 'Deluxe A', '1', 'Available')">EDIT</button>
+                      <button class="btn-action-danger" onclick="toggleRoomCatalogStatus('101')">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                  <tr data-search="room 102 deluxe b with balcony floor 1 available">
+                    <td><strong>Room 102</strong></td>
+                    <td>Deluxe B with Balcony</td>
+                    <td>Floor 1</td>
+                    <td><span class="badge-status badge-available" id="inv-status-102">AVAILABLE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-outline" onclick="openRoomModal('edit', 'Room 102', 'Deluxe B with Balcony', '1', 'Available')">EDIT</button>
+                      <button class="btn-action-danger" onclick="toggleRoomCatalogStatus('102')">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                  <tr data-search="room 204 junior suite c with balcony floor 2 maintenance">
+                    <td><strong>Room 204</strong></td>
+                    <td>Junior Suite C with Balcony</td>
+                    <td>Floor 2</td>
+                    <td><span class="badge-status badge-maintenance" id="inv-status-204">MAINTENANCE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-outline" onclick="openRoomModal('edit', 'Room 204', 'Junior Suite C with Balcony', '2', 'Maintenance')">EDIT</button>
+                      <button class="btn-action-danger" onclick="toggleRoomCatalogStatus('204')">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- FACILITY & SERVICE MANAGEMENT SUBTAB -->
+          <div id="subtab-facilities" class="subtab-content hidden">
+            <div class="card-title-bar">
+              <div>
+                <h2 class="card-title-text" style="font-size:20px;">Facility & Service Management</h2>
+                <p class="portal-subtitle">Informational website content only. Guests cannot make online reservations for these facilities.</p>
+              </div>
+              <button class="btn-action-primary" onclick="openFacilityModal('add')">+ ADD FACILITY / SERVICE</button>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-facility" placeholder="Search Facility Name, Description..." onkeyup="filterTable('table-facility-body', 'search-facility', 'filter-facility-status')" />
+              <select id="filter-facility-status" onchange="filterTable('table-facility-body', 'search-facility', 'filter-facility-status')">
+                <option value="">All Statuses</option>
+                <option value="active">Active</option>
+                <option value="deactivated">Deactivated</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>PICTURE / IMAGE</th>
+                    <th>FACILITY NAME</th>
+                    <th>DESCRIPTION</th>
+                    <th>STATUS</th>
+                    <th style="text-align: right;">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="table-facility-body">
+                  <tr data-search="game & entertainment room billiard hall game room lounge active">
+                    <td><img src="images/game room.jpg" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Game+Room'" class="room-thumb-catalog" alt="Game & Entertainment Room"></td>
+                    <td><strong>Game & Entertainment Room</strong></td>
+                    <td><span style="font-size:11px; color:#687680;">A relaxed recreation space made for friendly matches and easygoing entertainment. Every detail has been considered to give you the freedom to enjoy your stay exactly as you wish. Available Features: Billiard hall • Game room lounge</span></td>
+                    <td><span class="badge-status badge-active" id="fac-status-3">ACTIVE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-outline" onclick="openFacilityModal('edit', 'Game & Entertainment Room', 'A relaxed recreation space made for friendly matches and easygoing entertainment. Available Features: Billiard hall • Game room lounge')">EDIT</button>
+                      <button class="btn-action-danger" onclick="toggleFacilityStatus('3')">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                  <tr data-search="gazebo pavilion sheltered outdoor pavilion surrounded by calm atmosphere active">
+                    <td><img src="images/gazebo.jfif" onerror="this.src='https://placehold.co/100x80/092741/FFFFFF?text=Gazebo'" class="room-thumb-catalog" alt="Gazebo Pavilion"></td>
+                    <td><strong>Gazebo Pavilion</strong></td>
+                    <td><span style="font-size:11px; color:#687680;">A sheltered outdoor pavilion surrounded by the calm atmosphere of the property grounds. Every detail has been considered to give you the freedom to enjoy your stay exactly as you wish.</span></td>
+                    <td><span class="badge-status badge-active" id="fac-status-4">ACTIVE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-outline" onclick="openFacilityModal('edit', 'Gazebo Pavilion', 'A sheltered outdoor pavilion surrounded by the calm atmosphere of the property grounds.')">EDIT</button>
+                      <button class="btn-action-danger" onclick="toggleFacilityStatus('4')">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ROOM AVAILABILITY & STATUS MANAGEMENT -->
+      <div id="view-room-status" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">Room Operational Status</div>
+          <h1 class="portal-greeting">Room Availability & Status Management</h1>
+          <p class="portal-subtitle">Update room availability statuses for maintenance or operational holds.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="card-title-bar">
+            <h2 class="card-title-text">Current Operational Statuses</h2>
+          </div>
+
+          <div class="filter-toolbar">
+            <input type="text" id="search-status" placeholder="Search by Room Unit or Status..." onkeyup="filterTable('table-status-body', 'search-status', 'filter-status-select')" />
+            <select id="filter-status-select" onchange="filterTable('table-status-body', 'search-status', 'filter-status-select')">
+              <option value="">All Operational Statuses</option>
+              <option value="available">Available</option>
+              <option value="out of service">Out of Service</option>
+            </select>
+          </div>
+
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ROOM UNIT</th>
+                  <th>ROOM TYPE</th>
+                  <th>CURRENT OPERATIONAL STATUS</th>
+                  <th style="text-align: right;">CHANGE OPERATIONAL STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="table-status-body">
+                <tr data-search="room 101 deluxe a available">
+                  <td><strong>Room 101</strong></td>
+                  <td>Deluxe A</td>
+                  <td><span class="badge-status badge-available" id="op-badge-101">AVAILABLE</span></td>
+                  <td style="text-align: right;">
+                    <select onchange="updateOperationalStatus('101', this.value)" style="padding:6px 10px; font-size:12px;">
+                      <option value="Available" selected>Available</option>
+                      <option value="Out of Service">Out of Service</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr data-search="room 102 deluxe b balcony available">
+                  <td><strong>Room 102</strong></td>
+                  <td>Deluxe B with Balcony</td>
+                  <td><span class="badge-status badge-available" id="op-badge-102">AVAILABLE</span></td>
+                  <td style="text-align: right;">
+                    <select onchange="updateOperationalStatus('102', this.value)" style="padding:6px 10px; font-size:12px;">
+                      <option value="Available" selected>Available</option>
+                      <option value="Out of Service">Out of Service</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr data-search="room 204 junior suite c balcony out of service">
+                  <td><strong>Room 204</strong></td>
+                  <td>Junior Suite C with Balcony</td>
+                  <td><span class="badge-status badge-maintenance" id="op-badge-204">OUT OF SERVICE</span></td>
+                  <td style="text-align: right;">
+                    <select onchange="updateOperationalStatus('204', this.value)" style="padding:6px 10px; font-size:12px;">
+                      <option value="Available">Available</option>
+                      <option value="Out of Service" selected>Out of Service</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- USER ACCOUNT & ACCESS MANAGEMENT -->
+      <div id="view-user-accounts" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">User Account & Access Management</div>
+          <h1 class="portal-greeting">User Governance & Account Management</h1>
+          <p class="portal-subtitle">Manage Front Office Staff user accounts and oversee registered Guest Profiles.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="tab-bar">
+            <button class="tab-btn active" id="btn-subtab-staff" onclick="switchUserTab('staff')">Staff Accounts</button>
+            <button class="tab-btn" id="btn-subtab-guest" onclick="switchUserTab('guest')">Guest Accounts</button>
+          </div>
+
+          <!-- STAFF ACCOUNTS SUBTAB -->
+          <div id="subtab-staff" class="subtab-content">
+            <div class="card-title-bar">
+              <h2 class="card-title-text" style="font-size:20px;">Staff Accounts Management</h2>
+              <button class="btn-action-primary" onclick="openStaffModal('add')">+ CREATE NEW STAFF ACCOUNT</button>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-staff" placeholder="Search Staff Name, Employee ID, Username, Email..." onkeyup="filterTable('table-staff-body', 'search-staff', 'filter-staff-status')" />
+              <select id="filter-staff-status" onchange="filterTable('table-staff-body', 'search-staff', 'filter-staff-status')">
+                <option value="">All Account Statuses</option>
+                <option value="active">Active</option>
+                <option value="deactivated">Deactivated</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>EMPLOYEE ID & USERNAME</th>
+                    <th>FULL NAME</th>
+                    <th>POSITION & DEPARTMENT</th>
+                    <th>CONTACT & EMAIL</th>
+                    <th>ACCOUNT STATUS</th>
+                    <th style="text-align: right;">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="table-staff-body">
+                  <tr data-search="emp-101 foa_reyes maria reyes front office associate front desk 0917-111-2233 reyes.m@extremeli.com active">
+                    <td><strong>EMP-101</strong><br><span style="font-size:11px; color:#888;">(foa_reyes)</span></td>
+                    <td>Maria Reyes</td>
+                    <td>Front Office Associate<br><span style="font-size:11px; color:#888;">Front Desk</span></td>
+                    <td>0917-111-2233<br><span style="font-size:11px; color:#888;">reyes.m@extremeli.com</span></td>
+                    <td><span class="badge-status badge-active">ACTIVE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-outline" onclick="openStaffModal('edit', 'EMP-101', 'Maria Reyes', 'reyes.m@extremeli.com')">EDIT</button>
+                      <button class="btn-action-danger">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                  <tr data-search="emp-102 foa_santos mark santos front office associate front desk 0918-222-3344 santos.m@extremeli.com active">
+                    <td><strong>EMP-102</strong><br><span style="font-size:11px; color:#888;">(foa_santos)</span></td>
+                    <td>Mark Santos</td>
+                    <td>Front Office Associate<br><span style="font-size:11px; color:#888;">Front Desk</span></td>
+                    <td>0918-222-3344<br><span style="font-size:11px; color:#888;">santos.m@extremeli.com</span></td>
+                    <td><span class="badge-status badge-active">ACTIVE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-outline" onclick="openStaffModal('edit', 'EMP-102', 'Mark Santos', 'santos.m@extremeli.com')">EDIT</button>
+                      <button class="btn-action-danger">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- GUEST ACCOUNTS SUBTAB -->
+          <div id="subtab-guest" class="subtab-content hidden">
+            <div class="card-title-bar">
+              <h2 class="card-title-text" style="font-size:20px;">Registered Guest Profiles</h2>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-guest" placeholder="Search Guest Name, Guest ID, Email, Phone, Nationality..." onkeyup="filterTable('table-guest-body', 'search-guest', 'filter-guest-status')" />
+              <select id="filter-guest-status" onchange="filterTable('table-guest-body', 'search-guest', 'filter-guest-status')">
+                <option value="">All Account Statuses</option>
+                <option value="active">Active</option>
+                <option value="deactivated">Deactivated</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>GUEST ID</th>
+                    <th>FULL NAME</th>
+                    <th>EMAIL & CONTACT</th>
+                    <th>NATIONALITY</th>
+                    <th>ACCOUNT STATUS</th>
+                    <th style="text-align: right;">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="table-guest-body">
+                  <tr data-search="gst-8801 jana abordo jana.abordo@gmail.com 0917-888-9900 filipino active">
+                    <td><strong>GST-8801</strong></td>
+                    <td>Jana Abordo</td>
+                    <td>jana.abordo@gmail.com<br><span style="font-size:11px; color:#888;">0917-888-9900</span></td>
+                    <td>Filipino</td>
+                    <td><span class="badge-status badge-active" id="guest-badge-8801">ACTIVE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-danger" onclick="toggleGuestStatus('8801')">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                  <tr data-search="gst-8802 marielle mactal marielle.m@gmail.com 0919-444-5566 filipino active">
+                    <td><strong>GST-8802</strong></td>
+                    <td>Marielle Mactal</td>
+                    <td>marielle.m@gmail.com<br><span style="font-size:11px; color:#888;">0919-444-5566</span></td>
+                    <td>Filipino</td>
+                    <td><span class="badge-status badge-active" id="guest-badge-8802">ACTIVE</span></td>
+                    <td style="text-align: right; display:flex; gap:6px; justify-content:flex-end;">
+                      <button class="btn-action-danger" onclick="toggleGuestStatus('8802')">DEACTIVATE</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- REPORTS AND ANALYTICS -->
+      <div id="view-reports" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">System Reporting & Analytics</div>
+          <h1 class="portal-greeting">Reports & Analytics</h1>
+          <p class="portal-subtitle">Generate and download system reports using reservation, room, and payment records stored in the proposed system.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="reports-date-filter">
+            <label>START DATE:</label>
+            <input type="date" id="report-start-date" value="2026-11-01">
+            <label>END DATE:</label>
+            <input type="date" id="report-end-date" value="2026-11-30">
+            <button class="btn-action-primary" style="padding:6px 14px; font-size:11px;" onclick="applyDateFilter()">APPLY FILTER</button>
+          </div>
+
+          <div class="tab-bar">
+            <button class="tab-btn active" id="btn-subtab-reservations" onclick="switchReportTab('reservations')">Reservation Reports</button>
+            <button class="tab-btn" id="btn-subtab-occupancy" onclick="switchReportTab('occupancy')">Room Availability & Occupancy</button>
+            <button class="tab-btn" id="btn-subtab-payments" onclick="switchReportTab('payments')">GCash & Rebooking Payments</button>
+            <button class="tab-btn" id="btn-subtab-cancellations" onclick="switchReportTab('cancellations')">Cancellation Reports</button>
+            <button class="tab-btn" id="btn-subtab-rebookings" onclick="switchReportTab('rebookings')">Rebooking Reports</button>
+          </div>
+
+          <!-- 1. RESERVATION REPORTS -->
+          <div id="subtab-reservations-report" class="subtab-content">
+            <div class="card-title-bar">
+              <div>
+                <h2 class="card-title-text" style="font-size:20px;">Reservation Reports</h2>
+                <p class="portal-subtitle">Displays online reservation records within the selected date range including deposit payment status.</p>
+              </div>
+              <button class="btn-action-primary" onclick="downloadCSVReport('Reservation_Report')">⤓ DOWNLOAD CSV</button>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-res-report" placeholder="Search Reservation No., Guest Name, Room..." onkeyup="filterTable('table-res-report-body', 'search-res-report', 'filter-res-status')" />
+              <select id="filter-res-status" onchange="filterTable('table-res-report-body', 'search-res-report', 'filter-res-status')">
+                <option value="">All Reservation Statuses</option>
+                <option value="pending verification">Pending Verification</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="checked-in">Checked-In</option>
+                <option value="checked-out">Checked-Out</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="rejected">Rejected</option>
+                <option value="no show">No Show</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>RESERVATION NO.</th>
+                    <th>GUEST NAME</th>
+                    <th>ROOM TYPE / UNIT</th>
+                    <th>ROOM RATE</th>
+                    <th>CHECK-IN</th>
+                    <th>CHECK-OUT</th>
+                    <th>NIGHTS</th>
+                    <th>GUESTS</th>
+                    <th>EST. ROOM CHARGE</th>
+                    <th>DEPOSIT PAYMENT STATUS</th>
+                    <th>RESERVATION STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="table-res-report-body">
+                  <tr data-search="ext-2026-00482 jana abordo room 101 deluxe a pending verification">
+                    <td><strong>EXT-2026-00482</strong></td>
+                    <td>Jana Abordo</td>
+                    <td>Room 101 (Deluxe A)</td>
+                    <td>₱3,300.00</td>
+                    <td>2026-12-18</td>
+                    <td>2026-12-20</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td><strong>₱6,600.00</strong></td>
+                    <td><span class="badge-status badge-pending">Pending Verification</span></td>
+                    <td><span class="badge-status badge-pending">Pending Verification</span></td>
+                  </tr>
+                  <tr data-search="ext-2026-00480 marielle mactal room 204 junior suite c confirmed paid">
+                    <td><strong>EXT-2026-00480</strong></td>
+                    <td>Marielle Mactal</td>
+                    <td>Room 204 (Junior Suite C)</td>
+                    <td>₱6,800.00</td>
+                    <td>2026-12-15</td>
+                    <td>2026-12-17</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td><strong>₱13,600.00</strong></td>
+                    <td><span class="badge-status badge-paid">Paid</span></td>
+                    <td><span class="badge-status badge-confirmed">Confirmed</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 2. ROOM AVAILABILITY AND OCCUPANCY REPORTS -->
+          <div id="subtab-occupancy-report" class="subtab-content hidden">
+            <div class="card-title-bar">
+              <div>
+                <h2 class="card-title-text" style="font-size:20px;">Room Availability and Occupancy Reports</h2>
+                <p class="portal-subtitle">Displays room availability and reservation info for selected dates (Available, Reserved, Occupied, Out of Service).</p>
+              </div>
+              <button class="btn-action-primary" onclick="downloadCSVReport('Room_Availability_Occupancy_Report')">⤓ DOWNLOAD CSV</button>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-occupancy-report" placeholder="Search Room Type, Status..." onkeyup="filterTable('table-occupancy-report-body', 'search-occupancy-report', 'filter-occupancy-status')" />
+              <select id="filter-occupancy-status" onchange="filterTable('table-occupancy-report-body', 'search-occupancy-report', 'filter-occupancy-status')">
+                <option value="">All Statuses</option>
+                <option value="available">Available</option>
+                <option value="reserved">Reserved</option>
+                <option value="occupied">Occupied</option>
+                <option value="out of service">Out of Service</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ROOM TYPE / UNIT</th>
+                    <th>AVAILABLE</th>
+                    <th>RESERVED</th>
+                    <th>OCCUPIED</th>
+                    <th>OUT OF SERVICE</th>
+                    <th>CURRENT STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="table-occupancy-report-body">
+                  <tr data-search="room 101 - deluxe a reserved">
+                    <td><strong>Room 101 - Deluxe A</strong></td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td><span class="badge-status badge-pending">Reserved</span></td>
+                  </tr>
+                  <tr data-search="room 102 - deluxe b with balcony available">
+                    <td><strong>Room 102 - Deluxe B with Balcony</strong></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td><span class="badge-status badge-available">Available</span></td>
+                  </tr>
+                  <tr data-search="room 204 - junior suite c with balcony out of service">
+                    <td><strong>Room 204 - Junior Suite C with Balcony</strong></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td><span class="badge-status badge-maintenance">Out of Service</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 3. GCASH DEPOSIT AND REBOOKING ADDITIONAL PAYMENT REPORTS -->
+          <div id="subtab-payments-report" class="subtab-content hidden">
+            <div class="card-title-bar">
+              <div>
+                <h2 class="card-title-text" style="font-size:20px;">GCash Deposit and Rebooking Additional Payment Reports</h2>
+                <p class="portal-subtitle">Displays GCash deposits and additional rebooking payments. Total verified, pending, and rejected submissions.</p>
+              </div>
+              <button class="btn-action-primary" onclick="downloadCSVReport('GCash_Payment_Report')">⤓ DOWNLOAD CSV</button>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-payment-report" placeholder="Search Reservation No., Guest Name, Payment Type..." onkeyup="filterTable('table-payment-report-body', 'search-payment-report', 'filter-payment-status')" />
+              <select id="filter-payment-status" onchange="filterTable('table-payment-report-body', 'search-payment-report', 'filter-payment-status')">
+                <option value="">All Payment Statuses</option>
+                <option value="paid">Paid</option>
+                <option value="pending verification">Pending Verification</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>RESERVATION NO.</th>
+                    <th>GUEST NAME</th>
+                    <th>PAYMENT TYPE</th>
+                    <th>PAYMENT DATE</th>
+                    <th>GCASH REF NO.</th>
+                    <th>REBOOKING ID / CHARGE DESC</th>
+                    <th>AMOUNT</th>
+                    <th>PAYMENT STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="table-payment-report-body">
+                  <tr data-search="ext-2026-00482 jana abordo reservation deposit pending verification">
+                    <td><strong>EXT-2026-00482</strong></td>
+                    <td>Jana Abordo</td>
+                    <td>Reservation Deposit</td>
+                    <td>2026-11-10 14:42</td>
+                    <td><code>1002938475102</code></td>
+                    <td>—</td>
+                    <td><strong>₱1,000.00</strong></td>
+                    <td><span class="badge-status badge-pending">Pending Verification</span></td>
+                  </tr>
+                  <tr data-search="ext-2026-00480 marielle mactal reservation deposit paid">
+                    <td><strong>EXT-2026-00480</strong></td>
+                    <td>Marielle Mactal</td>
+                    <td>Reservation Deposit</td>
+                    <td>2026-11-09 11:20</td>
+                    <td><code>1002938475099</code></td>
+                    <td>—</td>
+                    <td><strong>₱1,000.00</strong></td>
+                    <td><span class="badge-status badge-paid">Paid</span></td>
+                  </tr>
+                  <tr data-search="ext-2026-00475 marco silva rebooking additional payment paid">
+                    <td><strong>EXT-2026-00475</strong></td>
+                    <td>Marco Silva</td>
+                    <td>Rebooking Additional Payment</td>
+                    <td>2026-11-08 09:15</td>
+                    <td>—</td>
+                    <td>RBK-019 · Date Change</td>
+                    <td><strong>₱0.00</strong></td>
+                    <td><span class="badge-status badge-paid">Paid</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 4. CANCELLATION REPORTS -->
+          <div id="subtab-cancellations-report" class="subtab-content hidden">
+            <div class="card-title-bar">
+              <div>
+                <h2 class="card-title-text" style="font-size:20px;">Cancellation Reports</h2>
+                <p class="portal-subtitle">Displays cancellation records, cancellation date, reason for cancellation, and current reservation status.</p>
+              </div>
+              <button class="btn-action-primary" onclick="downloadCSVReport('Cancellation_Report')">⤓ DOWNLOAD CSV</button>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-cancel-report" placeholder="Search Reservation No., Guest Name, Reason..." onkeyup="filterTable('table-cancel-report-body', 'search-cancel-report', 'filter-cancel-status')" />
+              <select id="filter-cancel-status" onchange="filterTable('table-cancel-report-body', 'search-cancel-report', 'filter-cancel-status')">
+                <option value="">All Statuses</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>RESERVATION NO.</th>
+                    <th>GUEST NAME</th>
+                    <th>CANCELLATION DATE</th>
+                    <th>ORIGINAL RESERVATION DETAILS</th>
+                    <th>REASON FOR CANCELLATION</th>
+                    <th>CURRENT RESERVATION STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="table-cancel-report-body">
+                  <tr data-search="ext-2026-00477 kevin tan 2026-11-03 room 102 · nov 05–07 change in travel schedule cancelled">
+                    <td><strong>EXT-2026-00477</strong></td>
+                    <td>Kevin Tan</td>
+                    <td>2026-11-03</td>
+                    <td>Room 102 · Nov 05–07</td>
+                    <td>Change in travel schedule</td>
+                    <td><span class="badge-status badge-cancelled">Cancelled</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 5. REBOOKING REPORTS -->
+          <div id="subtab-rebookings-report" class="subtab-content hidden">
+            <div class="card-title-bar">
+              <div>
+                <h2 class="card-title-text" style="font-size:20px;">Rebooking Reports</h2>
+                <p class="portal-subtitle">Displays rebooking requests with requested check-in/out dates, room unit, number of guests, FOA decision, and payment details.</p>
+              </div>
+              <button class="btn-action-primary" onclick="downloadCSVReport('Rebooking_Report')">⤓ DOWNLOAD CSV</button>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-rebook-report" placeholder="Search Reservation No., Guest Name, Room Unit..." onkeyup="filterTable('table-rebook-report-body', 'search-rebook-report', 'filter-rebook-status')" />
+              <select id="filter-rebook-status" onchange="filterTable('table-rebook-report-body', 'search-rebook-report', 'filter-rebook-status')">
+                <option value="">All Decisions / Statuses</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>RESERVATION NO.</th>
+                    <th>GUEST NAME</th>
+                    <th>REQUEST DATE</th>
+                    <th>REQUESTED CHECK-IN & CHECK-OUT</th>
+                    <th>ROOM TYPE OR UNIT</th>
+                    <th>NUMBER OF GUESTS</th>
+                    <th>ADDITIONAL CHARGE AMOUNT & DESC</th>
+                    <th>PAYMENT STATUS</th>
+                    <th>FOA DECISION</th>
+                  </tr>
+                </thead>
+                <tbody id="table-rebook-report-body">
+                  <tr data-search="ext-2026-00475 marco silva 2026-11-08 nov 19–21, 2026 room 101 2 guests paid approved">
+                    <td><strong>EXT-2026-00475</strong></td>
+                    <td>Marco Silva</td>
+                    <td>2026-11-08</td>
+                    <td>Nov 19 – Nov 21, 2026</td>
+                    <td>Room 101</td>
+                    <td>2 Guests</td>
+                    <td>₱0.00 · Date Change (No Fee)</td>
+                    <td><span class="badge-status badge-paid">Paid</span></td>
+                    <td><span class="badge-status badge-confirmed">Approved</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SYSTEM & SECURITY AUDIT LOGS -->
+      <div id="view-audit-logs" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">System Governance & Audit Logs</div>
+          <h1 class="portal-greeting">System & Security Logs</h1>
+          <p class="portal-subtitle">Inspect operational audit trails, password reset requests, and email delivery notifications.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="tab-bar">
+            <button class="tab-btn active" id="btn-subtab-audit" onclick="switchAuditTab('audit')">System Audit Trail Log</button>
+            <button class="tab-btn" id="btn-subtab-email" onclick="switchAuditTab('email')">Email & Notification Log</button>
+            <button class="tab-btn" id="btn-subtab-pw" onclick="switchAuditTab('pw')">Password Reset Requests</button>
+          </div>
+
+          <div id="subtab-audit-logs" class="subtab-content">
+            <div class="card-title-bar">
+              <h2 class="card-title-text" style="font-size:20px;">Operational Audit Trail Log</h2>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>AUDIT LOG ID</th>
+                    <th>PERFORMED BY</th>
+                    <th>ACTION TAKEN</th>
+                    <th>MODULE</th>
+                    <th>RECORD ID</th>
+                    <th>TIMESTAMP</th>
+                    <th>DESCRIPTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>LOG-9053</strong></td>
+                    <td>General Manager</td>
+                    <td>Status Changed</td>
+                    <td>Room Status</td>
+                    <td>Room 101</td>
+                    <td>2026-11-10 15:48</td>
+                    <td>Set Room 101 status to Available</td>
+                  </tr>
+                  <tr>
+                    <td><strong>LOG-9573</strong></td>
+                    <td>General Manager</td>
+                    <td>Status Changed</td>
+                    <td>Room Status</td>
+                    <td>Room 101</td>
+                    <td>2026-11-10 15:48</td>
+                    <td>Set Room 101 status to Out of Service</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="subtab-email-logs" class="subtab-content hidden">
+            <div class="card-title-bar">
+              <h2 class="card-title-text" style="font-size:20px;">Email Delivery & Notification Logs</h2>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>LOG ID</th>
+                    <th>RECIPIENT EMAIL</th>
+                    <th>SUBJECT / NOTIFICATION TYPE</th>
+                    <th>DISPATCH DATE</th>
+                    <th>DELIVERY STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>EML-501</strong></td>
+                    <td>jana.abordo@gmail.com</td>
+                    <td>Booking Confirmation - EXT-2026-00482</td>
+                    <td>2026-11-10 14:30</td>
+                    <td><span class="badge-status badge-active">SENT</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="subtab-pw-logs" class="subtab-content hidden">
+            <div class="card-title-bar">
+              <h2 class="card-title-text" style="font-size:20px;">Password Reset Request History</h2>
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>REQUEST ID</th>
+                    <th>USER ACCOUNT</th>
+                    <th>REQUEST DATE</th>
+                    <th>EXPIRY DATE</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>PWR-301</strong></td>
+                    <td>jana.abordo@gmail.com</td>
+                    <td>2026-11-08 10:00</td>
+                    <td>2026-11-08 11:00</td>
+                    <td><span class="badge-status badge-completed">COMPLETED / USED</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- MODAL: ADD / EDIT ROOM TYPE -->
+  <div id="modal-room-type-crud" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h2 class="card-title-text" id="modal-room-type-title" style="margin-bottom:15px;">Add New Room Type</h2>
+      
+      <div class="c-field">
+        <label>ROOM TYPE NAME</label>
+        <input type="text" id="m-rt-name" placeholder="e.g., Deluxe A">
+      </div>
+
+      <div class="c-field">
+        <label>NIGHTLY RATE (₱)</label>
+        <input type="number" id="m-rt-rate" placeholder="3300">
+      </div>
+
+      <div class="c-field">
+        <label>MAX GUEST CAPACITY</label>
+        <input type="number" id="m-rt-capacity" placeholder="2">
+      </div>
+
+      <div class="c-field">
+        <label>ROOM DESCRIPTION</label>
+        <textarea id="m-rt-desc" rows="3" placeholder="Room type description..."></textarea>
+      </div>
+
+      <div class="c-field">
+        <label>BED TYPE</label>
+        <input type="text" id="m-rt-bed" placeholder="e.g., 1 Queen Bed">
+      </div>
+
+      <div class="c-field">
+        <label>AMENITIES AND INCLUSIONS</label>
+        <input type="text" id="m-rt-amenities" placeholder="e.g., Wi-Fi, Air Conditioning, Work Desk">
+      </div>
+
+      <div class="c-field">
+        <label>ROOM PHOTOS (ALLOW MULTIPLE UPLOADS)</label>
+        <input type="file" id="m-rt-photos" multiple accept="image/*">
+      </div>
+
+      <div class="c-field">
+        <label>STATUS</label>
+        <select id="m-rt-status">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:15px;">
+        <button class="btn-action-outline" onclick="closeModal('modal-room-type-crud')">CANCEL</button>
+        <button class="btn-action-primary" onclick="saveRoomTypeRecord()">SAVE ROOM TYPE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT ROOM UNIT -->
+  <div id="modal-room-crud" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h2 class="card-title-text" id="modal-room-title" style="margin-bottom:15px;">Add New Room Unit</h2>
+      
+      <div class="c-field">
+        <label>ROOM NUMBER</label>
+        <input type="text" id="m-room-name" placeholder="e.g., Room 101">
+      </div>
+
+      <div class="c-field">
+        <label>ROOM TYPE (SELECT EXISTING)</label>
+        <select id="m-room-type">
+          <option value="">Select existing room type...</option>
+          <option value="Deluxe A">Deluxe A</option>
+          <option value="Deluxe B with Balcony">Deluxe B with Balcony</option>
+          <option value="Junior Suite C with Balcony">Junior Suite C with Balcony</option>
+        </select>
+      </div>
+
+      <div class="c-field">
+        <label>FLOOR NUMBER</label>
+        <input type="number" id="m-room-floor" placeholder="e.g., 1">
+      </div>
+
+      <div class="c-field">
+        <label>ROOM STATUS</label>
+        <select id="m-room-status">
+          <option value="Available">Available</option>
+          <option value="Occupied">Occupied</option>
+          <option value="Maintenance">Maintenance</option>
+        </select>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:15px;">
+        <button class="btn-action-outline" onclick="closeModal('modal-room-crud')">CANCEL</button>
+        <button class="btn-action-primary" onclick="saveRoomRecord()">SAVE ROOM UNIT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT FACILITY & SERVICE -->
+  <div id="modal-facility-crud" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h2 class="card-title-text" id="modal-facility-title" style="margin-bottom:15px;">Add Facility or Service</h2>
+      <div class="c-field">
+        <label>FACILITY OR SERVICE NAME</label>
+        <input type="text" id="m-fac-name" placeholder="e.g., Game & Entertainment Room">
+      </div>
+      <div class="c-field">
+        <label>DESCRIPTION</label>
+        <textarea id="m-fac-desc" rows="3" placeholder="Facility description and details..."></textarea>
+      </div>
+      <div class="c-field">
+        <label>PICTURE OR IMAGE</label>
+        <input type="file" id="m-fac-image" accept="image/*">
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:15px;">
+        <button class="btn-action-outline" onclick="closeModal('modal-facility-crud')">CANCEL</button>
+        <button class="btn-action-primary" onclick="saveFacilityRecord()">SAVE FACILITY</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE / EDIT STAFF ACCOUNT -->
+  <div id="modal-staff-crud" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h2 class="card-title-text" id="modal-staff-title" style="margin-bottom:15px;">Create Staff Account</h2>
+      <div class="c-field">
+        <label>FULL NAME</label>
+        <input type="text" id="m-staff-name" placeholder="First Name Last Name">
+      </div>
+      <div class="c-field">
+        <label>EMAIL ADDRESS</label>
+        <input type="email" id="m-staff-email" placeholder="staff@extremeli.com">
+      </div>
+      <div class="c-field">
+        <label>ROLE ASSIGNMENT</label>
+        <select id="m-staff-role">
+          <option value="FOA">Front Office Associate (FOA)</option>
+          <option value="FOS">Front Office Supervisor (FOS / Admin)</option>
+          <option value="GM">General Manager (GM / Admin)</option>
+        </select>
+      </div>
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:15px;">
+        <button class="btn-action-outline" onclick="closeModal('modal-staff-crud')">CANCEL</button>
+        <button class="btn-action-primary" onclick="saveStaffRecord()">SAVE STAFF ACCOUNT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-bottom">
+      © 2026 EXTREMELI SUITES · ADMINISTRATIVE PORTAL.
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    function showSection(sectionId, navId) {
+      const sections = ['view-dashboard', 'view-room-inventory', 'view-room-status', 'view-user-accounts', 'view-reports', 'view-audit-logs'];
+      sections.forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+
+      const navItems = ['nav-dashboard', 'nav-inventory', 'nav-status', 'nav-accounts', 'nav-reports', 'nav-audit'];
+      navItems.forEach(id => {
+        document.getElementById(id).classList.remove('active');
+      });
+
+      document.getElementById(sectionId).classList.remove('hidden');
+      if(navId) document.getElementById(navId).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchUserTab(tabType) {
+      document.getElementById('btn-subtab-staff').classList.remove('active');
+      document.getElementById('btn-subtab-guest').classList.remove('active');
+      
+      document.getElementById('subtab-staff').classList.add('hidden');
+      document.getElementById('subtab-guest').classList.add('hidden');
+
+      if(tabType === 'staff') {
+        document.getElementById('btn-subtab-staff').classList.add('active');
+        document.getElementById('subtab-staff').classList.remove('hidden');
+      } else {
+        document.getElementById('btn-subtab-guest').classList.add('active');
+        document.getElementById('subtab-guest').classList.remove('hidden');
+      }
+    }
+
+    function switchContentTab(tabType) {
+      document.getElementById('btn-subtab-room-types').classList.remove('active');
+      document.getElementById('btn-subtab-rooms').classList.remove('active');
+      document.getElementById('btn-subtab-facilities').classList.remove('active');
+      
+      document.getElementById('subtab-room-types').classList.add('hidden');
+      document.getElementById('subtab-rooms').classList.add('hidden');
+      document.getElementById('subtab-facilities').classList.add('hidden');
+
+      if (tabType === 'room-types') {
+        document.getElementById('btn-subtab-room-types').classList.add('active');
+        document.getElementById('subtab-room-types').classList.remove('hidden');
+      } else if (tabType === 'rooms') {
+        document.getElementById('btn-subtab-rooms').classList.add('active');
+        document.getElementById('subtab-rooms').classList.remove('hidden');
+      } else {
+        document.getElementById('btn-subtab-facilities').classList.add('active');
+        document.getElementById('subtab-facilities').classList.remove('hidden');
+      }
+    }
+
+    function switchReportTab(tabType) {
+      const buttons = ['btn-subtab-reservations', 'btn-subtab-occupancy', 'btn-subtab-payments', 'btn-subtab-cancellations', 'btn-subtab-rebookings'];
+      const subtabs = ['subtab-reservations-report', 'subtab-occupancy-report', 'subtab-payments-report', 'subtab-cancellations-report', 'subtab-rebookings-report'];
+
+      buttons.forEach(id => document.getElementById(id).classList.remove('active'));
+      subtabs.forEach(id => document.getElementById(id).classList.add('hidden'));
+
+      document.getElementById('btn-subtab-' + tabType).classList.add('active');
+      document.getElementById('subtab-' + tabType + '-report').classList.remove('hidden');
+    }
+
+    function switchAuditTab(tabType) {
+      document.getElementById('btn-subtab-audit').classList.remove('active');
+      document.getElementById('btn-subtab-email').classList.remove('active');
+      document.getElementById('btn-subtab-pw').classList.remove('active');
+
+      document.getElementById('subtab-audit-logs').classList.add('hidden');
+      document.getElementById('subtab-email-logs').classList.add('hidden');
+      document.getElementById('subtab-pw-logs').classList.add('hidden');
+
+      if(tabType === 'audit') {
+        document.getElementById('btn-subtab-audit').classList.add('active');
+        document.getElementById('subtab-audit-logs').classList.remove('hidden');
+      } else if(tabType === 'email') {
+        document.getElementById('btn-subtab-email').classList.add('active');
+        document.getElementById('subtab-email-logs').classList.remove('hidden');
+      } else if(tabType === 'pw') {
+        document.getElementById('btn-subtab-pw').classList.add('active');
+        document.getElementById('subtab-pw-logs').classList.remove('hidden');
+      }
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
+    }
+
+    function filterTable(tbodyId, searchInputId, selectFilterId) {
+      const query = document.getElementById(searchInputId).value.toLowerCase();
+      const selectEl = document.getElementById(selectFilterId);
+      const statusFilter = selectEl ? selectEl.value.toLowerCase() : "";
+      const tbody = document.getElementById(tbodyId);
+      const rows = tbody.getElementsByTagName('tr');
+
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const searchData = row.getAttribute('data-search') || row.innerText.toLowerCase();
+        
+        const matchesSearch = searchData.includes(query);
+        const matchesStatus = statusFilter === "" || searchData.includes(statusFilter);
+
+        if (matchesSearch && matchesStatus) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      }
+    }
+
+    function openRoomTypeModal(mode, name='', rate='', capacity='', desc='', bed='', amenities='', status='') {
+      document.getElementById('modal-room-type-title').innerText = mode === 'add' ? 'Add New Room Type' : 'Edit Room Type';
+      document.getElementById('m-rt-name').value = name;
+      document.getElementById('m-rt-rate').value = rate;
+      document.getElementById('m-rt-capacity').value = capacity;
+      document.getElementById('m-rt-desc').value = desc;
+      document.getElementById('m-rt-bed').value = bed;
+      document.getElementById('m-rt-amenities').value = amenities;
+      document.getElementById('m-rt-status').value = status || 'Active';
+      document.getElementById('modal-room-type-crud').classList.remove('hidden');
+    }
+
+    function saveRoomTypeRecord() {
+      alert("Room type details saved successfully!");
+      closeModal('modal-room-type-crud');
+    }
+
+    function toggleRoomTypeStatus(rtId) {
+      const badge = document.getElementById('rt-status-' + rtId);
+      if(badge.classList.contains('badge-active')) {
+        badge.className = 'badge-status badge-deactivated';
+        badge.innerText = 'INACTIVE';
+        alert("Room type deactivated. It will no longer be offered for new reservations.");
+      } else {
+        badge.className = 'badge-status badge-active';
+        badge.innerText = 'ACTIVE';
+        alert("Room type activated.");
+      }
+    }
+
+    function openRoomModal(mode, name='', type='', floor='', status='') {
+      document.getElementById('modal-room-title').innerText = mode === 'add' ? 'Add New Room Unit' : 'Edit Room Unit';
+      document.getElementById('m-room-name').value = name;
+      document.getElementById('m-room-type').value = type;
+      document.getElementById('m-room-floor').value = floor;
+      document.getElementById('m-room-status').value = status || 'Available';
+      document.getElementById('modal-room-crud').classList.remove('hidden');
+    }
+
+    function saveRoomRecord() {
+      alert("Room unit details saved successfully!");
+      closeModal('modal-room-crud');
+    }
+
+    function toggleRoomCatalogStatus(roomId) {
+      const badge = document.getElementById('inv-status-' + roomId);
+      if(badge.classList.contains('badge-available')) {
+        badge.className = 'badge-status badge-deactivated';
+        badge.innerText = 'DEACTIVATED';
+        alert("Room unit " + roomId + " deactivated.");
+      } else {
+        badge.className = 'badge-status badge-available';
+        badge.innerText = 'AVAILABLE';
+        alert("Room unit " + roomId + " activated.");
+      }
+    }
+
+    function toggleGuestStatus(guestId) {
+      const badge = document.getElementById('guest-badge-' + guestId);
+      if(badge.classList.contains('badge-active')) {
+        badge.className = 'badge-status badge-deactivated';
+        badge.innerText = 'DEACTIVATED';
+        alert("Guest account GST-" + guestId + " deactivated successfully.");
+      } else {
+        badge.className = 'badge-status badge-active';
+        badge.innerText = 'ACTIVE';
+        alert("Guest account activated.");
+      }
+    }
+
+    function openFacilityModal(mode, name='', desc='') {
+      document.getElementById('modal-facility-title').innerText = mode === 'add' ? 'Add Facility or Service' : 'Edit Facility or Service';
+      document.getElementById('m-fac-name').value = name;
+      document.getElementById('m-fac-desc').value = desc;
+      document.getElementById('modal-facility-crud').classList.remove('hidden');
+    }
+
+    function saveFacilityRecord() {
+      alert("Facility/Service information saved successfully!");
+      closeModal('modal-facility-crud');
+    }
+
+    function toggleFacilityStatus(facId) {
+      const badge = document.getElementById('fac-status-' + facId);
+      if(badge.classList.contains('badge-active')) {
+        badge.className = 'badge-status badge-deactivated';
+        badge.innerText = 'DEACTIVATED';
+        alert("Facility deactivated successfully.");
+      } else {
+        badge.className = 'badge-status badge-active';
+        badge.innerText = 'ACTIVE';
+        alert("Facility activated successfully.");
+      }
+    }
+
+    function updateOperationalStatus(roomId, newStatus) {
+      const badge = document.getElementById('op-badge-' + roomId);
+      if(newStatus === 'Available') {
+        badge.className = 'badge-status badge-available';
+        badge.innerText = 'AVAILABLE';
+      } else {
+        badge.className = 'badge-status badge-maintenance';
+        badge.innerText = 'OUT OF SERVICE';
+      }
+      alert("Operational status for Room " + roomId + " updated to: " + newStatus);
+    }
+
+    function openStaffModal(mode, id='', name='', email='') {
+      document.getElementById('modal-staff-title').innerText = mode === 'add' ? 'Create Staff Account' : 'Edit Staff Account';
+      document.getElementById('m-staff-name').value = name;
+      document.getElementById('m-staff-email').value = email;
+      document.getElementById('modal-staff-crud').classList.remove('hidden');
+    }
+
+    function saveStaffRecord() {
+      alert("Staff account details saved successfully!");
+      closeModal('modal-staff-crud');
+    }
+
+    function applyDateFilter() {
+      const start = document.getElementById('report-start-date').value;
+      const end = document.getElementById('report-end-date').value;
+      alert(`Reports filter applied from ${start} to ${end}! Data updated.`);
+    }
+
+    function downloadCSVReport(reportTitle) {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += `Extremeli Suites - ${reportTitle.replace(/_/g, ' ')}\nGenerated Date: ${new Date().toLocaleDateString()}\n\n`;
+
+      if (reportTitle === 'Reservation_Report') {
+        csvContent += "Reservation No,Guest Name,Room Type/Unit,Room Rate,Check-In,Check-Out,Nights,Guests,Est. Room Charge,Deposit Status,Status\n";
+        csvContent += "EXT-2026-00482,Jana Abordo,Room 101 (Deluxe A),3300.00,2026-12-18,2026-12-20,2,2,6600.00,Pending Verification,Pending Verification\n";
+        csvContent += "EXT-2026-00480,Marielle Mactal,Room 204 (Junior Suite C),6800.00,2026-12-15,2026-12-17,2,3,13600.00,Paid,Confirmed\n";
+      } else if (reportTitle === 'Room_Availability_Occupancy_Report') {
+        csvContent += "Room Type/Unit,Available,Reserved,Occupied,Out of Service,Current Status\n";
+        csvContent += "Room 101 - Deluxe A,0,1,0,0,Reserved\n";
+      } else if (reportTitle === 'GCash_Payment_Report') {
+        csvContent += "Reservation No,Guest Name,Payment Type,Payment Date,GCash Ref No,Rebooking ID / Desc,Amount,Payment Status\n";
+        csvContent += "EXT-2026-00482,Jana Abordo,Reservation Deposit,2026-11-10 14:42,1002938475102,-,1000.00,Pending Verification\n";
+        csvContent += "EXT-2026-00480,Marielle Mactal,Reservation Deposit,2026-11-09 11:20,1002938475099,-,1000.00,Paid\n";
+      } else if (reportTitle === 'Cancellation_Report') {
+        csvContent += "Reservation No,Guest Name,Cancellation Date,Original Details,Reason,Status\n";
+        csvContent += "EXT-2026-00477,Kevin Tan,2026-11-03,Room 102 Nov 05-07,Change in travel schedule,Cancelled\n";
+      } else if (reportTitle === 'Rebooking_Report') {
+        csvContent += "Reservation No,Guest Name,Request Date,Check-In & Check-Out,Room Unit,Guests,Additional Charge,Payment Status,FOA Decision\n";
+        csvContent += "EXT-2026-00475,Marco Silva,2026-11-08,Nov 19 - Nov 21 2026,Room 101,2 Guests,0.00 Date Change,Paid,Approved\n";
+      }
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `${reportTitle}_ExtremeliSuites.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    let currentMonth = 8;
+    let currentYear = 2026;
+    let selectedDay = 23;
+
+    const calendarBookings = {
+      "2026-09-09": { status: "booked", room: "Room 101", guest: "Mark Santos", dates: "2026-09-09 -> 2026-09-12" },
+      "2026-09-10": { status: "booked", room: "Room 102", guest: "Kevin Tan", dates: "2026-09-08 -> 2026-09-10" },
+      "2026-09-14": { status: "booked", room: "Room 204", guest: "Marielle Mactal", dates: "2026-09-14 -> 2026-09-17" },
+      "2026-09-15": { status: "booked", room: "Room 101", guest: "Mark Santos", dates: "2026-09-12 -> 2026-09-15" },
+      "2026-09-16": { status: "booked", room: "Room 102", guest: "Elena Gomez", dates: "2026-09-14 -> 2026-09-16" },
+      "2026-09-18": { status: "booked", room: "Room 101", guest: "Jana Abordo", dates: "2026-09-18 -> 2026-09-20" },
+      "2026-09-19": { status: "booked", room: "Room 101", guest: "Jana Abordo", dates: "2026-09-18 -> 2026-09-19" },
+      "2026-09-22": { status: "booked", room: "Room 102", guest: "David Lee", dates: "2026-09-20 -> 2026-09-22" },
+      "2026-09-23": { status: "booked", room: "Room 101", guest: "Jana Abordo", dates: "2026-09-22 -> 2026-09-23" },
+      "2026-09-24": { status: "booked", room: "Room 101", guest: "Jana Abordo", dates: "2026-09-22 -> 2026-09-24" },
+      "2026-09-26": { status: "booked", room: "Room 204", guest: "Sarah Lin", dates: "2026-09-26 -> 2026-09-28" },
+      "2026-09-27": { status: "booked", room: "Room 204", guest: "Sarah Lin", dates: "2026-09-26 -> 2026-09-27" }
+    };
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    function changeMonth(delta) {
+      currentMonth += delta;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      } else if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const monthYearTitle = document.getElementById('cal-month-year');
+      monthYearTitle.innerText = `${monthNames[currentMonth]} ${currentYear}`;
+
+      const datesGrid = document.getElementById('cal-dates-grid');
+      datesGrid.innerHTML = '';
+
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      let startingIndex = firstDay === 0 ? 6 : firstDay - 1;
+
+      const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+      for (let i = 0; i < startingIndex; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'cal-day-cell empty';
+        datesGrid.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= totalDays; day++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day-cell';
+        cell.innerText = day;
+
+        const dateKey = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const booking = calendarBookings[dateKey];
+
+        if (booking) {
+          cell.classList.add('booked');
+        }
+
+        if (day === selectedDay) {
+          cell.classList.add('selected');
+        }
+
+        cell.onclick = () => selectDate(day, dateKey);
+        datesGrid.appendChild(cell);
+      }
+    }
+
+    function selectDate(day, dateKey) {
+      selectedDay = day;
+      renderCalendar();
+
+      const dateObj = new Date(currentYear, currentMonth, day);
+      const dayOfWeek = dayNames[dateObj.getDay()];
+      const formattedDate = `${dayOfWeek}, ${monthNames[currentMonth]} ${day}, ${currentYear}`;
+      
+      document.getElementById('selected-date-display').innerText = formattedDate;
+      document.getElementById('avail-heading').innerText = `Room Availability on ${monthNames[currentMonth].substring(0,3)} ${day}`;
+
+      const booking = calendarBookings[dateKey];
+      const resContainer = document.getElementById('res-list-container');
+
+      if (booking) {
+        document.getElementById('selected-res-count').innerText = "1 reservation(s) on this date";
+        document.getElementById('selected-date-badge').innerText = "1 Active Booking";
+        resContainer.innerHTML = `
+          <div class="res-item-card">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div class="res-avatar">${booking.guest.charAt(0)}</div>
+              <div>
+                <strong style="font-size:14px; color:#092741;">${booking.room}</strong>
+                <div style="font-size:12px; color:#64748b;">${booking.dates} · Reserved by: <strong>${booking.guest}</strong></div>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <span class="badge-status badge-completed">Paid</span>
+              <button class="btn-action-outline" style="padding:4px 12px; font-size:11px;">View</button>
+            </div>
+          </div>
+        `;
+      } else {
+        document.getElementById('selected-res-count').innerText = "0 reservation(s) on this date";
+        document.getElementById('selected-date-badge').innerText = "All Rooms Available";
+        resContainer.innerHTML = `
+          <div style="padding:15px; background:#f8fafc; border:1px dashed #cbd5e1; border-radius:8px; font-size:13px; color:#64748b; text-align:center;">
+            No direct reservations recorded for ${formattedDate}.
+          </div>
+        `;
+      }
+    }
+
+    window.onload = function() {
+      renderCalendar();
+      selectDate(23, "2026-09-23");
+    };
+  </script>
+
+</body>
+</html>

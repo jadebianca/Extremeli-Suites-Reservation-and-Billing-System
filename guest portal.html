@@ -1,0 +1,2572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guest Portal - Extremeli Suites</title>
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/jpeg" href="images/logo.JPG">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    html {
+      scrollbar-gutter: stable;
+      overflow-y: scroll;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      color: #111111;
+      background-color: #f8f9fa;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, .portal-greeting, .stat-value, .room-title, .page-title, .room-card-title, .step-title, .summary-room-title {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .top-bar {
+      background-color: #092741;
+      color: #ffffff;
+      text-align: center;
+      padding: 12px 20px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      width: 100%;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e5e5;
+      width: 100%;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .logo-img {
+      height: 55px; 
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #111111;
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #D2AA55;
+    }
+
+    .user-nav-profile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #092741;
+      cursor: pointer;
+    }
+
+    .user-nav-profile svg {
+      width: 16px;
+      height: 16px;
+      fill: #092741;
+    }
+
+    .portal-wrapper {
+      max-width: 1280px;
+      width: 100%;
+      margin: 40px auto 80px;
+      padding: 0 4%;
+      display: flex;
+      gap: 30px;
+      flex: 1;
+    }
+
+    .portal-sidebar {
+      width: 270px;
+      background-color: #092741;
+      color: #ffffff;
+      padding: 35px 25px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 35px;
+    }
+
+    .avatar-circle {
+      width: 60px;
+      height: 60px;
+      background-color: #D2AA55;
+      color: #092741;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .profile-name {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .profile-role {
+      font-size: 12px;
+      color: #a0b2c6;
+      font-weight: 400;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .sidebar-menu li a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #cbd7e4;
+      font-weight: 500;
+      border-radius: 4px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .sidebar-menu li a svg {
+      width: 18px;
+      height: 18px;
+      fill: #cbd7e4;
+      transition: fill 0.3s;
+    }
+
+    .sidebar-menu li a:hover,
+    .sidebar-menu li.active a {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .sidebar-menu li.active a svg,
+    .sidebar-menu li a:hover svg {
+      fill: #D2AA55;
+    }
+
+    .logout-link {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logout-link a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #cbd7e4;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .logout-link a:hover {
+      color: #ff6b6b;
+    }
+
+    .portal-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      min-width: 0;
+    }
+
+    .portal-section {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .portal-section.hidden, .hidden {
+      display: none !important;
+    }
+
+    .portal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 5px;
+    }
+
+    .portal-subtag {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #B48934;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .portal-greeting {
+      font-size: 42px;
+      font-weight: 500;
+      color: #092741;
+      line-height: 1.1;
+    }
+
+    .portal-subtitle {
+      font-size: 14px;
+      color: #687680;
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    .btn-book-stay {
+      background-color: #D2AA55;
+      color: #092741;
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 14px 28px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+      white-space: nowrap;
+    }
+
+    .btn-book-stay:hover {
+      background-color: #B48934;
+    }
+
+    .modification-banner {
+      background-color: #FFF9EE;
+      border: 1px solid #F3DBA7;
+      padding: 18px 24px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .mod-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #B48934;
+      margin-bottom: 4px;
+    }
+    .mod-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #092741;
+    }
+    .mod-sub {
+      font-size: 12px;
+      color: #687680;
+      margin-top: 2px;
+    }
+    .mod-status-pill {
+      background-color: #FEF3C7;
+      color: #92400E;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      padding: 6px 14px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .search-input-box {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #dcdcdc;
+      border-radius: 4px;
+      padding: 10px 16px;
+      width: 300px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      transition: border-color 0.3s;
+    }
+    .search-input-box:focus-within {
+      border-color: #D2AA55;
+    }
+    .search-input-box svg {
+      width: 16px;
+      height: 16px;
+      fill: #687680;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    .search-input-box input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      color: #111111;
+      width: 100%;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: #ffffff;
+      padding: 25px 28px;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #687680;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 500;
+      color: #092741;
+      line-height: 1.2;
+    }
+
+    .stat-subtext {
+      font-size: 12px;
+      color: #888888;
+      margin-top: 4px;
+    }
+
+    .reservation-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      padding: 35px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .res-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .res-subtag {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #B48934;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .room-title {
+      font-size: 36px;
+      font-weight: 500;
+      color: #092741;
+    }
+
+    .badge-res {
+      padding: 6px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .badge-res.pending { background-color: #FFF6E5; color: #B48934; border: 1px solid #F3DBA7; }
+    .badge-res.pending-rebooking { background-color: #FEF3C7; color: #B45309; border: 1px solid #FCD34D; }
+    .badge-res.confirmed { background-color: #E7F6EC; color: #1E7E34; border: 1px solid #A3E0B5; }
+    .badge-res.cancelled, .badge-res.rejected { background-color: #FDF2F2; color: #9B1C1C; border: 1px solid #F8B4B4; }
+    .badge-res.checked-out { background-color: #F3F4F6; color: #4B5563; border: 1px solid #D1D5DB; }
+
+    .badge-pay {
+      padding: 5px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 4px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .badge-pay.pending { background-color: #FEF3C7; color: #92400E; }
+    .badge-pay.approved { background-color: #D1FAE5; color: #065F46; }
+
+    .res-body {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .res-image {
+      width: 240px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .res-details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px 40px;
+      flex: 1;
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #888888;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .detail-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #092741;
+    }
+
+    .res-actions {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-view-details {
+      background: transparent;
+      border: 1px solid #092741;
+      color: #092741;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-view-details:hover {
+      background-color: #092741;
+      color: #ffffff;
+    }
+
+    .back-link {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #687680;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+    .back-link:hover { color: #D2AA55; }
+
+    .res-table-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .res-table-header {
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 1.5fr 1fr;
+      padding: 16px 25px;
+      background-color: #fafafa;
+      border-bottom: 1px solid #e5e5e5;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #687680;
+    }
+
+    .res-table-row {
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 1.5fr 1fr;
+      padding: 20px 25px;
+      align-items: center;
+      border-bottom: 1px solid #f0f0f0;
+      background-color: #ffffff;
+    }
+
+    .res-room-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .res-room-thumb {
+      width: 70px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .res-room-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #092741;
+    }
+
+    .res-ref-sub {
+      font-size: 11px;
+      color: #888888;
+    }
+
+    .res-dates-col {
+      font-size: 13px;
+      color: #111111;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .btn-row-details {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #092741;
+      cursor: pointer;
+      text-align: right;
+    }
+
+    .btn-row-details:hover { color: #D2AA55; }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .details-left-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      padding: 35px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .details-main-img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 2px;
+      margin-bottom: 25px;
+    }
+
+    .details-room-title {
+      font-size: 38px;
+      font-weight: 500;
+      color: #092741;
+      margin-bottom: 25px;
+    }
+
+    .details-dates-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #e5e5e5;
+      margin-bottom: 30px;
+    }
+
+    .manage-res-box { margin-top: 10px; }
+    .manage-res-title { font-size: 22px; font-weight: 600; color: #092741; margin-bottom: 6px; }
+    .manage-res-desc { font-size: 13px; color: #687680; margin-bottom: 20px; }
+    .manage-buttons-group { display: flex; gap: 15px; }
+
+    .btn-outline-action {
+      border: 1px solid #092741;
+      background: transparent;
+      color: #092741;
+      padding: 12px 24px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-outline-action:hover {
+      background-color: #092741;
+      color: #ffffff;
+    }
+
+    .details-right-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .right-card-title {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #687680;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .payment-table {
+      width: 100%;
+      margin-bottom: 30px;
+      border-collapse: collapse;
+    }
+
+    .payment-table td {
+      padding: 12px 0;
+      font-size: 13px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .payment-table td.label { color: #687680; }
+    .payment-table td.val { text-align: right; font-weight: 700; color: #092741; }
+
+    .receipt-preview-box {
+      background-color: #f8f9fa;
+      border: 1px dashed #dcdcdc;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888888;
+      font-size: 12px;
+      border-radius: 2px;
+      margin-top: 12px;
+    }
+
+    .admin-billing-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      padding: 30px 35px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      width: 100%;
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: 24px;
+      border-bottom: 2px solid #e5e5e5;
+      margin-bottom: 25px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .tab-btn {
+      padding: 10px 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #687680;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      color: #B48934;
+      border-bottom-color: #B48934;
+    }
+
+    .card-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f0f0;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .card-title-text {
+      font-size: 24px;
+      font-weight: 500;
+      color: #092741;
+    }
+
+    .filter-toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-toolbar input {
+      flex: 1;
+      min-width: 240px;
+      padding: 11px 16px;
+      border: 1px solid #dcdcdc;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      outline: none;
+      background: #ffffff;
+      border-radius: 4px;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      background: #ffffff;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      white-space: nowrap;
+    }
+
+    .admin-table th {
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #687680;
+      background-color: #fafafa;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .admin-table td {
+      padding: 18px 16px;
+      font-size: 13px;
+      color: #111111;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td {
+      background-color: #fafbfc;
+    }
+
+    .btn-view-receipt {
+      background: #092741;
+      color: #ffffff;
+      border: none;
+      padding: 6px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-view-receipt:hover {
+      background: #D2AA55;
+      color: #092741;
+    }
+
+    .account-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .account-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      padding: 35px 40px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .account-card-title {
+      font-size: 28px;
+      font-weight: 500;
+      color: #092741;
+      margin-bottom: 25px;
+    }
+
+    .btn-gold-save {
+      background-color: #D2AA55;
+      color: #092741;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 14px 28px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+    .btn-gold-save:hover {
+      background-color: #B48934;
+    }
+
+    .security-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .security-desc {
+      font-size: 13px;
+      color: #687680;
+      margin-bottom: 25px;
+    }
+
+    .btn-change-pass {
+      width: 100%;
+      border: 1px solid #092741;
+      background: transparent;
+      color: #092741;
+      padding: 12px 20px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 20px;
+    }
+    .btn-change-pass:hover {
+      background: #092741;
+      color: #ffffff;
+    }
+
+    .security-logout-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #888888;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .security-logout-link:hover {
+      color: #ff6b6b;
+    }
+
+    .booking-filter-card {
+      background: #ffffff;
+      padding: 25px 30px;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .filter-field { display: flex; flex-direction: column; }
+    .filter-field label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #092741; font-weight: 700; margin-bottom: 8px; }
+    .filter-field input, .filter-field select { padding: 12px 14px; border: 1px solid #dcdcdc; font-family: 'Manrope', sans-serif; font-size: 13px; color: #111111; outline: none; background-color: #ffffff; font-weight: 600; }
+
+    .available-rooms-header { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px; }
+    .available-subtag { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #687680; font-weight: 700; margin-bottom: 4px; }
+    .available-title { font-size: 36px; font-weight: 500; color: #092741; }
+    .available-count { font-size: 12px; color: #687680; font-weight: 500; }
+
+    .booking-rooms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .b-room-card { 
+      background: #ffffff; 
+      border: 1px solid #e5e5e5; 
+      border-radius: 4px; 
+      overflow: hidden; 
+      display: flex; 
+      flex-direction: column; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03); 
+    }
+
+    .b-room-img { 
+      width: 100%; 
+      height: 180px; 
+      object-fit: cover; 
+    }
+
+    .b-room-content { 
+      padding: 20px; 
+      display: flex; 
+      flex-direction: column; 
+      flex: 1; 
+    }
+
+    /* FIX ALIGNMENT: Nilagyan ng min-height para pantay ang taas ng header kahit 1 or 2 lines ang title */
+    .b-room-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: flex-start; 
+      margin-bottom: 8px; 
+      min-height: 64px; /* Sinisiguradong magkakapantay ang taas ng Pamagat */
+    }
+
+    .b-room-name { 
+      font-size: 22px; 
+      font-weight: 600; 
+      color: #092741; 
+      line-height: 1.2;
+    }
+
+    .b-room-price { 
+      font-size: 15px; 
+      font-weight: 700; 
+      color: #092741; 
+      white-space: nowrap;
+      margin-left: 10px;
+    }
+
+    .b-room-specs { 
+      font-size: 11px; 
+      color: #687680; 
+      margin-bottom: 12px; 
+      font-weight: 500; 
+      min-height: 18px; /* Pantay na espasyo sa room details */
+    }
+
+    /* FIX BADGE ALIGNMENT: I-flex container para maging uniform ang lapad at taas ng status badge */
+    .room-status-badge {
+      margin-bottom: 15px; 
+      font-size: 11px; 
+      font-weight: 800; 
+      letter-spacing: 1px; 
+      padding: 8px 12px; 
+      border-radius: 4px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 38px; /* Pantay na taas ng badge kahit 1 o 2 lines ang text */
+    }
+
+    .btn-select-room { 
+      margin-top: auto; 
+      width: 100%; 
+      background-color: #D2AA55; 
+      color: #092741; 
+      font-family: 'Manrope', sans-serif; 
+      font-size: 11px; 
+      font-weight: 700; 
+      text-transform: uppercase; 
+      letter-spacing: 1.5px; 
+      padding: 13px; 
+      border: none; 
+      cursor: pointer; 
+      transition: background 0.3s; 
+    }
+    .btn-select-room:hover { 
+      background-color: #B48934; 
+    }
+
+    .checkout-wrapper { width: 100%; display: flex; flex-direction: column; gap: 30px; }
+    .step-indicator-bar { display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 10px; position: relative; }
+    .step-item { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 2; }
+    .step-circle { width: 36px; height: 36px; border-radius: 50%; background-color: #e5e5e5; color: #687680; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+    .step-item.active .step-circle, .step-item.completed .step-circle { background-color: #D2AA55; color: #092741; }
+    .step-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #888888; font-weight: 700; }
+    .step-item.active .step-label, .step-item.completed .step-label { color: #092741; }
+    .step-line { position: absolute; top: 18px; left: 32%; right: 32%; height: 2px; background-color: #e5e5e5; z-index: 1; }
+    .step-line-fill { height: 100%; background-color: #D2AA55; width: 0%; transition: width 0.3s; }
+
+    .checkout-grid { display: grid; grid-template-columns: 1fr 340px; gap: 30px; align-items: start; }
+    .checkout-form-card { background: #ffffff; border: 1px solid #e5e5e5; border-radius: 4px; padding: 35px 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .step-subtag { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #B48934; font-weight: 700; margin-bottom: 6px; }
+    .step-title { font-size: 40px; font-weight: 500; color: #092741; margin-bottom: 25px; }
+
+    .btn-step-action { width: 100%; background-color: #D2AA55; color: #092741; font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; padding: 16px; border: none; cursor: pointer; transition: background 0.3s; margin-top: 15px; }
+    .btn-step-action:hover { background-color: #B48934; }
+    .step-note { font-size: 11px; color: #888888; text-align: center; margin-top: 12px; }
+
+    .summary-card { background-color: #092741; color: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .summary-img { width: 100%; height: 180px; object-fit: cover; }
+    .summary-content { padding: 25px; }
+    .summary-subtag { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #D2AA55; font-weight: 700; margin-bottom: 6px; }
+    .summary-room-title { font-size: 32px; font-weight: 500; color: #ffffff; margin-bottom: 25px; }
+    .summary-table { width: 100%; margin-bottom: 25px; border-collapse: collapse; }
+    .summary-table td { padding: 6px 0; font-size: 12px; }
+    .summary-table td:last-child { text-align: right; font-weight: 600; }
+    .summary-table td.label { color: #a0b2c6; }
+    .summary-divider { height: 1px; background-color: rgba(255, 255, 255, 0.15); margin: 15px 0; }
+    .total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 15px; }
+    .total-label { font-size: 12px; color: #ffffff; font-weight: 500; }
+    .total-amount { font-size: 28px; font-family: 'Cormorant Garamond', serif; font-weight: 600; color: #ffffff; }
+    .deposit-box { background-color: rgba(255, 255, 255, 0.08); padding: 12px 16px; border-radius: 2px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+    .deposit-box span:first-child { color: #a0b2c6; }
+    .deposit-box span:last-child { color: #D2AA55; font-weight: 700; }
+
+    .timer-banner { background-color: #FFF9EE; border: 1px solid #F7E4BE; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-radius: 2px; }
+    .timer-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #B48934; font-weight: 700; }
+    .timer-clock { font-size: 18px; font-weight: 800; color: #092741; font-family: monospace; }
+
+    .ref-box { background-color: #f2f5f8; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-bottom: 30px; }
+    .ref-box span:first-child { color: #687680; }
+    .ref-box span:last-child { font-weight: 700; color: #092741; }
+
+    .gcash-info-card { border: 1px solid #e5e5e5; border-radius: 4px; padding: 20px; display: flex; gap: 20px; align-items: center; margin-bottom: 30px; }
+    .qr-placeholder { width: 110px; height: 110px; border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background-color: #ffffff; border: 1px solid #e5e5e5; }
+    .gcash-details p { font-size: 13px; color: #111111; margin-bottom: 4px; }
+    .gcash-details strong { color: #092741; }
+    .gcash-note { font-size: 11px; color: #888888; margin-top: 8px; line-height: 1.4; }
+
+    .upload-box { border: 2px dashed #dcdcdc; border-radius: 4px; padding: 35px 20px; text-align: center; cursor: pointer; transition: border-color 0.3s; margin-bottom: 25px; }
+    .upload-box:hover { border-color: #D2AA55; }
+    .upload-box svg { width: 32px; height: 32px; fill: #687680; margin-bottom: 10px; }
+    .upload-text-main { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #092741; }
+    .upload-text-sub { font-size: 11px; color: #aaaaaa; margin-top: 4px; }
+
+    .success-card-wrapper { max-width: 650px; margin: 20px auto 0; background: #ffffff; border: 1px solid #e5e5e5; padding: 50px 40px; text-align: center; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .success-icon-circle { width: 64px; height: 64px; background-color: #E7F6EC; color: #27A754; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .success-icon-circle svg { width: 32px; height: 32px; fill: #27A754; }
+    .success-subtag { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #B48934; font-weight: 700; margin-bottom: 8px; }
+    .success-title { font-size: 40px; font-weight: 500; color: #092741; margin-bottom: 12px; }
+    .success-desc { font-size: 14px; color: #687680; margin-bottom: 30px; line-height: 1.6; }
+    .warning-box { background-color: #FFF9EE; border: 1px solid #F7E4BE; padding: 20px; text-align: left; font-size: 12px; color: #7A5B14; line-height: 1.6; border-radius: 2px; margin-bottom: 35px; }
+
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(9, 39, 65, 0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-overlay.hidden { display: none !important; }
+    .modal-card { background: #ffffff; width: 100%; max-width: 540px; padding: 35px; border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); max-height: 90vh; overflow-y: auto; }
+    .modal-title { font-size: 28px; font-weight: 500; color: #092741; margin-bottom: 8px; }
+    .modal-desc { font-size: 13px; color: #687680; margin-bottom: 20px; }
+
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+    .c-field { display: flex; flex-direction: column; }
+    .c-field label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #092741; font-weight: 700; margin-bottom: 6px; }
+    .c-field input, .c-field select, .c-field textarea { padding: 11px 14px; border: 1px solid #dcdcdc; font-family: 'Manrope', sans-serif; font-size: 13px; color: #111111; outline: none; background: #ffffff; }
+
+    .avail-status-msg { font-size: 12px; padding: 10px 14px; border-radius: 4px; margin-bottom: 15px; display: none; }
+    .avail-status-msg.error { background-color: #FDF2F2; color: #9B1C1C; border: 1px solid #F8B4B4; display: block; }
+    .avail-status-msg.success { background-color: #E7F6EC; color: #1E7E34; border: 1px solid #A3E0B5; display: block; }
+
+    .footer { background-color: #061b2e; color: #ffffff; padding: 40px 10% 25px; font-size: 13px; margin-top: auto; }
+    .footer-bottom { text-align: center; color: #aaaaaa; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+
+    @media (max-width: 992px) {
+      .portal-wrapper { flex-direction: column; }
+      .portal-sidebar { width: 100%; }
+      .stats-row, .details-grid, .account-grid, .booking-rooms-grid, .checkout-grid { grid-template-columns: 1fr; }
+      .res-body { flex-direction: column; align-items: flex-start; }
+      .res-image { width: 100%; height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="top-bar">
+    ESCAPE THE ORDINARY · DIRECT RESERVATIONS INCLUDE OUR BEST AVAILABLE RATE
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <a href="index.html">
+        <img src="images/logo.JPG" alt="Extremeli Suites Logo" class="logo-img">
+      </a>
+    </div>
+    
+    <ul class="nav-links">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="#">ROOMS</a></li>
+      <li><a href="#">FACILITIES</a></li>
+      <li><a href="#">ABOUT US</a></li>
+    </ul>
+
+    <div class="user-nav-profile" onclick="showDashboardView()">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      <span>GUEST PORTAL</span>
+    </div>
+  </nav>
+
+  <!-- MAIN PORTAL WRAPPER -->
+  <div class="portal-wrapper">
+    
+    <!-- SIDEBAR -->
+    <aside class="portal-sidebar">
+      <div class="profile-header">
+        <div class="avatar-circle">JP</div>
+        <div class="profile-name">Jade Bianca Portillo</div>
+        <div class="profile-role">Guest member</div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li id="nav-dashboard" class="active">
+          <a onclick="showDashboardView()">
+            <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            Overview
+          </a>
+        </li>
+        <li id="nav-my-reservations">
+          <a onclick="showMyReservationsView()">
+            <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+            My reservations
+          </a>
+        </li>
+        <li id="nav-billing-payment">
+          <a onclick="showBillingPaymentView()">
+            <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            Billing & payment
+          </a>
+        </li>
+        <li id="nav-my-account">
+          <a onclick="showMyAccountView()">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            My account
+          </a>
+        </li>
+      </ul>
+
+      <div class="logout-link">
+        <a href="login.html">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+          Log out
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="portal-main">
+      
+      <!-- ==================== VIEW 1: DASHBOARD ==================== -->
+      <div id="view-dashboard" class="portal-section">
+        <div class="portal-header">
+          <div>
+            <div class="portal-subtag">GUEST PORTAL</div>
+            <h1 class="portal-greeting">Good afternoon, Jade Bianca.</h1>
+            <p class="portal-subtitle">Everything about your upcoming stay, in one place.</p>
+          </div>
+          <div>
+            <button class="btn-book-stay" onclick="showBookStayView()">BOOK STAY</button>
+          </div>
+        </div>
+
+        <div id="dash-rebooking-banner" class="modification-banner hidden">
+          <div>
+            <div class="mod-tag">REBOOKING REQUEST</div>
+            <div class="mod-title" id="banner-mod-title">Rebooking request · Pending FOA Approval</div>
+            <div class="mod-sub" id="banner-mod-sub">Front Office Associate will review your rebooking request.</div>
+          </div>
+          <div class="mod-status-pill" id="banner-mod-status">IN REVIEW</div>
+        </div>
+
+        <!-- STATS ROW (2 COLUMNS) -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">UPCOMING STAYS</div>
+            <div class="stat-value" id="dash-stat-stays">1</div>
+            <div class="stat-subtext" id="dash-stat-dates">Dec 18 - 20, 2026</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">RESERVATION STATUS</div>
+            <div class="stat-value" id="dash-stat-status" style="font-size:24px; color:#1E7E34;">Confirmed</div>
+            <div class="stat-subtext" id="dash-stat-sub">Assigned Room 408 · Deposit Verified</div>
+          </div>
+        </div>
+
+        <div class="reservation-card">
+          <div class="res-header">
+            <div>
+              <div class="res-subtag">CURRENT RESERVATION</div>
+              <h2 class="room-title" id="dash-card-room">Deluxe A</h2>
+            </div>
+            <div class="badge-res confirmed" id="dash-card-badge">CONFIRMED</div>
+          </div>
+
+          <div class="res-body">
+            <img src="images/deluxeA.JPG" alt="Deluxe A Room" class="res-image" id="dash-card-img">
+            
+            <div class="res-details-grid">
+              <div class="detail-item">
+                <span class="detail-label">RESERVATION NUMBER</span>
+                <span class="detail-value">EXT-2026-00482</span>
+              </div>
+              
+              <div class="detail-item">
+                <span class="detail-label">ASSIGNED ROOM NO.</span>
+                <span class="detail-value" id="dash-card-room-no" style="color: #092741; font-weight: 700;">Room 408 (Floor 4)</span>
+              </div>
+
+              <div class="detail-item">
+                <span class="detail-label">STAY DATES</span>
+                <span class="detail-value" id="dash-card-dates">Dec 18, 2026 – Dec 20, 2026</span>
+              </div>
+
+              <div class="detail-item">
+                <span class="detail-label">GUESTS</span>
+                <span class="detail-value" id="dash-card-guests">2 Adults</span>
+              </div>
+
+              <div class="detail-item">
+                <span class="detail-label">ESTIMATED ROOM CHARGE</span>
+                <span class="detail-value" id="dash-card-estimated-charge">₱6,600.00</span>
+              </div>
+
+              <div class="detail-item">
+                <span class="detail-label">DEPOSIT PAYMENT STATUS</span>
+                <div>
+                  <span class="badge-pay approved" id="dash-card-pay-badge">Verified</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="res-actions">
+            <button class="btn-view-details" onclick="showReservationDetailsView()">VIEW RESERVATION DETAILS</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== VIEW 2: MY RESERVATIONS VIEW ==================== -->
+      <div id="view-my-reservations" class="portal-section hidden">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+          <div>
+            <div class="portal-subtag">GUEST PORTAL</div>
+            <h1 class="portal-greeting">My reservations</h1>
+            <p class="portal-subtitle">View and monitor your reservation statuses and rebooking requests.</p>
+          </div>
+
+          <div class="search-input-box">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="search-reservations" placeholder="Search reservation #, room, dates..." onkeyup="filterReservationsTable()">
+          </div>
+        </div>
+
+        <div id="res-rebooking-banner" class="modification-banner hidden">
+          <div>
+            <div class="mod-tag">REBOOKING REQUEST</div>
+            <div class="mod-title" id="res-banner-mod-title">Rebooking request · Pending FOA Approval</div>
+            <div class="mod-sub">Front Office Associate will review your rebooking request.</div>
+          </div>
+          <div class="mod-status-pill">IN REVIEW</div>
+        </div>
+
+        <div class="res-table-card">
+          <div class="res-table-header">
+            <div>RESERVATION & ROOM</div>
+            <div>STAY DATES</div>
+            <div>RESERVATION STATUS</div>
+            <div style="text-align: right;">ACTION</div>
+          </div>
+
+          <div id="reservations-table-list">
+            <div class="res-table-row">
+              <div class="res-room-info">
+                <img src="images/deluxeA.JPG" alt="Deluxe A" class="res-room-thumb" id="table-room-img">
+                <div>
+                  <div class="res-room-name" id="table-room-name">Deluxe A</div>
+                  <div class="res-ref-sub">EXT-2026-00482 · <strong id="table-room-no-badge" style="color: #092741;">Room 408</strong></div>
+                </div>
+              </div>
+
+              <div class="res-dates-col" id="table-dates-col">
+                Dec 18, 2026<br>
+                Dec 20, 2026
+              </div>
+
+              <div>
+                <div class="badge-res confirmed" id="table-badge">CONFIRMED</div>
+              </div>
+
+              <div class="btn-row-details" onclick="showReservationDetailsView()">
+                DETAILS &rarr;
+              </div>
+            </div>
+
+            <div class="res-table-row">
+              <div class="res-room-info">
+                <img src="images/junior.JPG" alt="Junior Suite C" class="res-room-thumb">
+                <div>
+                  <div class="res-room-name">Junior Suite C with Balcony</div>
+                  <div class="res-ref-sub">EXT-2026-00109 · <strong style="color: #092741;">Room 502</strong></div>
+                </div>
+              </div>
+
+              <div class="res-dates-col">
+                Aug 10, 2026<br>
+                Aug 12, 2026
+              </div>
+
+              <div>
+                <div class="badge-res checked-out">CHECKED OUT</div>
+              </div>
+
+              <div class="btn-row-details" onclick="showBillingPaymentView()">
+                BILLED &rarr;
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== VIEW 3: RESERVATION DETAILS VIEW ==================== -->
+      <div id="view-reservation-details" class="portal-section hidden">
+        <div>
+          <div class="back-link" onclick="showMyReservationsView()">&larr; MY RESERVATIONS</div>
+          <div>
+            <div class="portal-subtag">GUEST PORTAL</div>
+            <h1 class="portal-greeting">Reservation details</h1>
+            <p class="portal-subtitle">Reservation Number: EXT-2026-00482</p>
+          </div>
+        </div>
+
+        <div class="details-grid">
+          <div class="details-left-card">
+            <img src="images/deluxeA.JPG" alt="Deluxe A" class="details-main-img" id="detail-card-img">
+            <h2 class="details-room-title" id="detail-card-room">Deluxe A</h2>
+
+            <div class="details-dates-grid">
+              <div class="detail-item">
+                <span class="detail-label">ASSIGNED ROOM NUMBER</span>
+                <span class="detail-value" id="detail-room-no" style="color: #092741; font-weight: 700;">Room 408 (Floor 4)</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">NUMBER OF GUESTS</span>
+                <span class="detail-value" id="detail-guests">2 Adults</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">CHECK IN</span>
+                <span class="detail-value" id="detail-checkin">Dec 18, 2026</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">CHECK OUT</span>
+                <span class="detail-value" id="detail-checkout">Dec 20, 2026</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">ESTIMATED ROOM CHARGE</span>
+                <span class="detail-value" id="detail-total">₱6,600.00</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">REQUIRED DEPOSIT</span>
+                <span class="detail-value" id="detail-deposit-val">₱1,000.00</span>
+              </div>
+            </div>
+
+            <div class="manage-res-box">
+              <h3 class="manage-res-title">Manage reservation</h3>
+              <p class="manage-res-desc">Need to change stay dates or cancel your booking? Select an option below.</p>
+              
+              <div class="manage-buttons-group">
+                <button class="btn-outline-action" onclick="openRebookingModal()">REQUEST REBOOKING</button>
+                <button class="btn-outline-action" onclick="openCancellationModal()">CANCEL RESERVATION</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="details-right-card">
+            <div class="right-card-title">STATUS & PAYMENT INFORMATION</div>
+
+            <table class="payment-table">
+              <tr>
+                <td class="label">Reservation Status</td>
+                <td style="text-align: right;">
+                  <div class="badge-res confirmed" id="detail-res-status-badge">CONFIRMED</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">Deposit Status</td>
+                <td style="text-align: right;">
+                  <span class="badge-pay approved" id="detail-pay-status-badge">Verified</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">Payment Method</td>
+                <td class="val" style="font-weight:600; color:#111111;">GCash</td>
+              </tr>
+              <tr>
+                <td class="label">Deposit Paid</td>
+                <td class="val">₱1,000.00</td>
+              </tr>
+              <tr id="row-same-day-charge" style="display:none;">
+                <td class="label">Rebooking Extra Charge</td>
+                <td class="val" id="val-same-day-charge" style="color:#B48934;">₱0.00</td>
+              </tr>
+            </table>
+
+            <div class="right-card-title" style="margin-bottom:10px;">PROOF OF PAYMENT</div>
+            <div class="receipt-preview-box">
+              Uploaded GCash Receipt (Verified)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== VIEW 4: BILLING & PAYMENT VIEW ==================== -->
+      <div id="view-billing-payment" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">FINANCIAL & RESERVATION PAYMENT RECORDS</div>
+          <h1 class="portal-greeting">Reservation Payment Records</h1>
+          <p class="portal-subtitle">Track deposit submissions, payment verifications, and uploaded GCash receipts.</p>
+        </div>
+
+        <div class="admin-billing-card">
+          <div class="tab-bar">
+            <button class="tab-btn active" id="btn-subtab-payment" onclick="switchBillingTab('payment')">Payment History</button>
+            <button class="tab-btn" id="btn-subtab-billing" onclick="switchBillingTab('billing')">Reservation Ledger</button>
+          </div>
+
+          <!-- 1. PAYMENT HISTORY SUBTAB -->
+          <div id="subtab-payment-history" class="subtab-content">
+            <div class="card-title-bar">
+              <h2 class="card-title-text" style="font-size:24px;">GCash Payment Proof Records</h2>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-payment" placeholder="Search payment date, reference number, status..." onkeyup="filterTable('table-payment-body', 'search-payment')" />
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>PAYMENT DATE</th>
+                    <th>TYPE / DESCRIPTION</th>
+                    <th>RESERVATION REF #</th>
+                    <th>GCASH REF NUMBER</th>
+                    <th>SUBMITTED AMOUNT</th>
+                    <th>PAYMENT STATUS</th>
+                    <th>SUBMITTED PROOF</th>
+                  </tr>
+                </thead>
+                <tbody id="table-payment-body">
+                  <tr data-ref="EXT-2026-00482">
+                    <td>Dec 15, 2026</td>
+                    <td>Reservation Deposit</td>
+                    <td style="font-weight: 700;">EXT-2026-00482</td>
+                    <td style="font-weight: 700; color: #092741;">1002938475102</td>
+                    <td style="font-weight: 700; color: #092741;">₱1,000.00</td>
+                    <td><span class="badge-pay approved">Verified</span></td>
+                    <td>
+                      <button class="btn-view-receipt" onclick="viewSubmittedReceipt('1002938475102', '₱1,000.00', 'Dec 15, 2026')">VIEW RECEIPT</button>
+                    </td>
+                  </tr>
+                  <tr id="row-payment-rebook-extra" style="display:none;">
+                    <td id="pay-rebook-date">Dec 16, 2026</td>
+                    <td id="pay-rebook-desc">Rebooking Extra Charge</td>
+                    <td style="font-weight: 700;">EXT-2026-00482</td>
+                    <td style="font-weight: 700; color: #092741;" id="pay-rebook-ref">1009876543210</td>
+                    <td style="font-weight: 700; color: #B48934;" id="pay-rebook-amt">₱500.00</td>
+                    <td><span class="badge-pay pending" id="pay-rebook-status">Pending Verification</span></td>
+                    <td>
+                      <button class="btn-view-receipt" onclick="viewSubmittedReceipt('1009876543210', '₱500.00', 'Dec 16, 2026')">VIEW RECEIPT</button>
+                    </td>
+                  </tr>
+                  <tr data-ref="EXT-2026-00109">
+                    <td>Aug 08, 2026</td>
+                    <td>Reservation Deposit</td>
+                    <td style="font-weight: 700;">EXT-2026-00109</td>
+                    <td style="font-weight: 700; color: #092741;">8830192840192</td>
+                    <td style="font-weight: 700; color: #092741;">₱1,000.00</td>
+                    <td><span class="badge-pay approved">Verified</span></td>
+                    <td>
+                      <button class="btn-view-receipt" onclick="viewSubmittedReceipt('8830192840192', '₱1,000.00', 'Aug 08, 2026')">VIEW RECEIPT</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 2. RESERVATION LEDGER SUBTAB -->
+          <div id="subtab-billing-history" class="subtab-content hidden">
+            <div class="card-title-bar">
+              <h2 class="card-title-text" style="font-size:24px;">Online Reservation Ledger Summary</h2>
+            </div>
+
+            <div class="filter-toolbar">
+              <input type="text" id="search-billing" placeholder="Search reservation ID, date, status..." onkeyup="filterTable('table-billing-body', 'search-billing')" />
+            </div>
+
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>RESERVATION ID</th>
+                    <th>GUEST NAME</th>
+                    <th>ROOM TYPE</th>
+                    <th>ESTIMATED ROOM CHARGE</th>
+                    <th>REQUIRED DEPOSIT</th>
+                    <th>DEPOSIT PAID</th>
+                    <th>DEPOSIT PAYMENT STATUS</th>
+                    <th>REBOOKING EXTRA CHARGE</th>
+                    <th>RESERVATION STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="table-billing-body">
+                  <tr data-ref="EXT-2026-00482">
+                    <td><strong>EXT-2026-00482</strong></td>
+                    <td><strong>JADE BIANCA PORTILLO</strong></td>
+                    <td id="ledger-room-name">Deluxe A</td>
+                    <td id="ledger-est-charge">₱6,600.00</td>
+                    <td>₱1,000.00</td>
+                    <td style="color: #0E7A36; font-weight: 700;">₱1,000.00</td>
+                    <td><span class="badge-pay approved" id="ledger-deposit-status-badge">Verified</span></td>
+                    <td id="ledger-same-day-amt">₱0.00</td>
+                    <td><span class="badge-res confirmed" id="ledger-res-status-badge">CONFIRMED</span></td>
+                  </tr>
+                  <tr data-ref="EXT-2026-00109">
+                    <td><strong>EXT-2026-00109</strong></td>
+                    <td><strong>JADE BIANCA PORTILLO</strong></td>
+                    <td>Junior Suite C</td>
+                    <td>₱7,600.00</td>
+                    <td>₱1,000.00</td>
+                    <td style="color: #0E7A36; font-weight: 700;">₱1,000.00</td>
+                    <td><span class="badge-pay approved">Verified</span></td>
+                    <td>₱0.00</td>
+                    <td><span class="badge-res checked-out">CHECKED OUT</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==================== VIEW 5: MY ACCOUNT VIEW ==================== -->
+      <div id="view-my-account" class="portal-section hidden">
+        <div>
+          <div class="portal-subtag">GUEST PORTAL</div>
+          <h1 class="portal-greeting">My account</h1>
+          <p class="portal-subtitle">Keep your personal and contact information up to date.</p>
+        </div>
+
+        <div class="account-grid">
+          <div class="account-card">
+            <h2 class="account-card-title">Personal information</h2>
+
+            <div class="form-grid-2">
+              <div class="c-field">
+                <label>FULL NAME</label>
+                <input type="text" id="acc-fullname" value="Jade Bianca Portillo">
+              </div>
+              <div class="c-field">
+                <label>EMAIL ADDRESS</label>
+                <input type="email" id="acc-email" value="jadebiancaportillo@gmail.com">
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="c-field">
+                <label>CONTACT NUMBER</label>
+                <input type="text" id="acc-phone" value="+63 917 123 4567">
+              </div>
+              <div class="c-field">
+                <label>COUNTRY</label>
+                <select id="acc-country">
+                  <option value="Philippines" selected>Philippines</option>
+                  <option value="United States">United States</option>
+                  <option value="Japan">Japan</option>
+                  <option value="Singapore">Singapore</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn-gold-save" onclick="alert('Account details updated successfully!')">SAVE CHANGES</button>
+          </div>
+
+          <div class="security-card">
+            <h2 class="account-card-title" style="font-size:24px;">Security</h2>
+            <p class="security-desc">Update your password regularly to keep your account secure.</p>
+
+            <button class="btn-change-pass" onclick="alert('Password reset link sent to your email!')">CHANGE PASSWORD</button>
+
+            <div class="security-logout-link" onclick="window.location.href='login.html'">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+              <span>LOG OUT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== VIEW 6: BOOK YOUR STAY ==================== -->
+      <div id="view-book-stay" class="portal-section hidden">
+        <div>
+          <div class="back-link" onclick="showDashboardView()">&larr; GUEST DASHBOARD</div>
+          <div class="portal-subtag">GUEST PORTAL</div>
+          <h1 class="portal-greeting">Book your stay</h1>
+          <p class="portal-subtitle">Choose your stay details and see real-time room availability for your selected dates.</p>
+        </div>
+
+        <div class="booking-filter-card">
+          <div class="filter-field">
+            <label>CHECK IN DATE</label>
+            <input type="date" id="book-checkin" value="2026-12-18" onchange="updateRoomAvailability()">
+          </div>
+
+          <div class="filter-field">
+            <label>CHECK OUT DATE</label>
+            <input type="date" id="book-checkout" value="2026-12-20" onchange="updateRoomAvailability()">
+          </div>
+
+          <div class="filter-field">
+            <label>NUMBER OF GUESTS</label>
+            <select id="book-guests-count">
+              <option value="1 Guest">1 Guest</option>
+              <option value="2 Guests" selected>2 Guests</option>
+              <option value="3 Guests">3 Guests</option>
+              <option value="4 Guests">4 Guests</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="available-rooms-header">
+          <div>
+            <div class="available-subtag">ROOM AVAILABILITY</div>
+            <h2 class="available-title">Select your room</h2>
+          </div>
+          <div class="available-count" id="available-rooms-count-text">3 room types available for selected dates</div>
+        </div>
+
+        <div class="booking-rooms-grid">
+          <!-- DELUXE A -->
+          <div class="b-room-card" id="card-deluxe-a">
+            <img src="images/deluxeA.JPG" alt="Deluxe A" class="b-room-img">
+            <div class="b-room-content">
+              <div class="b-room-header">
+                <h3 class="b-room-name">Deluxe A</h3>
+                <span class="b-room-price">₱3,300</span>
+              </div>
+              <div class="b-room-specs">Up to 2 guests · 2 Single beds</div>
+              
+              <!-- Live Availability Indicator -->
+              <div id="avail-badge-deluxe-a" style="margin-bottom: 12px; font-size: 11px; font-weight: 800; letter-spacing: 1px; color: #1E7E34; background: #E7F6EC; padding: 4px 10px; border-radius: 4px; display: inline-block;">
+                ✓ AVAILABLE FOR SELECTED DATES
+              </div>
+
+              <button class="btn-select-room" id="btn-select-deluxe-a" onclick="startCheckout('Deluxe A', '₱3,300', 'images/deluxeA.JPG', 2)">SELECT ROOM</button>
+            </div>
+          </div>
+
+          <!-- DELUXE B -->
+          <div class="b-room-card" id="card-deluxe-b">
+            <img src="images/deluxeB.JPG" alt="Deluxe B with Balcony" class="b-room-img">
+            <div class="b-room-content">
+              <div class="b-room-header">
+                <h3 class="b-room-name">Deluxe B with Balcony</h3>
+                <span class="b-room-price">₱3,800</span>
+              </div>
+              <div class="b-room-specs">Up to 3 guests · 2 Single beds</div>
+              
+              <!-- Live Availability Indicator -->
+              <div id="avail-badge-deluxe-b" style="margin-bottom: 12px; font-size: 11px; font-weight: 800; letter-spacing: 1px; color: #1E7E34; background: #E7F6EC; padding: 4px 10px; border-radius: 4px; display: inline-block;">
+                ✓ AVAILABLE FOR SELECTED DATES
+              </div>
+
+              <button class="btn-select-room" id="btn-select-deluxe-b" onclick="startCheckout('Deluxe B with Balcony', '₱3,800', 'images/deluxeB.JPG', 3)">SELECT ROOM</button>
+            </div>
+          </div>
+
+          <!-- JUNIOR SUITE C -->
+          <div class="b-room-card" id="card-junior-c">
+            <img src="images/junior.JPG" alt="Junior Suite C with Balcony" class="b-room-img">
+            <div class="b-room-content">
+              <div class="b-room-header">
+                <h3 class="b-room-name">Junior Suite C with Balcony</h3>
+                <span class="b-room-price">₱6,800</span>
+              </div>
+              <div class="b-room-specs">Up to 4 guests · 1 Queen bed</div>
+              
+              <!-- Live Availability Indicator -->
+              <div id="avail-badge-junior-c" style="margin-bottom: 12px; font-size: 11px; font-weight: 800; letter-spacing: 1px; color: #1E7E34; background: #E7F6EC; padding: 4px 10px; border-radius: 4px; display: inline-block;">
+                ✓ AVAILABLE FOR SELECTED DATES
+              </div>
+
+              <button class="btn-select-room" id="btn-select-junior-c" onclick="startCheckout('Junior Suite C with Balcony', '₱6,800', 'images/junior.JPG', 4)">SELECT ROOM</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== VIEW 7: STEP 1 - COMPLETE YOUR STAY ==================== -->
+      <div id="view-checkout-step1" class="portal-section hidden">
+        <div class="checkout-wrapper">
+          <div class="step-indicator-bar">
+            <div class="step-line"><div class="step-line-fill" style="width: 0%;"></div></div>
+            <div class="step-item active">
+              <div class="step-circle">1</div>
+              <div class="step-label">STAY DETAILS</div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">2</div>
+              <div class="step-label">PAYMENT</div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">3</div>
+              <div class="step-label">SUBMITTED</div>
+            </div>
+          </div>
+
+          <div class="checkout-grid">
+            <div class="checkout-form-card">
+              <div class="step-subtag">RESERVATION DETAILS</div>
+              <h1 class="step-title">Complete your stay</h1>
+
+              <div class="form-grid-2">
+                <div class="c-field">
+                  <label>CHECK-IN DATE</label>
+                  <input type="text" value="18/12/2026" readonly>
+                </div>
+                <div class="c-field">
+                  <label>CHECK-OUT DATE</label>
+                  <input type="text" value="20/12/2026" readonly>
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="c-field">
+                  <label>NUMBER OF GUESTS</label>
+                  <select id="checkout-guest-select"></select>
+                </div>
+                <div class="c-field">
+                  <label>FULL NAME</label>
+                  <input type="text" value="Jade Bianca Portillo">
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="c-field">
+                  <label>EMAIL ADDRESS</label>
+                  <input type="email" value="jadebiancaportillo@gmail.com">
+                </div>
+                <div class="c-field">
+                  <label>CONTACT NUMBER</label>
+                  <input type="text" value="+63 917 123 4567">
+                </div>
+              </div>
+
+              <button class="btn-step-action" onclick="goToStep2()">CONFIRM RESERVATION & PROCEED &rarr;</button>
+              <p class="step-note">You will be given 30 minutes to submit the required deposit before reservation hold expires.</p>
+            </div>
+
+            <div class="summary-card">
+              <img id="sum-img-1" src="images/deluxeA.JPG" alt="Selected Room" class="summary-img">
+              <div class="summary-content">
+                <div class="summary-subtag">YOUR RESERVATION</div>
+                <h3 id="sum-title-1" class="summary-room-title">Deluxe A</h3>
+
+                <table class="summary-table">
+                  <tr>
+                    <td class="label">Check in</td>
+                    <td>Dec 18, 2026</td>
+                  </tr>
+                  <tr>
+                    <td class="label">Check out</td>
+                    <td>Dec 20, 2026</td>
+                  </tr>
+                  <tr>
+                    <td class="label">Stay</td>
+                    <td id="sum-stay-info-1">2 nights · 2 guests</td>
+                  </tr>
+                  <tr>
+                    <td class="label">Room rate</td>
+                    <td id="sum-rate-1">₱3,300 / night</td>
+                  </tr>
+                </table>
+
+                <div class="summary-divider"></div>
+
+                <div class="total-row">
+                  <span class="total-label">Estimated room charge</span>
+                  <span id="sum-total-1" class="total-amount">₱6,600</span>
+                </div>
+
+                <div class="deposit-box">
+                  <span>Required deposit</span>
+                  <span>₱1,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== VIEW 8: STEP 2 - PAY YOUR DEPOSIT ==================== -->
+      <div id="view-checkout-step2" class="portal-section hidden">
+        <div class="checkout-wrapper">
+          <div class="step-indicator-bar">
+            <div class="step-line"><div class="step-line-fill" style="width: 50%;"></div></div>
+            <div class="step-item completed">
+              <div class="step-circle">&#10003;</div>
+              <div class="step-label">STAY DETAILS</div>
+            </div>
+            <div class="step-item active">
+              <div class="step-circle">2</div>
+              <div class="step-label">PAYMENT</div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">3</div>
+              <div class="step-label">SUBMITTED</div>
+            </div>
+          </div>
+
+          <div class="checkout-grid">
+            <div class="checkout-form-card">
+              <div class="timer-banner">
+                <div>
+                  <div class="step-subtag" style="margin:0;">SECURE DEPOSIT PAYMENT</div>
+                  <h1 class="step-title" style="font-size:36px; margin:0;">Pay your deposit</h1>
+                </div>
+                <div style="text-align:right;">
+                  <div class="timer-label">HOLD EXPIRES AT</div>
+                  <div class="timer-clock" id="timer-display">29:34</div>
+                </div>
+              </div>
+
+              <div class="ref-box">
+                <span>Reservation Number</span>
+                <span>EXT-2026-00482</span>
+              </div>
+
+              <div style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#092741; margin-bottom:12px;">
+                1. SEND ₱1,000 DEPOSIT VIA GCASH
+              </div>
+
+              <!-- GCASH CARD WITH QR IMAGE FROM PROVIDED LINK -->
+              <div class="gcash-info-card">
+                <div class="qr-placeholder" style="background: none; padding: 0;">
+                  <img src="images/qr.webp" alt="GCash QR Code" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+                <div class="gcash-details">
+                  <p><strong>Extremeli Suites</strong></p>
+                  <p>GCash number: <strong>0917 000 0000</strong></p>
+                  <p>Account name: <strong>EXTREMELI SUITES</strong></p>
+                  <p class="gcash-note">Enter the 13-digit reference number and upload transaction screenshot.</p>
+                </div>
+              </div>
+
+              <div style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#092741; margin-bottom:12px;">
+                2. UPLOAD PAYMENT PROOF
+              </div>
+
+              <div class="upload-box" onclick="document.getElementById('file-input').click()">
+                <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+                <div class="upload-text-main" id="upload-status-text">UPLOAD RECEIPT SCREENSHOT</div>
+                <div class="upload-text-sub">JPG or PNG · Maximum 10 MB</div>
+                <input type="file" id="file-input" style="display:none;" onchange="handleFileUpload(event)">
+              </div>
+
+              <div class="c-field" style="margin-bottom:20px;">
+                <label>13-DIGIT GCASH REFERENCE NUMBER</label>
+                <input type="text" id="gcash-ref-input" placeholder="e.g. 1002938475102">
+              </div>
+
+              <button class="btn-step-action" onclick="goToStep3()">SUBMIT PAYMENT PROOF</button>
+            </div>
+
+            <div class="summary-card">
+              <img id="sum-img-2" src="images/deluxeA.JPG" alt="Selected Room" class="summary-img">
+              <div class="summary-content">
+                <div class="summary-subtag">YOUR RESERVATION</div>
+                <h3 id="sum-title-2" class="summary-room-title">Deluxe A</h3>
+
+                <table class="summary-table">
+                  <tr>
+                    <td class="label">Check in</td>
+                    <td>Dec 18, 2026</td>
+                  </tr>
+                  <tr>
+                    <td class="label">Check out</td>
+                    <td>Dec 20, 2026</td>
+                  </tr>
+                  <tr>
+                    <td class="label">Stay</td>
+                    <td id="sum-stay-info-2">2 nights · 2 guests</td>
+                  </tr>
+                  <tr>
+                    <td class="label">Room rate</td>
+                    <td id="sum-rate-2">₱3,300 / night</td>
+                  </tr>
+                </table>
+
+                <div class="summary-divider"></div>
+
+                <div class="total-row">
+                  <span class="total-label">Estimated room charge</span>
+                  <span id="sum-total-2" class="total-amount">₱6,600</span>
+                </div>
+
+                <div class="deposit-box">
+                  <span>Required deposit</span>
+                  <span>₱1,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== VIEW 9: STEP 3 - SUBMITTED REVIEW ==================== -->
+      <div id="view-checkout-step3" class="portal-section hidden">
+        <div class="checkout-wrapper">
+          <div class="step-indicator-bar">
+            <div class="step-line"><div class="step-line-fill" style="width: 100%;"></div></div>
+            <div class="step-item completed">
+              <div class="step-circle">&#10003;</div>
+              <div class="step-label">STAY DETAILS</div>
+            </div>
+            <div class="step-item completed">
+              <div class="step-circle">&#10003;</div>
+              <div class="step-label">PAYMENT</div>
+            </div>
+            <div class="step-item active">
+              <div class="step-circle">3</div>
+              <div class="step-label">SUBMITTED</div>
+            </div>
+          </div>
+
+          <div class="success-card-wrapper">
+            <div class="success-icon-circle">
+              <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+            <div class="success-subtag">PAYMENT SUBMITTED</div>
+            <h1 class="success-title">Your proof is under review</h1>
+            <p class="success-desc">
+              We received your GCash payment receipt for reservation <strong>EXT-2026-00482</strong>. Hotel personnel will verify it shortly.
+            </p>
+
+            <div class="warning-box">
+              <strong>Please note:</strong> Your reservation is not yet fully confirmed. We will update your status once your payment has been verified. The room dates remain held while your request is pending verification, and requests still awaiting review after 24 hours remain pending until hotel personnel process them.
+            </div>
+
+            <button class="btn-book-stay" style="width:100%;" onclick="showDashboardView()">GO TO GUEST PORTAL &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL: CANCELLATION REQUEST -->
+  <div id="modal-cancellation" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h2 class="modal-title">Cancel Reservation</h2>
+      <p class="modal-desc">Are you sure you want to cancel reservation <strong>EXT-2026-00482</strong>?</p>
+      
+      <div class="warning-box" style="margin-bottom:15px; background-color:#FFF3CD; border-color:#FFEBAA; color:#856404;">
+        <strong>Cancellation Policy Notice:</strong><br>
+        Please note that the <strong>₱1,000 reservation deposit is strictly non-refundable</strong>. No extra cancellation fees will be charged.
+      </div>
+
+      <div class="c-field" style="margin-bottom:20px;">
+        <label>REASON FOR CANCELLATION</label>
+        <textarea id="cancel-reason-input" placeholder="Please enter your reason for cancellation..."></textarea>
+      </div>
+      <div style="display:flex; gap:12px; justify-content:flex-end;">
+        <button class="btn-outline-action" onclick="closeModal('modal-cancellation')">BACK</button>
+        <button class="btn-book-stay" onclick="submitCancellationWorkflow()">CONFIRM CANCELLATION</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: REBOOKING REQUEST -->
+  <div id="modal-rebooking" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h2 class="modal-title">Request Rebooking</h2>
+      <p class="modal-desc">Select requested check-in/check-out dates and room type. Rebooking requests are subject to room availability and FOA review.</p>
+      
+      <div id="rebook-avail-alert" class="avail-status-msg"></div>
+
+      <div class="form-grid-2">
+        <div class="c-field">
+          <label>REQUESTED CHECK-IN DATE</label>
+          <input type="date" id="rebook-date-in" value="2026-12-22" onchange="checkRebookingAvailability()">
+        </div>
+        <div class="c-field">
+          <label>REQUESTED CHECK-OUT DATE</label>
+          <input type="date" id="rebook-date-out" value="2026-12-24" onchange="checkRebookingAvailability()">
+        </div>
+      </div>
+
+      <div class="c-field" style="margin-bottom:15px;">
+        <label>PREFERRED ROOM TYPE</label>
+        <select id="rebook-room-select" onchange="checkRebookingAvailability()">
+          <option value="Deluxe A" data-price="3300" data-max="2">Deluxe A (₱3,300/night - Max 2 Guests)</option>
+          <option value="Deluxe B with Balcony" data-price="3800" data-max="3">Deluxe B with Balcony (₱3,800/night - Max 3 Guests)</option>
+          <option value="Junior Suite C with Balcony" data-price="6800" data-max="4">Junior Suite C with Balcony (₱6,800/night - Max 4 Guests)</option>
+        </select>
+      </div>
+
+      <div class="c-field" style="margin-bottom:15px;">
+        <label>NUMBER OF GUESTS</label>
+        <select id="rebook-guests-select"></select>
+      </div>
+
+      <div style="background-color: #f8f9fa; padding: 16px; border: 1px solid #e5e5e5; border-radius: 4px; margin-bottom: 20px;">
+        <div style="font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #092741; margin-bottom: 8px;">REBOOKING RATE COMPUTATION</div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+          <span>Original Room Charge:</span>
+          <span>₱6,600.00</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+          <span>New Estimated Room Charge:</span>
+          <span id="rebook-new-total" style="font-weight: 700;">₱6,600.00</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; border-top: 1px solid #dcdcdc; padding-top: 6px; margin-top: 6px;">
+          <span>ADDITIONAL CHARGE DUE:</span>
+          <span id="rebook-extra-charge" style="color: #B48934; font-size: 14px;">₱0.00</span>
+        </div>
+      </div>
+
+      <div id="rebook-gcash-section" style="display: none; border-top: 1px dashed #dcdcdc; padding-top: 15px; margin-bottom: 20px;">
+        <div style="font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #092741; margin-bottom: 8px;">PAY ADDITIONAL REBOOKING CHARGE VIA GCASH</div>
+        <p style="font-size: 12px; color: #687680; margin-bottom: 10px;">Please pay the required additional charge via GCash and submit the transaction proof below.</p>
+        
+        <div style="background: #092741; color: #fff; padding: 12px; font-size: 12px; border-radius: 4px; margin-bottom: 12px;">
+          GCash Number: <strong>0917 000 0000</strong> | Account Name: <strong>EXTREMELI SUITES</strong>
+        </div>
+
+        <div class="c-field" style="margin-bottom: 12px;">
+          <label>13-DIGIT GCASH REFERENCE NUMBER</label>
+          <input type="text" id="rebook-gcash-ref" placeholder="e.g. 1009876543210">
+        </div>
+
+        <div class="c-field" style="margin-bottom: 12px;">
+          <label>UPLOAD RECEIPT SCREENSHOT (PROOF OF PAYMENT)</label>
+          <input type="file" id="rebook-proof-file" accept="image/*" onchange="handleRebookFile(event)">
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; justify-content:flex-end;">
+        <button class="btn-outline-action" onclick="closeModal('modal-rebooking')">CANCEL</button>
+        <button class="btn-book-stay" id="btn-submit-rebooking" onclick="submitRebookingWorkflow()">SUBMIT REBOOKING REQUEST</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: VIEW SUBMITTED RECEIPT IMAGE -->
+  <div id="modal-view-receipt" class="modal-overlay hidden">
+    <div class="modal-card" style="text-align: center;">
+      <h2 class="modal-title" style="font-size:24px;">Submitted Payment Proof</h2>
+      <p class="modal-desc" id="receipt-modal-sub">GCash Reference: 1002938475102</p>
+
+      <div style="border: 1px solid #e5e5e5; padding: 15px; border-radius: 4px; background: #fafafa; margin-bottom: 20px;">
+        <div style="font-size: 12px; font-weight: 700; color: #092741; margin-bottom: 10px;" id="receipt-modal-amt">Amount: ₱1,000.00</div>
+        <div style="background: #005CEE; color: #fff; padding: 20px; border-radius: 8px; text-align: left; font-family: sans-serif;">
+          <div style="font-size: 16px; font-weight: 800; margin-bottom: 10px;">GCash Express Send</div>
+          <div style="font-size: 11px; opacity: 0.9;">Successfully Sent To</div>
+          <div style="font-size: 14px; font-weight: 700; margin-bottom: 15px;">EXTREMELI SUITES</div>
+          <div style="font-size: 22px; font-weight: 800; margin-bottom: 15px;" id="receipt-card-amt">PHP 1,000.00</div>
+          <div style="font-size: 10px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 8px;" id="receipt-card-ref">Ref No. 1002938475102</div>
+        </div>
+      </div>
+
+      <button class="btn-outline-action" onclick="closeModal('modal-view-receipt')">CLOSE RECEIPT</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-bottom">
+      &copy; 2026 EXTREMELI SUITES. ALL RIGHTS RESERVED.
+    </div>
+  </footer>
+
+  <script>
+    let rebookProofUploaded = false;
+
+    let currentRoom = {
+      name: 'Deluxe A',
+      rate: '₱3,300',
+      total: '₱6,600.00',
+      img: 'images/deluxeA.JPG',
+      maxGuests: 2,
+      selectedGuests: '2 Guests',
+      assignedRoomNo: 'Room 408'
+    };
+
+    function setActiveSidebar(id) {
+      document.getElementById('nav-dashboard').classList.remove('active');
+      document.getElementById('nav-my-reservations').classList.remove('active');
+      document.getElementById('nav-billing-payment').classList.remove('active');
+      document.getElementById('nav-my-account').classList.remove('active');
+      if(id) document.getElementById(id).classList.add('active');
+    }
+
+    function hideAllViews() {
+      const views = ['view-dashboard', 'view-my-reservations', 'view-reservation-details', 'view-billing-payment', 'view-my-account', 'view-book-stay', 'view-checkout-step1', 'view-checkout-step2', 'view-checkout-step3'];
+      views.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.classList.add('hidden');
+      });
+    }
+
+    function showDashboardView() {
+      hideAllViews();
+      setActiveSidebar('nav-dashboard');
+      document.getElementById('view-dashboard').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showMyReservationsView() {
+      hideAllViews();
+      setActiveSidebar('nav-my-reservations');
+      document.getElementById('view-my-reservations').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showReservationDetailsView() {
+      hideAllViews();
+      setActiveSidebar('nav-my-reservations');
+      document.getElementById('view-reservation-details').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showBillingPaymentView() {
+      hideAllViews();
+      setActiveSidebar('nav-billing-payment');
+      document.getElementById('view-billing-payment').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showMyAccountView() {
+      hideAllViews();
+      setActiveSidebar('nav-my-account');
+      document.getElementById('view-my-account').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showBookStayView() {
+      hideAllViews();
+      setActiveSidebar(null);
+      document.getElementById('view-book-stay').classList.remove('hidden');
+      updateRoomAvailability();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // DYNAMIC ROOM AVAILABILITY CHECKER FOR SELECTED DATES
+    function updateRoomAvailability() {
+      const checkIn = document.getElementById('book-checkin').value;
+      const checkOut = document.getElementById('book-checkout').value;
+
+      const badgeA = document.getElementById('avail-badge-deluxe-a');
+      const btnA = document.getElementById('btn-select-deluxe-a');
+      
+      const badgeB = document.getElementById('avail-badge-deluxe-b');
+      const btnB = document.getElementById('btn-select-deluxe-b');
+      
+      const badgeC = document.getElementById('avail-badge-junior-c');
+      const btnC = document.getElementById('btn-select-junior-c');
+
+      // Sample Logic: If check-in is set to peak dates (e.g. Dec 24 to Dec 26), mark Deluxe B as fully booked
+      if (checkIn >= "2026-12-24" && checkIn <= "2026-12-26") {
+        badgeB.style.color = "#9B1C1C";
+        badgeB.style.background = "#FDF2F2";
+        badgeB.innerText = "✕ FULLY BOOKED ON THESE DATES";
+        btnB.disabled = true;
+        btnB.style.opacity = "0.5";
+        btnB.style.cursor = "not-allowed";
+
+        badgeA.style.color = "#1E7E34";
+        badgeA.style.background = "#E7F6EC";
+        badgeA.innerText = "✓ AVAILABLE FOR SELECTED DATES";
+        btnA.disabled = false;
+        btnA.style.opacity = "1";
+        btnA.style.cursor = "pointer";
+
+        badgeC.style.color = "#1E7E34";
+        badgeC.style.background = "#E7F6EC";
+        badgeC.innerText = "✓ AVAILABLE FOR SELECTED DATES";
+        btnC.disabled = false;
+        btnC.style.opacity = "1";
+        btnC.style.cursor = "pointer";
+
+        document.getElementById('available-rooms-count-text').innerText = "2 room types available for selected dates";
+      } else {
+        [badgeA, badgeB, badgeC].forEach(b => {
+          if (b) {
+            b.style.color = "#1E7E34";
+            b.style.background = "#E7F6EC";
+            b.innerText = "✓ AVAILABLE FOR SELECTED DATES";
+          }
+        });
+
+        [btnA, btnB, btnC].forEach(btn => {
+          if (btn) {
+            btn.disabled = false;
+            btn.style.opacity = "1";
+            btn.style.cursor = "pointer";
+          }
+        });
+
+        document.getElementById('available-rooms-count-text').innerText = "3 room types available for selected dates";
+      }
+    }
+
+    function switchBillingTab(tabType) {
+      document.getElementById('btn-subtab-payment').classList.remove('active');
+      document.getElementById('btn-subtab-billing').classList.remove('active');
+      
+      document.getElementById('subtab-payment-history').classList.add('hidden');
+      document.getElementById('subtab-billing-history').classList.add('hidden');
+
+      if(tabType === 'payment') {
+        document.getElementById('btn-subtab-payment').classList.add('active');
+        document.getElementById('subtab-payment-history').classList.remove('hidden');
+      } else {
+        document.getElementById('btn-subtab-billing').classList.add('active');
+        document.getElementById('subtab-billing-history').classList.remove('hidden');
+      }
+    }
+
+    function filterTable(tbodyId, searchInputId) {
+      const query = document.getElementById(searchInputId).value.toLowerCase();
+      const tbody = document.getElementById(tbodyId);
+      const rows = tbody.getElementsByTagName('tr');
+
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const searchData = row.innerText.toLowerCase();
+        row.style.display = searchData.includes(query) ? "" : "none";
+      }
+    }
+
+    function filterReservationsTable() {
+      const input = document.getElementById('search-reservations').value.toLowerCase();
+      const rows = document.querySelectorAll('#reservations-table-list .res-table-row');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(input) ? 'grid' : 'none';
+      });
+    }
+
+    function viewSubmittedReceipt(refNo, amount, date) {
+      document.getElementById('receipt-modal-sub').innerText = `GCash Reference: ${refNo} · Date: ${date}`;
+      document.getElementById('receipt-modal-amt').innerText = `Submitted Amount: ${amount}`;
+      document.getElementById('receipt-card-amt').innerText = `PHP ${amount.replace('₱', '')}`;
+      document.getElementById('receipt-card-ref').innerText = `Ref No. ${refNo}`;
+      document.getElementById('modal-view-receipt').classList.remove('hidden');
+    }
+
+    function checkRebookingAvailability() {
+      const roomSelect = document.getElementById('rebook-room-select');
+      const selectedOption = roomSelect.options[roomSelect.selectedIndex];
+      const alertBox = document.getElementById('rebook-avail-alert');
+      const gcashSection = document.getElementById('rebook-gcash-section');
+      const submitBtn = document.getElementById('btn-submit-rebooking');
+      const guestsSelect = document.getElementById('rebook-guests-select');
+
+      const roomName = selectedOption.value;
+      const pricePerNight = parseInt(selectedOption.getAttribute('data-price') || 0);
+      const maxGuests = parseInt(selectedOption.getAttribute('data-max') || 2);
+      const nights = 2;
+
+      guestsSelect.innerHTML = '';
+      for (let i = 1; i <= maxGuests; i++) {
+        const opt = document.createElement('option');
+        opt.value = i + (i === 1 ? ' Guest' : ' Guests');
+        opt.innerText = i + (i === 1 ? ' Adult' : ' Adults');
+        if (i === maxGuests) opt.selected = true;
+        guestsSelect.appendChild(opt);
+      }
+
+      if (roomName.includes('FULL') || pricePerNight === 0) {
+        alertBox.className = 'avail-status-msg error';
+        alertBox.innerText = '⚠️ Selected room is not available for requested dates.';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.5';
+        return;
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+
+      alertBox.className = 'avail-status-msg success';
+      alertBox.innerText = `✓ Requested room is AVAILABLE for selected stay dates!`;
+
+      const newTotal = pricePerNight * nights;
+      const originalTotal = 6600;
+      let extraCharge = Math.max(0, newTotal - originalTotal);
+
+      document.getElementById('rebook-new-total').innerText = '₱' + newTotal.toLocaleString() + '.00';
+      document.getElementById('rebook-extra-charge').innerText = '₱' + extraCharge.toLocaleString() + '.00';
+
+      if (extraCharge > 0) {
+        gcashSection.style.display = 'block';
+      } else {
+        gcashSection.style.display = 'none';
+      }
+    }
+
+    function handleRebookFile(e) {
+      if (e.target.files && e.target.files[0]) {
+        rebookProofUploaded = true;
+      }
+    }
+
+    function startCheckout(name, rate, img, maxGuests) {
+      currentRoom.name = name;
+      currentRoom.rate = rate + ' / night';
+      currentRoom.img = img;
+      currentRoom.maxGuests = maxGuests;
+      
+      if(name.includes('Deluxe A')) currentRoom.total = '₱6,600.00';
+      else if(name.includes('Deluxe B')) currentRoom.total = '₱7,600.00';
+      else currentRoom.total = '₱13,600.00';
+
+      const checkoutGuestSel = document.getElementById('checkout-guest-select');
+      checkoutGuestSel.innerHTML = '';
+      for(let i = 1; i <= maxGuests; i++) {
+        const opt = document.createElement('option');
+        opt.value = i + (i === 1 ? ' Guest' : ' Guests');
+        opt.innerText = i + (i === 1 ? ' Guest' : ' Guests');
+        if(i === 2 || (maxGuests < 2 && i === 1)) opt.selected = true;
+        checkoutGuestSel.appendChild(opt);
+      }
+
+      document.getElementById('sum-title-1').innerText = currentRoom.name;
+      document.getElementById('sum-rate-1').innerText = currentRoom.rate;
+      document.getElementById('sum-total-1').innerText = currentRoom.total;
+      document.getElementById('sum-img-1').src = currentRoom.img;
+      document.getElementById('sum-stay-info-1').innerText = `2 nights · ${checkoutGuestSel.value}`;
+
+      hideAllViews();
+      document.getElementById('view-checkout-step1').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goToStep2() {
+      const selectedGuests = document.getElementById('checkout-guest-select').value;
+      document.getElementById('sum-title-2').innerText = currentRoom.name;
+      document.getElementById('sum-rate-2').innerText = currentRoom.rate;
+      document.getElementById('sum-total-2').innerText = currentRoom.total;
+      document.getElementById('sum-img-2').src = currentRoom.img;
+      document.getElementById('sum-stay-info-2').innerText = `2 nights · ${selectedGuests}`;
+
+      hideAllViews();
+      document.getElementById('view-checkout-step2').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      startTimer();
+    }
+
+    function goToStep3() {
+      hideAllViews();
+      document.getElementById('view-checkout-step3').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleFileUpload(e) {
+      const file = e.target.files[0];
+      if(file) {
+        document.getElementById('upload-status-text').innerText = 'RECEIPT ATTACHED: ' + file.name.toUpperCase();
+      }
+    }
+
+    let timerInterval;
+    function startTimer() {
+      let seconds = 30 * 60;
+      const display = document.getElementById('timer-display');
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        display.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+        if (seconds <= 0) clearInterval(timerInterval);
+        else seconds--;
+      }, 1000);
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function openCancellationModal() {
+      document.getElementById('modal-cancellation').classList.remove('hidden');
+    }
+
+    function submitCancellationWorkflow() {
+      closeModal('modal-cancellation');
+      const resBadges = ['dash-card-badge', 'table-badge', 'detail-res-status-badge', 'ledger-res-status-badge'];
+      resBadges.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) { el.innerText = 'CANCELLED'; el.className = 'badge-res cancelled'; }
+      });
+      document.getElementById('dash-stat-status').innerText = 'Cancelled';
+      document.getElementById('dash-stat-status').style.color = '#9B1C1C';
+      showDashboardView();
+    }
+
+    function openRebookingModal() {
+      document.getElementById('modal-rebooking').classList.remove('hidden');
+      checkRebookingAvailability();
+    }
+
+    function submitRebookingWorkflow() {
+      const roomSelect = document.getElementById('rebook-room-select');
+      const newRoom = roomSelect.value;
+      const newIn = document.getElementById('rebook-date-in').value;
+      const newOut = document.getElementById('rebook-date-out').value;
+      const newGuests = document.getElementById('rebook-guests-select').value;
+      
+      const pricePerNight = parseInt(roomSelect.options[roomSelect.selectedIndex].getAttribute('data-price') || 0);
+      const estNewTotal = pricePerNight * 2;
+      let extraCharge = Math.max(0, estNewTotal - 6600);
+
+      closeModal('modal-rebooking');
+
+      // UPDATE ROOM & DATES
+      document.getElementById('dash-card-room').innerText = newRoom;
+      document.getElementById('table-room-name').innerText = newRoom;
+      document.getElementById('detail-card-room').innerText = newRoom;
+      document.getElementById('ledger-room-name').innerText = newRoom;
+
+      document.getElementById('dash-card-dates').innerText = `${newIn} – ${newOut}`;
+      document.getElementById('table-dates-col').innerHTML = `${newIn}<br>${newOut}`;
+      document.getElementById('detail-checkin').innerText = newIn;
+      document.getElementById('detail-checkout').innerText = newOut;
+      document.getElementById('dash-card-guests').innerText = newGuests;
+      document.getElementById('detail-guests').innerText = newGuests;
+
+      document.getElementById('dash-card-estimated-charge').innerText = '₱' + estNewTotal.toLocaleString() + '.00';
+      document.getElementById('detail-total').innerText = '₱' + estNewTotal.toLocaleString() + '.00';
+      document.getElementById('ledger-est-charge').innerText = '₱' + estNewTotal.toLocaleString() + '.00';
+
+      // UPDATE RESERVATION STATUS BADGES TO "PENDING REBOOKING"
+      const resBadges = ['dash-card-badge', 'table-badge', 'detail-res-status-badge', 'ledger-res-status-badge'];
+      resBadges.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) { 
+          el.innerText = 'PENDING REBOOKING'; 
+          el.className = 'badge-res pending-rebooking'; 
+        }
+      });
+
+      document.getElementById('dash-stat-status').innerText = 'Pending Rebooking';
+      document.getElementById('dash-stat-status').style.color = '#B45309';
+
+      let statusTitle = "Rebooking Requested · Pending FOA Approval";
+      let subDesc = "Front Office Associate will review your rebooking request.";
+
+      if (extraCharge > 0) {
+        document.getElementById('row-same-day-charge').style.display = 'table-row';
+        document.getElementById('val-same-day-charge').innerText = '₱' + extraCharge.toLocaleString() + '.00';
+        document.getElementById('ledger-same-day-amt').innerText = '₱' + extraCharge.toLocaleString() + '.00';
+
+        document.getElementById('row-payment-rebook-extra').style.display = 'table-row';
+        document.getElementById('pay-rebook-amt').innerText = '₱' + extraCharge.toLocaleString() + '.00';
+
+        if (rebookProofUploaded) {
+          const gcashRef = document.getElementById('rebook-gcash-ref').value || "1009876543210";
+          document.getElementById('pay-rebook-ref').innerText = gcashRef;
+          statusTitle = "Rebooking Requested · Payment Proof Submitted";
+          subDesc = "FOA is verifying your additional payment of ₱" + extraCharge.toLocaleString() + ".00.";
+        }
+      } else {
+        document.getElementById('row-same-day-charge').style.display = 'none';
+        document.getElementById('ledger-same-day-amt').innerText = '₱0.00';
+      }
+
+      document.getElementById('banner-mod-title').innerText = statusTitle;
+      document.getElementById('banner-mod-sub').innerText = subDesc;
+      document.getElementById('res-banner-mod-title').innerText = statusTitle;
+      
+      document.getElementById('dash-rebooking-banner').classList.remove('hidden');
+      document.getElementById('res-rebooking-banner').classList.remove('hidden');
+
+      showDashboardView();
+    }
+  </script>
+
+</body>
+</html>

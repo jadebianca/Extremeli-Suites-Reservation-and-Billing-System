@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - Extremeli Suites</title>
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/jpeg" href="images/logo.JPG">
+  
+  <!-- Google Fonts: Cormorant Garamond for Headings & Manrope for Body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* RESET & BASE STYLES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      color: #111111;
+      background-color: #ffffff;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Cormorant Garamond for Headings */
+    h1, h2, h3, .register-title, .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* TOP ANNOUNCEMENT BAR */
+    .top-bar {
+      background-color: #092741; /* Navy Blue */
+      color: #ffffff;
+      text-align: center;
+      padding: 12px 20px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* NAVIGATION BAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img {
+      height: 55px; 
+      width: auto;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 35px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #111111;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #D2AA55;
+    }
+
+    .auth-buttons {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .btn-sign-in {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #092741;
+    }
+
+    .btn-create-account {
+      background-color: #D2AA55; /* GOLD */
+      color: #092741; /* Navy Blue Text */
+      padding: 12px 28px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-create-account:hover {
+      background-color: #B48934;
+    }
+
+    /* REGISTER SPLIT CONTAINER */
+    .register-container {
+      display: flex;
+      flex: 1;
+      min-height: calc(100vh - 100px);
+    }
+
+    /* LEFT SIDE: PHOTO & STRICT LEFT-ALIGNED OVERLAY QUOTE */
+    .register-image-side {
+      flex: 1.1;
+      position: relative;
+      background: url('images/junior.JPG') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 60px 10%;
+      color: #ffffff;
+      text-align: left;
+    }
+
+    .register-image-side::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to top, rgba(9, 39, 65, 0.85) 0%, rgba(9, 39, 65, 0.25) 60%);
+      z-index: 1;
+    }
+
+    .quote-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 500px;
+      margin: 0;
+      text-align: left;
+    }
+
+    .quote-subtag {
+      font-size: 13px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: #D2AA55;
+      margin-bottom: 12px;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .quote-text {
+      font-size: 42px;
+      font-weight: 400;
+      line-height: 1.25;
+      color: #ffffff;
+      text-align: left;
+    }
+
+    /* RIGHT SIDE: FORM */
+    .register-form-side {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 50px 10%;
+      background-color: #ffffff;
+    }
+
+    .form-wrapper {
+      max-width: 440px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* JOIN US SUBTAG */
+    .register-subtag {
+      font-size: 13px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: #B48934;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .register-title {
+      font-size: 46px;
+      font-weight: 500;
+      color: #092741;
+      margin-bottom: 8px;
+    }
+
+    .register-desc {
+      font-size: 14px;
+      color: #687680;
+      margin-bottom: 30px;
+      font-weight: 400;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #092741;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid #dcdcdc;
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      color: #111111;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+      border-color: #D2AA55;
+    }
+
+    .form-group input::placeholder {
+      color: #aaaaaa;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .toggle-password svg {
+      width: 20px;
+      height: 20px;
+      fill: #888888;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background-color: #D2AA55;
+      color: #092741;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 16px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+      margin-bottom: 22px;
+    }
+
+    .btn-submit:hover {
+      background-color: #B48934;
+    }
+
+    .login-prompt {
+      text-align: center;
+      font-size: 13px;
+      color: #687680;
+    }
+
+    .login-prompt a {
+      color: #092741;
+      font-weight: 700;
+      margin-left: 4px;
+      text-decoration: underline;
+    }
+
+    .login-prompt a:hover {
+      color: #D2AA55;
+    }
+
+    /* FOOTER */
+    .footer {
+      background-color: #061b2e;
+      color: #ffffff;
+      padding: 40px 10% 25px;
+      font-size: 13px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      color: #aaaaaa;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 900px) {
+      .register-container {
+        flex-direction: column;
+      }
+      .register-image-side {
+        min-height: 350px;
+        padding: 40px 8%;
+      }
+      .register-form-side {
+        padding: 40px 8%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="top-bar">
+    ESCAPE THE ORDINARY · DIRECT RESERVATIONS INCLUDE OUR BEST AVAILABLE RATE
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <a href="index.html">
+        <img src="images/logo.JPG" alt="Extremeli Suites Logo" class="logo-img">
+      </a>
+    </div>
+    
+    <ul class="nav-links">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="#">ROOMS</a></li>
+      <li><a href="#">FACILITIES</a></li>
+      <li><a href="#">ABOUT US</a></li>
+    </ul>
+
+    <div class="auth-buttons">
+      <a href="login.html" class="btn-sign-in">SIGN IN</a>
+      <button class="btn-create-account" onclick="window.location.href='register.html'">CREATE ACCOUNT</button>
+    </div>
+  </nav>
+
+  <!-- MAIN REGISTER SPLIT SECTION -->
+  <div class="register-container">
+    
+    <!-- LEFT SIDE: PHOTO & STRICT LEFT-ALIGNED QUOTE -->
+    <div class="register-image-side">
+      <div class="quote-content">
+        <div class="quote-subtag">YOUR STAY, YOUR WAY</div>
+        <div class="quote-text">“Where Elegance & Comfort Meet.”</div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE: REGISTER FORM -->
+    <div class="register-form-side">
+      <div class="form-wrapper">
+        <div class="register-subtag">JOIN US</div>
+        <h1 class="register-title">Create your account</h1>
+        <p class="register-desc">Save your details and manage every part of your stay with ease.</p>
+
+        <form action="guest portal.html" method="POST">
+          <!-- FULL NAME -->
+          <div class="form-group">
+            <label for="fullname">FULL NAME</label>
+            <input type="text" id="fullname" name="fullname" placeholder="Juan Dela Cruz" >
+          </div>
+
+          <!-- EMAIL ADDRESS -->
+          <div class="form-group">
+            <label for="email">EMAIL ADDRESS</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" >
+          </div>
+
+          <!-- CONTACT NUMBER -->
+          <div class="form-group">
+            <label for="contact">CONTACT NUMBER</label>
+            <input type="tel" id="contact" name="contact" placeholder="+63 9XX XXX XXXX" >
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="form-group">
+            <label for="password">PASSWORD</label>
+            <div class="input-wrapper">
+              <input type="password" id="password" name="password" placeholder="Enter your password" >
+              <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password')">
+                <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- CONFIRM PASSWORD -->
+          <div class="form-group">
+            <label for="confirm-password">CONFIRM PASSWORD</label>
+            <div class="input-wrapper">
+              <input type="password" id="confirm-password" name="confirm_password" placeholder="Re-enter your password" >
+              <button type="button" class="toggle-password" onclick="togglePasswordVisibility('confirm-password')">
+                <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit">CREATE ACCOUNT &rarr;</button>
+
+          <div class="login-prompt">
+            Already have an account? <a href="login.html">Sign in</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIMPLE FOOTER -->
+  <footer class="footer">
+    <div class="footer-bottom">
+      &copy; 2025 EXTREMELI SUITES. ALL RIGHTS RESERVED.
+    </div>
+  </footer>
+
+  <!-- SCRIPT FOR SHOW/HIDE PASSWORDS -->
+  <script>
+    function togglePasswordVisibility(fieldId) {
+      const passwordInput = document.getElementById(fieldId);
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extremeli Suites - Home</title>
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/jpeg" href="images/logo.JPG">
+  
+  <!-- Google Fonts: Cormorant Garamond for Headings & Manrope for Body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* RESET & BASE STYLES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      color: #111111;
+      background-color: #ffffff;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* CAPITALIZE FIRST LETTER OF EACH WORD FOR ALL HEADINGS */
+    h1, h2, h3, .room-name, .facility-name, .login-title, .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      text-transform: capitalize;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    /* PAGE SWITCHING */
+    .page-section {
+      display: none;
+      flex: 1;
+    }
+    .page-section.active-page {
+      display: block;
+    }
+
+    /* TOP ANNOUNCEMENT BAR */
+    .top-bar {
+      background-color: #092741;
+      color: #ffffff;
+      text-align: center;
+      padding: 12px 20px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* NAVIGATION BAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e5e5;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img {
+      height: 55px; 
+      width: auto;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 35px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #111111;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #D2AA55;
+    }
+
+    .auth-buttons {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .btn-sign-in {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #092741;
+    }
+
+    .btn-create-account {
+      background-color: #D2AA55;
+      color: #092741;
+      padding: 12px 28px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-create-account:hover {
+      background-color: #B48934;
+    }
+
+    /* HERO SECTION (HOME) */
+    .hero {
+      position: relative;
+      height: 85vh;
+      min-height: 600px;
+      background: linear-gradient(to right, rgba(9, 39, 65, 0.85) 0%, rgba(9, 39, 65, 0.55) 50%, rgba(0, 0, 0, 0) 100%), 
+                  url('images/hero.jpg') center 40%/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 10%;
+      color: #ffffff;
+    }
+
+    .hero-subtag {
+      font-size: 13px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      color: #E0BD71;
+      font-weight: 500;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .hero-title {
+      font-size: 72px;
+      font-weight: 500;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      max-width: 700px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero-description {
+      font-size: 16px;
+      max-width: 520px;
+      margin-bottom: 35px;
+      color: #ffffff;
+      font-weight: 400;
+      line-height: 1.6;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .btn-explore {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background-color: #D2AA55;
+      color: #092741;
+      font-weight: 600;
+      padding: 15px 32px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      width: fit-content;
+      transition: background 0.3s;
+    }
+
+    .btn-explore:hover {
+      background-color: #B48934;
+    }
+
+    .location-tag {
+      position: absolute;
+      bottom: 70px;
+      right: 8%;
+      text-align: right;
+      font-size: 12px;
+      color: #ffffff;
+      font-weight: 500;
+      line-height: 1.5;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* BOOKING SEARCH BAR */
+    .booking-bar-wrapper {
+      position: relative;
+      margin-top: -45px;
+      padding: 0 10%;
+      z-index: 10;
+    }
+
+    .booking-bar {
+      background: #ffffff;
+      display: flex;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      border-radius: 2px;
+      border: 1px solid #e0e0e0;
+      overflow: hidden;
+    }
+
+    .booking-field {
+      flex: 1;
+      padding: 20px 24px;
+      border-right: 1px solid #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .booking-field label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #092741;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .booking-field input, .booking-field select {
+      border: none;
+      outline: none;
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      color: #111111;
+      background: transparent;
+      font-weight: 600;
+    }
+
+    .btn-browse-rooms {
+      background-color: #D2AA55;
+      color: #092741;
+      font-weight: 600;
+      border: none;
+      padding: 0 42px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.3s;
+    }
+
+    .btn-browse-rooms:hover {
+      background-color: #B48934;
+    }
+
+    /* ROOMS SECTION (HOME) */
+    .rooms-section {
+      padding: 100px 10% 80px;
+      text-align: center;
+      background-color: #ffffff;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: #D2AA55;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 500;
+      color: #092741;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 15px;
+      color: #687680;
+      max-width: 600px;
+      margin: 0 auto 50px;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+
+    .room-card {
+      background: #ffffff;
+      border: 1px solid #d5d5d5;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .room-img-container {
+      position: relative;
+      height: 240px;
+      width: 100%;
+      background-color: #e0e0e0;
+      overflow: hidden;
+    }
+
+    .room-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .room-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 6px 14px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      color: #092741;
+    }
+
+    .room-content {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .room-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .room-name {
+      font-size: 26px;
+      font-weight: 600;
+      color: #092741;
+    }
+
+    .room-price {
+      text-align: right;
+      font-size: 18px;
+      font-weight: 700;
+      color: #092741;
+    }
+
+    .room-price span {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      color: #687680;
+      text-transform: uppercase;
+    }
+
+    .room-details {
+      font-size: 13px;
+      color: #687680;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .room-features {
+      font-size: 12px;
+      color: #687680;
+      margin-bottom: 25px;
+      display: flex;
+      gap: 20px;
+      font-weight: 500;
+    }
+
+    .room-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .room-feature-item svg {
+      width: 16px;
+      height: 16px;
+      fill: #687680;
+    }
+
+    .room-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .btn-view-details {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #092741;
+    }
+
+    .btn-explore-room {
+      background-color: #D2AA55;
+      color: #092741;
+      font-weight: 600;
+      padding: 10px 20px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-explore-room:hover {
+      background-color: #B48934;
+    }
+
+    .btn-discover-all {
+      display: inline-block;
+      border: 2px solid #092741;
+      color: #092741;
+      padding: 14px 36px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+    }
+
+    .btn-discover-all:hover {
+      background-color: #092741;
+      color: #ffffff;
+    }
+
+    /* ABOUT / OUR STORY SECTION (HOME) */
+    .about-section {
+      padding: 100px 10%;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 70px;
+    }
+
+    .about-img-container {
+      flex: 1.1;
+      position: relative;
+    }
+
+    .about-img-container img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      box-shadow: -15px 15px 0px #D2AA55;
+    }
+
+    .about-content {
+      flex: 1;
+    }
+
+    .about-subtitle {
+      font-size: 12px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: #D2AA55;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .about-title {
+      font-size: 50px;
+      font-weight: 500;
+      color: #092741;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .about-text {
+      font-size: 14px;
+      color: #687680;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+
+    .btn-our-story {
+      display: inline-block;
+      border: 2px solid #092741;
+      color: #092741;
+      padding: 14px 32px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 10px;
+      transition: all 0.3s;
+    }
+
+    .btn-our-story:hover {
+      background-color: #092741;
+      color: #ffffff;
+    }
+
+    /* FACILITIES SECTION (HOME) */
+    .facilities-section {
+      background-color: #092741;
+      color: #ffffff;
+      padding: 100px 10%;
+      text-align: center;
+    }
+
+    .facilities-subtitle {
+      font-size: 12px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: #D2AA55;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .facilities-title {
+      font-size: 48px;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 50px;
+    }
+
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .facility-card {
+      position: relative;
+      height: 340px;
+      overflow: hidden;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 30px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .facility-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to top, rgba(9, 39, 65, 0.95) 20%, rgba(9, 39, 65, 0.2) 75%);
+      z-index: 1;
+    }
+
+    .facility-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .facility-name {
+      font-size: 26px;
+      color: #ffffff;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .facility-desc {
+      font-size: 12px;
+      color: #e0e0e0;
+      margin-bottom: 16px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .facility-link {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #D2AA55;
+      font-weight: 600;
+    }
+
+    /* INNER PAGE HERO (ROOMS & FACILITIES & ABOUT) */
+    .page-hero {
+      position: relative;
+      height: 360px;
+      background: linear-gradient(to right, rgba(9, 39, 65, 0.88) 0%, rgba(9, 39, 65, 0.6) 60%, rgba(9, 39, 65, 0.3) 100%),
+                  url('images/hero.jpg') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 10%;
+      color: #ffffff;
+    }
+
+    .facilities-hero {
+      background: linear-gradient(to right, rgba(9, 39, 65, 0.88) 0%, rgba(9, 39, 65, 0.6) 60%, rgba(9, 39, 65, 0.3) 100%),
+                  url('images/pool.webp') center/cover no-repeat;
+    }
+
+    .about-hero {
+      background: linear-gradient(to right, rgba(9, 39, 65, 0.88) 0%, rgba(9, 39, 65, 0.65) 60%, rgba(9, 39, 65, 0.35) 100%),
+                  url('images/entrance.jpg') center/cover no-repeat;
+    }
+
+    .page-hero-sub { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #D2AA55; margin-bottom: 10px; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+    .page-hero-title { font-size: 54px; font-weight: 500; line-height: 1.1; margin-bottom: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .page-hero-desc { font-size: 15px; max-width: 550px; color: #e5e5e5; text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+
+    /* ROOMS LISTING TOOLBAR */
+    .rooms-container { padding: 70px 10% 90px; }
+    .rooms-toolbar { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
+    .toolbar-left span { display: block; font-size: 12px; color: #687680; margin-bottom: 4px; }
+    .toolbar-left h2 { font-size: 36px; color: #092741; font-weight: 500; }
+    .toolbar-filters { display: flex; gap: 15px; }
+    .filter-select { padding: 10px 16px; border: 1px solid #d5d5d5; font-family: 'Manrope', sans-serif; font-size: 13px; color: #092741; background: #ffffff; outline: none; cursor: pointer; }
+
+    /* ROOM DETAIL PAGE STYLES */
+    .room-detail-container { padding: 50px 10% 90px; }
+    .back-to-rooms { display: inline-block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #687680; margin-bottom: 30px; transition: color 0.3s; }
+    .back-to-rooms:hover { color: #092741; }
+    
+    .room-gallery { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 45px; }
+    .room-gallery.single-img { grid-template-columns: 1fr; }
+    .room-main-img { height: 420px; overflow: hidden; background: #e0e0e0; }
+    .room-main-img img, .room-side-imgs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .room-side-imgs { display: flex; flex-direction: column; gap: 20px; height: 420px; }
+    .room-side-imgs img { height: 200px; }
+
+    .room-detail-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 50px; align-items: start; }
+    .room-info-left .room-type-tag { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #D2AA55; font-weight: 600; margin-bottom: 10px; }
+    .room-info-left .room-title-main { font-size: 46px; font-weight: 500; color: #092741; margin-bottom: 16px; }
+    .room-meta-tags { display: flex; gap: 25px; font-size: 13px; color: #687680; margin-bottom: 25px; font-weight: 500; }
+    .room-meta-item { display: flex; align-items: center; gap: 6px; }
+    .room-desc-text { font-size: 14px; color: #687680; line-height: 1.8; margin-bottom: 40px; }
+    
+    .amenities-title { font-size: 26px; color: #092741; font-weight: 500; margin-bottom: 25px; border-top: 1px solid #e5e5e5; padding-top: 35px; }
+    .amenities-grid { display: grid; grid-template-columns: 1fr 1fr; row-gap: 16px; column-gap: 30px; }
+    .amenity-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #687680; font-weight: 500; }
+    .amenity-item svg { width: 16px; height: 16px; fill: #D2AA55; flex-shrink: 0; }
+
+    .booking-card { background: #ffffff; border: 1px solid #d5d5d5; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+    .booking-card-rate-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #687680; margin-bottom: 6px; }
+    .booking-card-price { font-size: 32px; font-weight: 700; color: #092741; font-family: 'Cormorant Garamond', serif; margin-bottom: 16px; }
+    .booking-card-price span { font-size: 12px; font-weight: 400; color: #687680; font-family: 'Manrope', sans-serif; }
+    .booking-card-note { font-size: 12px; color: #687680; line-height: 1.6; margin-bottom: 24px; border-bottom: 1px solid #e5e5e5; padding-bottom: 20px; }
+    .btn-book-now { display: block; width: 100%; background-color: #D2AA55; color: #092741; font-weight: 600; padding: 16px; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; border: none; cursor: pointer; text-align: center; transition: background 0.3s; margin-bottom: 14px; }
+    .btn-book-now:hover { background-color: #B48934; }
+    .booking-card-footer { font-size: 11px; text-align: center; color: #687680; letter-spacing: 0.5px; }
+
+    /* FACILITIES PAGE CONTENT */
+    .facilities-wrapper { padding: 80px 10%; }
+    .facility-row { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 90px; }
+    .facility-row:last-child { margin-bottom: 0; }
+    .facility-row.reverse .facility-img { order: 2; }
+    .facility-row.reverse .facility-info { order: 1; }
+    .facility-img { width: 100%; height: 380px; overflow: hidden; }
+    .facility-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .facility-num { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #D2AA55; font-weight: 600; margin-bottom: 10px; }
+    .facility-heading { font-size: 40px; font-weight: 500; color: #092741; margin-bottom: 16px; line-height: 1.2; }
+    .facility-text { font-size: 14px; color: #687680; line-height: 1.8; margin-bottom: 24px; }
+    .facility-features-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #092741; font-weight: 700; margin-bottom: 8px; }
+    .facility-features-list { font-size: 13px; color: #687680; }
+
+    /* ABOUT PAGE CONTENT */
+    .story-section { padding: 90px 10%; display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: start; }
+    .story-sub { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #D2AA55; font-weight: 600; margin-bottom: 12px; }
+    .story-title { font-size: 44px; color: #092741; font-weight: 500; line-height: 1.15; }
+    .story-text p { font-size: 14px; color: #687680; line-height: 1.8; margin-bottom: 18px; }
+    .btn-plan-stay { display: inline-block; background-color: #D2AA55; color: #092741; font-weight: 600; padding: 14px 30px; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 10px; transition: background 0.3s; }
+    .btn-plan-stay:hover { background-color: #B48934; }
+
+    /* VIDEO SECTION IN ABOUT PAGE */
+    .video-section { padding: 20px 10% 90px; text-align: center; }
+    .video-sub { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #D2AA55; font-weight: 600; margin-bottom: 8px; }
+    .video-title { font-size: 38px; color: #092741; font-weight: 500; margin-bottom: 30px; }
+    .video-wrapper { max-width: 900px; margin: 0 auto; border: 1px solid #e0e0e0; box-shadow: 0 10px 30px rgba(0,0,0,0.08); background: #092741; }
+    .video-wrapper video { width: 100%; height: auto; display: block; max-height: 500px; object-fit: cover; }
+
+    .stats-bar { background-color: #f6f3ee; padding: 60px 10%; display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 30px; }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 46px; color: #D2AA55; font-weight: 500; line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #687680; font-weight: 600; }
+
+    /* FOOTER SECTION */
+    .footer {
+      background-color: #061b2e;
+      color: #ffffff;
+      padding: 80px 10% 35px;
+      font-size: 13px;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr 2fr;
+      gap: 50px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .footer-logo img {
+      height: 55px;
+      margin-bottom: 18px;
+      background: #ffffff;
+      padding: 6px 10px;
+      object-fit: contain;
+    }
+
+    .footer-brand-desc {
+      color: #dddddd;
+      font-size: 13px;
+      line-height: 1.7;
+      max-width: 320px;
+      font-weight: 400;
+    }
+
+    .footer-column h4 {
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #D2AA55;
+      margin-bottom: 22px;
+      font-weight: 600;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column ul li a {
+      color: #ffffff;
+      font-weight: 400;
+      transition: color 0.3s;
+    }
+
+    .footer-column ul li a:hover {
+      color: #D2AA55;
+    }
+
+    .footer-contact p {
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 35px;
+      color: #aaaaaa;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 1024px) {
+      .rooms-grid, .facilities-grid { grid-template-columns: repeat(2, 1fr); }
+      .room-detail-grid, .room-gallery { grid-template-columns: 1fr; }
+      .about-section { flex-direction: column; }
+      .footer-container { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 900px) {
+      .facility-row { grid-template-columns: 1fr; gap: 30px; margin-bottom: 60px; }
+      .facility-row.reverse .facility-img { order: 0; }
+      .facility-row.reverse .facility-info { order: 0; }
+      .story-section { grid-template-columns: 1fr; gap: 30px; }
+      .stats-bar { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 650px) {
+      .rooms-grid, .facilities-grid { grid-template-columns: 1fr; }
+      .footer-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="top-bar">
+    ESCAPE THE ORDINARY · DIRECT RESERVATIONS INCLUDE OUR BEST AVAILABLE RATE
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <a onclick="showPage('home')">
+        <img src="images/logo.JPG" alt="Extremeli Suites Logo" class="logo-img">
+      </a>
+    </div>
+    
+    <ul class="nav-links">
+      <li><a id="nav-home" class="active" onclick="showPage('home')">HOME</a></li>
+      <li><a id="nav-rooms" onclick="showPage('rooms')">ROOMS</a></li>
+      <li><a id="nav-facilities" onclick="showPage('facilities')">FACILITIES</a></li>
+      <li><a id="nav-about" onclick="showPage('about')">ABOUT US</a></li>
+    </ul>
+
+    <div class="auth-buttons">
+      <a href="login.html" class="btn-sign-in">SIGN IN</a>
+      <button class="btn-create-account" onclick="window.location.href='register.html'">CREATE ACCOUNT</button>
+    </div>
+  </nav>
+
+  <!-- ==================== 1. HOME PAGE ==================== -->
+  <div id="home-page" class="page-section active-page">
+    <header class="hero">
+      <div class="hero-subtag">WELCOME TO EXTREMELI SUITES</div>
+      <h1 class="hero-title">Where elegance<br>and comfort meet.</h1>
+      <p class="hero-description">
+        Three thoughtfully prepared room types, complete guest facilities, and genuine hospitality in the heart of the city.
+      </p>
+      <a onclick="showPage('rooms')" class="btn-explore">EXPLORE OUR ROOMS &rarr;</a>
+
+      <div class="location-tag">
+        PARANAQUE, PHILIPPINES<br>
+        <small>&bull; Your city sanctuary</small>
+      </div>
+    </header>
+
+    <div class="booking-bar-wrapper">
+      <form class="booking-bar">
+        <div class="booking-field">
+          <label>CHECK IN</label>
+          <input type="date" value="2026-12-18">
+        </div>
+        <div class="booking-field">
+          <label>CHECK OUT</label>
+          <input type="date" value="2026-12-20">
+        </div>
+        <div class="booking-field">
+          <label>GUESTS</label>
+          <select>
+            <option>2 Guests</option>
+            <option>1 Guest</option>
+            <option>3 Guests</option>
+            <option>4 Guests</option>
+          </select>
+        </div>
+        <button type="button" class="btn-browse-rooms" onclick="showPage('rooms')">BROWSE ROOMS &rarr;</button>
+      </form>
+    </div>
+
+    <section class="rooms-section">
+      <div class="section-subtitle">STAY BEAUTIFULLY</div>
+      <h2 class="section-title">Rooms made for unwinding</h2>
+      <p class="section-desc">
+        Every room is a quiet expression of modern comfort, designed for restful nights and easy mornings.
+      </p>
+
+      <div class="rooms-grid">
+        <div class="room-card">
+          <div class="room-img-container">
+            <span class="room-badge">CLASSIC COMFORT</span>
+            <img src="images/deluxeA.JPG" alt="Deluxe A">
+          </div>
+          <div class="room-content">
+            <div class="room-header">
+              <h3 class="room-name">Deluxe A</h3>
+              <div class="room-price">₱3,300<span>room only</span></div>
+            </div>
+            <p class="room-details">A bright and comfortable room with a queen bed, dedicated work desk, and everything needed for a...</p>
+            <div class="room-features">
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span>Up to 2</span>
+              </div>
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4zm-9 6H3V9h7v4z"/></svg>
+                <span>2 Single beds</span>
+              </div>
+            </div>
+            <div class="room-actions">
+              <a onclick="showRoomDetail('deluxeA')" class="btn-view-details">VIEW DETAILS</a>
+              <button class="btn-explore-room" onclick="showRoomDetail('deluxeA')">EXPLORE ROOM</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-img-container">
+            <span class="room-badge">PRIVATE BALCONY</span>
+            <img src="images/deluxeB.JPG" alt="Deluxe B with Balcony">
+          </div>
+          <div class="room-content">
+            <div class="room-header">
+              <h3 class="room-name">Deluxe B with Balcony</h3>
+              <div class="room-price">₱3,800<span>room only</span></div>
+            </div>
+            <p class="room-details">A welcoming twin room with generous natural light and a private balcony overlooking the property.</p>
+            <div class="room-features">
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span>Up to 2</span>
+              </div>
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4zm-9 6H3V9h7v4z"/></svg>
+                <span>2 Single beds</span>
+              </div>
+            </div>
+            <div class="room-actions">
+              <a onclick="showRoomDetail('deluxeB')" class="btn-view-details">VIEW DETAILS</a>
+              <button class="btn-explore-room" onclick="showRoomDetail('deluxeB')">EXPLORE ROOM</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-img-container">
+            <span class="room-badge">SPACIOUS SUITE</span>
+            <img src="images/junior.JPG" alt="Junior Suite C with Balcony">
+          </div>
+          <div class="room-content">
+            <div class="room-header">
+              <h3 class="room-name">Junior Suite C with Balcony</h3>
+              <div class="room-price">₱6,800<span>room only</span></div>
+            </div>
+            <p class="room-details">Our most spacious guest option, featuring a private balcony and generous room for longer stays or smal...</p>
+            <div class="room-features">
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span>Up to 4</span>
+              </div>
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4zm-9 6H3V9h7v4z"/></svg>
+                <span>1 Queen bed</span>
+              </div>
+            </div>
+            <div class="room-actions">
+              <a onclick="showRoomDetail('junior')" class="btn-view-details">VIEW DETAILS</a>
+              <button class="btn-explore-room" onclick="showRoomDetail('junior')">EXPLORE ROOM</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a onclick="showPage('rooms')" class="btn-discover-all">DISCOVER ALL ROOMS</a>
+    </section>
+
+    <section class="about-section">
+      <div class="about-img-container">
+        <img src="images/entrance.jpg" alt="Extremeli Suites Entrance">
+      </div>
+      <div class="about-content">
+        <div class="about-subtitle">A PLACE OF YOUR OWN</div>
+        <h2 class="about-title">Thoughtful stays,<br>warmly delivered.</h2>
+        <p class="about-text">
+          At Extremeli Suites, we believe the best hospitality feels natural. From calm interiors to considerate service, each detail is designed to make you feel genuinely at ease.
+        </p>
+        <p class="about-text">
+          Whether you are here for work, a celebration, or a quiet weekend away, you will find a stay that moves at your pace.
+        </p>
+        <a onclick="showPage('about')" class="btn-our-story">OUR STORY</a>
+      </div>
+    </section>
+
+    <section class="facilities-section">
+      <div class="facilities-subtitle">MORE TO EXPERIENCE</div>
+      <h2 class="facilities-title">Space to restore and reconnect</h2>
+
+      <div class="facilities-grid">
+        <div class="facility-card" style="background-image: url('images/pool.webp');">
+          <div class="facility-content">
+            <h3 class="facility-name">Adult & Children's Pools</h3>
+            <p class="facility-desc">Dedicated swimming areas where adults can unwind and younger guests can safely enjoy the water.</p>
+            <a onclick="showPage('facilities')" class="facility-link">DISCOVER &rarr;</a>
+          </div>
+        </div>
+
+        <div class="facility-card" style="background-image: url('images/fitness center.webp');">
+          <div class="facility-content">
+            <h3 class="facility-name">Fitness & Exercise</h3>
+            <p class="facility-desc">Well-equipped spaces for maintaining your wellness and movement routines at your pace.</p>
+            <a onclick="showPage('facilities')" class="facility-link">DISCOVER &rarr;</a>
+          </div>
+        </div>
+
+        <div class="facility-card" style="background-image: url('images/game room.jpg');">
+          <div class="facility-content">
+            <h3 class="facility-name">Game & Entertainment Room</h3>
+            <p class="facility-desc">A relaxed recreation space made for friendly matches and easygoing entertainment.</p>
+            <a onclick="showPage('facilities')" class="facility-link">DISCOVER &rarr;</a>
+          </div>
+        </div>
+
+        <div class="facility-card" style="background-image: url('images/gazebo.jfif');">
+          <div class="facility-content">
+            <h3 class="facility-name">Gazebo Pavilion</h3>
+            <p class="facility-desc">A sheltered outdoor pavilion surrounded by the calm atmosphere of the property grounds.</p>
+            <a onclick="showPage('facilities')" class="facility-link">DISCOVER &rarr;</a>
+          </div>
+        </div>
+
+        <div class="facility-card" style="background-image: url('images/community space.jpg');">
+          <div class="facility-content">
+            <h3 class="facility-name">Guest Community Spaces</h3>
+            <p class="facility-desc">Comfortable shared spaces for connecting, working, or spending a quiet moment indoors.</p>
+            <a onclick="showPage('facilities')" class="facility-link">DISCOVER &rarr;</a>
+          </div>
+        </div>
+
+        <div class="facility-card" style="background-image: url('images/garden.webp');">
+          <div class="facility-content">
+            <h3 class="facility-name">Family & Garden Areas</h3>
+            <p class="facility-desc">Open-air spaces where families and younger guests can enjoy time together.</p>
+            <a onclick="showPage('facilities')" class="facility-link">DISCOVER &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== 2. ROOMS PAGE (LISTING) ==================== -->
+  <div id="rooms-page" class="page-section">
+    <header class="page-hero">
+      <div class="page-hero-sub">ROOMS &amp; SUITES</div>
+      <h1 class="page-hero-title">Your room to settle in</h1>
+      <p class="page-hero-desc">Discover considered spaces with everything you need for a comfortable, memorable stay.</p>
+    </header>
+
+    <div class="rooms-container">
+      <div class="rooms-toolbar">
+        <div class="toolbar-left">
+          <span>Showing 3 room types</span>
+          <h2>Available rooms</h2>
+        </div>
+        <div class="toolbar-filters">
+          <select class="filter-select">
+            <option>All guests</option>
+            <option>Up to 2 Guests</option>
+            <option>Up to 4 Guests</option>
+          </select>
+          <select class="filter-select">
+            <option>Recommended</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="rooms-grid">
+        <div class="room-card">
+          <div class="room-img-container">
+            <span class="room-badge">CLASSIC COMFORT</span>
+            <img src="images/deluxeA.JPG" alt="Deluxe A">
+          </div>
+          <div class="room-content">
+            <div class="room-header">
+              <h3 class="room-name">Deluxe A</h3>
+              <div class="room-price">₱3,300<span>room only</span></div>
+            </div>
+            <p class="room-details">A bright and comfortable room with a queen bed, dedicated work desk, and everything needed for an easy stay.</p>
+            <div class="room-features">
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span>Up to 2</span>
+              </div>
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4zm-9 6H3V9h7v4z"/></svg>
+                <span>2 Single beds</span>
+              </div>
+            </div>
+            <div class="room-actions">
+              <a onclick="showRoomDetail('deluxeA')" class="btn-view-details">VIEW DETAILS</a>
+              <button class="btn-explore-room" onclick="showRoomDetail('deluxeA')">EXPLORE ROOM</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-img-container">
+            <span class="room-badge">PRIVATE BALCONY</span>
+            <img src="images/deluxeB.JPG" alt="Deluxe B with Balcony">
+          </div>
+          <div class="room-content">
+            <div class="room-header">
+              <h3 class="room-name">Deluxe B with Balcony</h3>
+              <div class="room-price">₱3,800<span>room only</span></div>
+            </div>
+            <p class="room-details">A welcoming twin room with generous natural light and a private balcony overlooking the property.</p>
+            <div class="room-features">
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span>Up to 2</span>
+              </div>
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4zm-9 6H3V9h7v4z"/></svg>
+                <span>2 Single beds</span>
+              </div>
+            </div>
+            <div class="room-actions">
+              <a onclick="showRoomDetail('deluxeB')" class="btn-view-details">VIEW DETAILS</a>
+              <button class="btn-explore-room" onclick="showRoomDetail('deluxeB')">EXPLORE ROOM</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <div class="room-img-container">
+            <span class="room-badge">SPACIOUS SUITE</span>
+            <img src="images/junior.JPG" alt="Junior Suite C with Balcony">
+          </div>
+          <div class="room-content">
+            <div class="room-header">
+              <h3 class="room-name">Junior Suite C with Balcony</h3>
+              <div class="room-price">₱6,800<span>room only</span></div>
+            </div>
+            <p class="room-details">Our most spacious guest option, featuring a private balcony and generous room for longer stays or small families.</p>
+            <div class="room-features">
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span>Up to 4</span>
+              </div>
+              <div class="room-feature-item">
+                <svg viewBox="0 0 24 24"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4zm-9 6H3V9h7v4z"/></svg>
+                <span>1 Queen bed</span>
+              </div>
+            </div>
+            <div class="room-actions">
+              <a onclick="showRoomDetail('junior')" class="btn-view-details">VIEW DETAILS</a>
+              <button class="btn-explore-room" onclick="showRoomDetail('junior')">EXPLORE ROOM</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2.1. ROOM DETAIL PAGES ==================== -->
+  
+  <!-- Deluxe A Detail Page -->
+  <div id="room-deluxeA-page" class="page-section">
+    <div class="room-detail-container">
+      <a onclick="showPage('rooms')" class="back-to-rooms">&larr; ALL ROOMS</a>
+      
+      <div class="room-gallery">
+        <div class="room-main-img"><img src="images/deluxeA.JPG" alt="Deluxe A Main"></div>
+        <div class="room-side-imgs">
+          <img src="images/deluxeA.JPG" alt="Deluxe A Angle 1">
+          <img src="images/deluxeB.JPG" alt="Deluxe A Angle 2">
+        </div>
+      </div>
+
+      <div class="room-detail-grid">
+        <div class="room-info-left">
+          <div class="room-type-tag">CLASSIC COMFORT</div>
+          <h1 class="room-title-main">Deluxe A</h1>
+          <div class="room-meta-tags">
+            <div class="room-meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#687680"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              <span>Up to 2 guests</span>
+            </div>
+            <div class="room-meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#687680"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4zm-9 6H3V9h7v4z"/></svg>
+              <span>2 Single beds</span>
+            </div>
+            <div class="room-meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#687680"><path d="M21 3H3C2 3 1 4 1 5v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1-.9-2-2-2zm0 16H3V5h18v14z"/></svg>
+              <span>25-29 m&sup2;</span>
+            </div>
+          </div>
+          <p class="room-desc-text">A bright and comfortable room with a queen bed, dedicated work desk, and everything needed for an easy city stay.</p>
+          
+          <h3 class="amenities-title">Room amenities</h3>
+          <div class="amenities-grid">
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Complimentary Wi-Fi</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Air conditioning</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Smart TV</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Coffee &amp; tea</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Rain shower</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Work desk</div>
+          </div>
+        </div>
+
+        <div class="booking-card">
+          <div class="booking-card-rate-label">Rates from</div>
+          <div class="booking-card-price">₱3,300 <span>/ night</span></div>
+          <div class="booking-card-note">With breakfast: ₱3,500 per night. Rates are inclusive of applicable taxes. A ₱1,000 deposit is required to secure your reservation.</div>
+          <button class="btn-book-now" onclick="window.location.href='register.html'">BOOK NOW</button>
+          <div class="booking-card-footer">Sign in required &bull; Secure guest booking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deluxe B with Balcony Detail Page -->
+  <div id="room-deluxeB-page" class="page-section">
+    <div class="room-detail-container">
+      <a onclick="showPage('rooms')" class="back-to-rooms">&larr; ALL ROOMS</a>
+      
+      <div class="room-gallery single-img">
+        <div class="room-main-img"><img src="images/deluxeB.JPG" alt="Deluxe B with Balcony"></div>
+      </div>
+
+      <div class="room-detail-grid">
+        <div class="room-info-left">
+          <div class="room-type-tag">PRIVATE BALCONY</div>
+          <h1 class="room-title-main">Deluxe B with Balcony</h1>
+          <div class="room-meta-tags">
+            <div class="room-meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#687680"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              <span>Up to 2 guests</span>
+            </div>
+            <div class="room-meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#687680"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4zm-9 6H3V9h7v4z"/></svg>
+              <span>2 Single beds</span>
+            </div>
+            <div class="room-meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#687680"><path d="M21 3H3C2 3 1 4 1 5v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1-.9-2-2-2zm0 16H3V5h18v14z"/></svg>
+              <span>25-29 m&sup2;</span>
+            </div>
+          </div>
+          <p class="room-desc-text">A welcoming twin room with generous natural light and a private balcony overlooking the property.</p>
+          
+          <h3 class="amenities-title">Room amenities</h3>
+          <div class="amenities-grid">
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Complimentary Wi-Fi</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Air conditioning</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Smart TV</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Private balcony</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Rain shower</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>In-room safe</div>
+          </div>
+        </div>
+
+        <div class="booking-card">
+          <div class="booking-card-rate-label">Rates from</div>
+          <div class="booking-card-price">₱3,800 <span>/ night</span></div>
+          <div class="booking-card-note">With breakfast: ₱4,000 per night. Rates are inclusive of applicable taxes. A ₱1,000 deposit is required to secure your reservation.</div>
+          <button class="btn-book-now" onclick="window.location.href='register.html'">BOOK NOW</button>
+          <div class="booking-card-footer">Sign in required &bull; Secure guest booking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Junior Suite C with Balcony Detail Page -->
+  <div id="room-junior-page" class="page-section">
+    <div class="room-detail-container">
+      <a onclick="showPage('rooms')" class="back-to-rooms">&larr; ALL ROOMS</a>
+      
+      <div class="room-gallery">
+        <div class="room-main-img"><img src="images/junior.JPG" alt="Junior Suite Main"></div>
+        <div class="room-side-imgs">
+          <img src="images/junior.JPG" alt="Junior Suite Angle 1">
+          <img src="images/deluxeA.JPG" alt="Junior Suite Angle 2">
+        </div>
+      </div>
+
+      <div class="room-detail-grid">
+        <div class="room-info-left">
+          <div class="room-type-tag">SPACIOUS SUITE</div>
+          <h1 class="room-title-main">Junior Suite C with Balcony</h1>
+          <div class="room-meta-tags">
+            <div class="room-meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#687680"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              <span>Up to 4 guests</span>
+            </div>
+            <div class="room-meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#687680"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4zm-9 6H3V9h7v4z"/></svg>
+              <span>1 Queen bed</span>
+            </div>
+            <div class="room-meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#687680"><path d="M21 3H3C2 3 1 4 1 5v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1-.9-2-2-2zm0 16H3V5h18v14z"/></svg>
+              <span>40-45 m&sup2;</span>
+            </div>
+          </div>
+          <p class="room-desc-text">Our most spacious guest option, featuring a private balcony and generous room for longer stays or small families.</p>
+          
+          <h3 class="amenities-title">Room amenities</h3>
+          <div class="amenities-grid">
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Private balcony</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Complimentary Wi-Fi</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Spacious living area</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Smart TV</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Premium bath</div>
+            <div class="amenity-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Dining nook</div>
+          </div>
+        </div>
+
+        <div class="booking-card">
+          <div class="booking-card-rate-label">Rates from</div>
+          <div class="booking-card-price">₱6,800 <span>/ night</span></div>
+          <div class="booking-card-note">With breakfast: ₱7,200 per night. Rates are inclusive of applicable taxes. A ₱1,000 deposit is required to secure your reservation.</div>
+          <button class="btn-book-now" onclick="window.location.href='register.html'">BOOK NOW</button>
+          <div class="booking-card-footer">Sign in required &bull; Secure guest booking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 3. FACILITIES PAGE ==================== -->
+  <div id="facilities-page" class="page-section">
+    <header class="page-hero facilities-hero">
+      <div class="page-hero-sub">HOTEL FACILITIES</div>
+      <h1 class="page-hero-title">At your leisure</h1>
+      <p class="page-hero-desc">From a morning swim to dinner at dusk, discover spaces created for unhurried enjoyment.</p>
+    </header>
+
+    <div class="facilities-wrapper">
+      <div class="facility-row">
+        <div class="facility-img"><img src="images/pool.webp" alt="Adult & Children's Pools"></div>
+        <div class="facility-info">
+          <div class="facility-num">01 · EXPERIENCE</div>
+          <h2 class="facility-heading">Adult &amp; Children's Pools</h2>
+          <p class="facility-text">Dedicated swimming areas where adults can unwind and younger guests can safely enjoy the water. Every detail has been considered to give you the freedom to enjoy your stay exactly as you wish.</p>
+          <div class="facility-features-label">AVAILABLE FEATURES</div>
+          <div class="facility-features-list">Adult pool &bull; Children's pool</div>
+        </div>
+      </div>
+
+      <div class="facility-row reverse">
+        <div class="facility-img"><img src="images/fitness center.webp" alt="Fitness & Exercise"></div>
+        <div class="facility-info">
+          <div class="facility-num">02 · EXPERIENCE</div>
+          <h2 class="facility-heading">Fitness &amp; Exercise</h2>
+          <p class="facility-text">Well-equipped spaces for maintaining your wellness and movement routines during your stay. Every detail has been considered to give you the freedom to enjoy your stay exactly as you wish.</p>
+          <div class="facility-features-label">AVAILABLE FEATURES</div>
+          <div class="facility-features-list">Fitness gym &bull; Fitness center &bull; Yoga deck</div>
+        </div>
+      </div>
+
+      <div class="facility-row">
+        <div class="facility-img"><img src="images/game room.jpg" alt="Game & Entertainment Room"></div>
+        <div class="facility-info">
+          <div class="facility-num">03 · EXPERIENCE</div>
+          <h2 class="facility-heading">Game &amp; Entertainment Room</h2>
+          <p class="facility-text">A relaxed recreation space made for friendly matches and easygoing entertainment. Every detail has been considered to give you the freedom to enjoy your stay exactly as you wish.</p>
+          <div class="facility-features-label">AVAILABLE FEATURES</div>
+          <div class="facility-features-list">Billiard hall &bull; Game room lounge</div>
+        </div>
+      </div>
+
+      <div class="facility-row reverse">
+        <div class="facility-img"><img src="images/gazebo.jfif" alt="Gazebo Pavilion"></div>
+        <div class="facility-info">
+          <div class="facility-num">04 · EXPERIENCE</div>
+          <h2 class="facility-heading">Gazebo Pavilion</h2>
+          <p class="facility-text">A sheltered outdoor pavilion surrounded by the calm atmosphere of the property grounds. Every detail has been considered to give you the freedom to enjoy your stay exactly as you wish.</p>
+          <div class="facility-features-label">AVAILABLE FEATURES</div>
+          <div class="facility-features-list">Outdoor pavilion &bull; Garden seating</div>
+        </div>
+      </div>
+
+      <div class="facility-row">
+        <div class="facility-img"><img src="images/community space.jpg" alt="Guest Community Spaces"></div>
+        <div class="facility-info">
+          <div class="facility-num">05 · EXPERIENCE</div>
+          <h2 class="facility-heading">Guest Community Spaces</h2>
+          <p class="facility-text">Comfortable shared spaces for connecting, working, or spending a quiet moment indoors. Every detail has been considered to give you the freedom to enjoy your stay exactly as you wish.</p>
+          <div class="facility-features-label">AVAILABLE FEATURES</div>
+          <div class="facility-features-list">Function room &bull; Lounge areas &bull; Wi-Fi &amp; workspace</div>
+        </div>
+      </div>
+
+      <div class="facility-row reverse">
+        <div class="facility-img"><img src="images/garden.webp" alt="Family & Garden Areas"></div>
+        <div class="facility-info">
+          <div class="facility-num">06 · EXPERIENCE</div>
+          <h2 class="facility-heading">Family &amp; Garden Areas</h2>
+          <p class="facility-text">Open-air spaces where families and younger guests can enjoy time together. Every detail has been considered to give you the freedom to enjoy your stay exactly as you wish.</p>
+          <div class="facility-features-label">AVAILABLE FEATURES</div>
+          <div class="facility-features-list">Children's playground &bull; Outdoor garden</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 4. ABOUT US PAGE ==================== -->
+  <div id="about-page" class="page-section">
+    <header class="page-hero about-hero">
+      <div class="page-hero-sub">OUR STORY</div>
+      <h1 class="page-hero-title">Hospitality, made personal</h1>
+      <p class="page-hero-desc">Extremeli Suites is a modern city sanctuary shaped by warmth, attention, and a true sense of place.</p>
+    </header>
+
+    <section class="story-section">
+      <div>
+        <div class="story-sub">MORE THAN A STAY</div>
+        <h2 class="story-title">A place to pause,<br>connect, and belong.</h2>
+      </div>
+      <div class="story-text">
+        <p>Founded with the view that great stays are built through thoughtful details, Extremeli Suites pairs contemporary guest rooms with shared spaces that feel vibrant yet peaceful.</p>
+        <p>Whether you are traveling with family, hosting a small celebration, or simply looking for a quiet weekend away, our team is ready to make your stay seamless.</p>
+        <a onclick="showPage('rooms')" class="btn-plan-stay">PLAN YOUR STAY</a>
+      </div>
+    </section>
+
+    <!-- VIDEO SECTION -->
+    <section class="video-section">
+      <div class="video-sub">INSIDE EXTREMELI SUITES</div>
+      <h2 class="video-title">Experience our sanctuary</h2>
+      <div class="video-wrapper">
+        <video controls poster="images/front.webp">
+          <source src="images/VIDEO.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </section>
+
+    <section class="stats-bar">
+      <div>
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">THOUGHTFUL ASSISTANCE</div>
+      </div>
+      <div>
+        <div class="stat-num">03</div>
+        <div class="stat-label">DISTINCT ROOM TYPES</div>
+      </div>
+      <div>
+        <div class="stat-num">01</div>
+        <div class="stat-label">MEMORABLE EXPERIENCE</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="images/logo.JPG" alt="Extremeli Suites Logo">
+        </div>
+        <p class="footer-brand-desc">
+          A considered city escape where warm Filipino hospitality meets modern comfort.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>EXPLORE</h4>
+        <ul>
+          <li><a onclick="showPage('rooms')">Our Rooms</a></li>
+          <li><a onclick="showPage('facilities')">Hotel Facilities</a></li>
+          <li><a onclick="showPage('about')">Our Story</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column footer-contact">
+        <h4>CONTACT</h4>
+        <p>G-21 Solemare Parksuites, Bradco Avenue, Brgy. Baclaran, Parañaque City., Parañaque, Philippines</p>
+        <p>0917 671 6009</p>
+        <p>+63 917 671 6009</p>
+        <p>frontdesk.extremeli@gmail.com</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2026 EXTREMELI SUITES. ALL RIGHTS RESERVED.
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT PARA SA PAGE SWITCHING AT ROOM DETAILS -->
+  <script>
+    function showPage(pageName) {
+      document.querySelectorAll('.page-section').forEach(section => {
+        section.classList.remove('active-page');
+      });
+
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+      });
+
+      document.getElementById(pageName + '-page').classList.add('active-page');
+      if(document.getElementById('nav-' + pageName)) {
+        document.getElementById('nav-' + pageName).classList.add('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showRoomDetail(roomKey) {
+      document.querySelectorAll('.page-section').forEach(section => {
+        section.classList.remove('active-page');
+      });
+
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+      });
+
+      document.getElementById('room-' + roomKey + '-page').classList.add('active-page');
+      document.getElementById('nav-rooms').classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
